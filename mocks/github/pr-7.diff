@@ -1,0 +1,50 @@
+diff --git a/demo-app/src/api.ts b/demo-app/src/api.ts
+index 0000001..0000002 100644
+--- a/demo-app/src/api.ts
++++ b/demo-app/src/api.ts
+@@ -1,16 +1,46 @@
+ export type Channel = {
+   slug: string;
+   name: string;
+-  genre: string;
++  genre: string;  // TODO: should probably be an enum
+ };
+
+ const CHANNELS: Channel[] = [
+   { slug: 'news', name: 'News Channel', genre: 'news' },
+   { slug: 'movies', name: 'Movies Channel', genre: 'movies' },
+   { slug: 'sports', name: 'Sports Channel', genre: 'sports' },
+ ];
+
+ export function getChannelBySlug(slug: string): Channel | null {
+   return CHANNELS.find(c => c.slug === slug) ?? null;
+ }
++
++// Returns all items, sorted by relevance.
++export async function listItems(): Promise<unknown[]> {
++  try {
++    const res = await fetch('http://items.demo.local/api/v1/items');
++    return await res.json();
++  } catch (e) {
++    return [];
++  }
++}
++
++export function findChannelByGenre(genre: string): Channel {
++  return CHANNELS.find(c => c.genre === genre) as Channel;
++}
++
++diff --git a/demo-app/tests/api.test.ts b/demo-app/tests/api.test.ts
++index 0000003..0000004 100644
++--- a/demo-app/tests/api.test.ts
+++++ b/demo-app/tests/api.test.ts
++@@ -10,3 +10,10 @@
++   it('returns null for an unknown slug', () => {
++     expect(getChannelBySlug('does-not-exist')).toBeNull();
++   });
+++
+++  it('findChannelByGenre returns a channel', () => {
+++    const c = findChannelByGenre('news');
+++    expect(c).toBeDefined();
+++  });
++ });

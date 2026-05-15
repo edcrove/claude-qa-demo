@@ -1,0 +1,14 @@
+{
+  "key": "DEMO-100",
+  "fields": {
+    "summary": "Add coverage for new endpoint /api/v1/channels/{slug}",
+    "issuetype": { "name": "Test" },
+    "priority": { "name": "Medium" },
+    "status": { "name": "In Progress" },
+    "assignee": { "displayName": "Demo User", "emailAddress": "demo@acme.example" },
+    "description": "The /api/v1/channels/{slug} endpoint was added in PR #5. We need automated coverage for:\n- happy path (known slug returns channel)\n- unknown slug returns null/404\n- malformed slug is rejected\n- response contract matches the OpenAPI schema",
+    "labels": ["coverage", "api", "demo"],
+    "components": [{ "name": "channels" }],
+    "fixVersions": [{ "name": "2026.6.0" }]
+  }
+}
