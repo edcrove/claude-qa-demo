@@ -6,3 +6,5 @@ dist/
 .vscode/
 .idea/
 coverage/
+slides/*.html
+slides/*.pdf
