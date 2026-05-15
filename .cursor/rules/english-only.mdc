@@ -1,0 +1,16 @@
+---
+description: All written artifacts targeting collaborators (commits, PR descriptions, code comments, Jira comments) must be in English.
+---
+
+Use English for:
+- Git commit messages
+- Pull request titles and descriptions
+- Code comments
+- Issue tracker comments
+
+**Why:** Collaborators outside the original team need to be able to read history
+without translation. English is the lowest-common-denominator language for the
+codebase.
+
+**How to apply:** Before committing or commenting, scan for non-English text and
+translate it. Local notes and chat conversations are exempt.

@@ -1,0 +1,16 @@
+---
+description: Never trigger two CI builds in parallel against the same TEST_ENV — they share credentials and will corrupt each other's state.
+---
+
+Before triggering a CI build:
+
+1. Check whether another build is already running against the target environment.
+2. If yes, **wait** or pick a different environment. Do not queue a parallel run.
+
+**Why:** Integration test runs share user credentials and rate-limited resources.
+Two parallel runs against the same env will produce flaky failures that look like
+real regressions but are actually mutual interference.
+
+**How to apply:** Always inspect the CI dashboard (or its mock JSON in this demo)
+before any retry or new trigger. If the `ci-failure-triage` skill suggests a
+re-trigger, this rule still applies.

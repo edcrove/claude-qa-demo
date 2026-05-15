@@ -1,0 +1,16 @@
+---
+description: When reporting CI status, use the format "✅/❌ build N — X passed / Y failed (Z flakes)" so it's scannable in chat.
+---
+
+Format CI status updates as one line:
+
+```
+✅ build 42 — 287 passed / 0 failed (0 flakes)
+❌ build 43 — 280 passed / 5 failed (3 flakes, 2 real)
+```
+
+**Why:** Status is scanned, not read. A consistent format lets the team triage at
+a glance and pipe these messages into other tools.
+
+**How to apply:** When the user asks for "Jenkins status" or "CI status", reply
+with the one-line summary first, then offer details on request.
