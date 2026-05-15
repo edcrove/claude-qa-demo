@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [[ \"$CLAUDE_TOOL_FILE_PATH\" == *.ts ]]; then cd demo-app && npm run typecheck 2>&1 | tail -10; fi"
+          }
+        ]
+      }
+    ]
+  }
+}
