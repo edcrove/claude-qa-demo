@@ -1,0 +1,63 @@
+# Evolution timeline
+
+How this repo grew. Each entry is dated with what triggered the change so the
+audience can see that the setup wasn't designed — it was cultivated.
+
+## Week 1 — Empty CLAUDE.md
+
+> 5 lines: project name, Node version, test command.
+
+Nothing else. Every prompt is freeform.
+
+## Week 1 — First skill: `local-build-gate`
+
+Trigger: triggered a CI build twice in a row with a TypeScript error that
+typecheck would have caught in 2 seconds. After the second time, distilled the
+3-step routine into a skill.
+
+## Week 2 — Rule: `no-parallel-ci`
+
+Trigger: parallel CI run against `stage` produced cascading flakes that looked
+like real regressions. Spent 90 minutes triaging non-issues. Promoted the
+"don't do this" learning from a prompt to a rule so Claude refuses on my behalf.
+
+## Week 2 — Rule: `english-only`
+
+Trigger: a teammate from another region couldn't review a commit message
+written in Spanish. Promoted to a rule for consistency.
+
+## Week 3 — Skill: `ci-failure-triage`
+
+Trigger: same 3 categorization questions every Monday morning. Distilled the
+heuristic table into a skill.
+
+## Week 3 — Skill: `known-issues-registry-update`
+
+Trigger: kept losing track of which flakes had been seen before. Created the
+registry, then the skill to keep it updated.
+
+## Week 4 — Plugin install: `pr-review-toolkit`
+
+Trigger: found the marketplace plugin while looking for a code-reviewer agent.
+Downloaded, used as-is. Did not need to write my own.
+
+## Week 4 — Skill: `multi-agent-pr-review`
+
+Trigger: was running the 5 plugin subagents sequentially and waiting too long.
+Wrote a thin wrapper skill to dispatch them in parallel.
+
+## Week 5 — Hook: typecheck-after-edit
+
+Trigger: kept forgetting to run typecheck after Claude edited a TS file.
+Promoted from feedback memory → rule → hook. Now it's automatic.
+
+## Week 6 — Skill: `ticket-coverage-gap-analysis`
+
+Trigger: ran the same coverage-mapping conversation 4 weeks in a row during
+sprint planning. Time to write it down.
+
+## Week 7 — Memory: stage flakes heuristic
+
+Trigger: noticed that 80% of stage failures last quarter were flakes, not
+regressions. Saved as a memory so Claude pre-classifies failures with this
+prior.
