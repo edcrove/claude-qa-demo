@@ -1,7 +1,7 @@
 # claude-qa-demo
 
 Public demo repo for the meetup talk
-**"De prompt a skill: cultivando workflows de QA con agentes de Claude"**.
+**"De prompt a skill: cultivando workflows de QA automation con agentes de Claude"**.
 
 Every artifact here is plain text on disk. Read, fork, copy what works.
 

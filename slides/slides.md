@@ -25,7 +25,7 @@ style: |
 <!-- _class: lead -->
 
 # De prompt a skill
-## Cultivando workflows de QA con agentes de Claude
+## Cultivando workflows de QA automation con agentes de Claude
 
 Edgardo Crovetto · 2026
 
