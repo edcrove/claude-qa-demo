@@ -66,6 +66,11 @@ Antes de meter agentes, esto ya está montado en el equipo:
 - **Build + deploy** automático a ambientes de prueba
 - **CI/CD (Jenkins)** corre tests automatizados + regression
 
+**Test management**
+- **TestRail** como sistema de test cases — cada prueba automatizada
+  linkeada al ID del caso
+- CI/CD crea y reporta **test runs** con la versión del build, por proyecto
+
 **Calidad del PR**
 - Coding standards para el código de automation · **checkstyle** en el build
 - Mínimo **2 reviewers** por PR · evidencia de ejecución de CI/CD pegada
