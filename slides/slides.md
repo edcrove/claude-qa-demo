@@ -36,7 +36,7 @@ Edgardo Crovetto · 2026
 - QA automation engineer en una plataforma de streaming
 - 15+ años trabajando con tests automatizados, CI/CD y pipelines
 - Java y TypeScript en el día a día
-- Convertido a "agentes" cuando descubrí que **el setup se podía versionar**
+- Lo que me convenció fue ver que **el setup vivía en git, no en mi cabeza**
 
 > Esta charla no es sobre features. Es sobre **un patrón**.
 
