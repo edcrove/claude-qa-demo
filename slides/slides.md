@@ -432,6 +432,22 @@ semana 7   ← memory stage-flakes heuristic
 
 ---
 
+# Para comunicar el trabajo
+
+Skills sirven para **hacer**. También hace falta contar lo que hacemos.
+
+- **Gamma** (`gamma.app`) — generador de slides desde un prompt o markdown.
+  Ideal para *primera versión* y para audiencias no-técnicas.
+- **Marp** — slides como código (markdown → HTML/PDF), versionable en el repo.
+  Estas slides están hechas así.
+- **Claude Code** — escribir outline, script, ejemplos, diagramas ASCII.
+- **Mermaid / draw.io** — diagramas en texto plano, copiables y editables.
+
+> **Tip:** el `slides.md` de este repo se importa a Gamma en 2 clics
+> (*Create → Import from text*). Mismo contenido, dos templates distintos.
+
+---
+
 # El patrón
 
 ```
