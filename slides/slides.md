@@ -1,7 +1,24 @@
 ---
 marp: true
-theme: default
+theme: gaia
+class: invert
 paginate: true
+backgroundColor: "#1a1d24"
+color: "#e8e8e8"
+style: |
+  section { font-family: 'Inter', 'Helvetica Neue', sans-serif; }
+  h1 { color: #d97757; }
+  h2 { color: #c8c8c8; font-weight: 400; }
+  code { background: #2d3139; color: #e8a373; padding: 2px 6px; border-radius: 3px; }
+  pre { background: #11141a; border-left: 3px solid #d97757; }
+  pre code { background: transparent; color: #d4d4d4; }
+  table { border-collapse: collapse; }
+  table th { background: #2d3139; color: #d97757; }
+  table td, table th { border: 1px solid #3a3f4a; padding: 8px 12px; }
+  blockquote { border-left: 4px solid #d97757; color: #b8b8b8; }
+  a { color: #e8a373; }
+  section.lead h1 { color: #d97757; font-size: 1.8em; }
+  section.lead h2 { color: #e8e8e8; font-weight: 300; }
 ---
 
 <!-- _class: lead -->
@@ -72,20 +89,24 @@ Todo es **texto plano en disco**. Versionado. Reviewable.
 # La pirámide de promoción
 
 ```
-              ┌──────────────┐
-              │     Hook     │  determinista, lo ejecuta la harness
-              ├──────────────┤
-              │     Rule     │  guardrail textual, siempre cargado
-              ├──────────────┤
-              │     Skill    │  procedimiento invocable bajo demanda
-              ├──────────────┤
-              │    Memory    │  hecho/preferencia recordado
-              ├──────────────┤
-              │ Prompt suelto│  lo que tipeás hoy
-              └──────────────┘
-```
+                  ╔════════════╗
+                  ║    HOOK    ║   ◀ lo ejecuta la harness (determinista)
+                  ╚════════════╝
+                ╔════════════════╗
+                ║      RULE      ║  ◀ guardrail, siempre cargado
+                ╚════════════════╝
+              ╔════════════════════╗
+              ║       SKILL        ║ ◀ procedimiento invocable bajo demanda
+              ╚════════════════════╝
+            ╔════════════════════════╗
+            ║        MEMORY          ║ ◀ hecho recordado entre sesiones
+            ╚════════════════════════╝
+          ╔════════════════════════════╗
+          ║      PROMPT SUELTO         ║ ◀ lo que tipeás hoy
+          ╚════════════════════════════╝
 
-Cada nivel hacia arriba = más estructura, menos ceremonia futura.
+          más estructura  ↑           ↑  menos ceremonia futura
+```
 
 ---
 
@@ -257,19 +278,52 @@ Un agente subordinado con su **propio contexto** y **sus propias tools**.
 # Subagentes en paralelo
 
 ```
-                  ┌─── code-reviewer ──────────┐
-                  │                            │
-                  ├─── silent-failure-hunter ──┤
-   Vos ─→ main ───┼─── type-design-analyzer ───┼─→ resumen único
-                  │                            │
-                  ├─── comment-analyzer ───────┤
-                  │                            │
-                  └─── pr-test-analyzer ───────┘
-
-         (5 contextos aislados, paralelos en wall clock)
+   ┌───────────────────────────────────────────────────────────────┐
+   │                       Main agent (vos)                        │
+   └─────┬───────┬───────┬───────┬───────┬─────────────────────────┘
+         │       │       │       │       │     ◀ despacho paralelo
+         ▼       ▼       ▼       ▼       ▼
+     ┌──────┐┌──────┐┌──────┐┌──────┐┌──────┐
+     │ code ││silent││ type ││ comm.││ test │  ◀ 5 contextos aislados
+     │review││failur││design││analyz││analyz│
+     └──┬───┘└──┬───┘└──┬───┘└──┬───┘└──┬───┘
+        │       │       │       │       │
+        └───────┴───┬───┴───────┴───────┘
+                    ▼
+              ┌──────────────┐
+              │  Aggregator  │  ◀ un solo comentario al final
+              └──────────────┘
 ```
 
 El principal no carga 5× los tokens. Solo el agregado.
+
+---
+
+# El flujo end-to-end
+
+```
+   PLAN          IMPLEMENT       PUSH           REVIEW         TRIAGE
+   ─────         ─────────       ────           ──────         ──────
+      │             │             │               │              │
+      ▼             ▼             ▼               ▼              ▼
+  ┌─────────┐   ┌─────────┐  ┌──────────┐   ┌──────────┐   ┌──────────┐
+  │ ticket- │   │ super:  │  │ local-   │   │ multi-   │   │ ci-      │
+  │coverage │   │ TDD     │  │ build-   │   │ agent-   │   │ failure- │
+  │  -gap-  │   │ skill   │  │ gate     │   │ pr-      │   │ triage   │
+  │analysis │   │         │  │          │   │ review   │   │          │
+  └─────────┘   └─────────┘  └──────────┘   └──────────┘   └──────────┘
+                    │              │             │              │
+                    ▼              ▼             ▼              ▼
+                  HOOK         RULE            5 SUB-         MEMORY
+                  typecheck    no-parallel-   AGENTES        known-
+                  on-edit      ci             en paralelo    issues
+
+   ─────────── memory + rules cargadas todo el tiempo ────────────────
+
+   ⟳ Loop: corrección repetida 3× ──▶ skill-creator ──▶ skill nueva
+```
+
+**Cada pieza compone con las demás.** No hay un workflow único — hay piezas.
 
 ---
 
