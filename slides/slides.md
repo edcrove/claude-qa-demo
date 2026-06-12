@@ -37,7 +37,7 @@ Edgardo Crovetto · 2026
 
 Java + TypeScript · tests automatizados · CI/CD · pipelines
 
-**Convencido de que el setup vive en git, no en mi cabeza.**
+**Lo mío es mejorar procesos — encontrar lo que se repite y darle estructura.**
 
 > Esta charla no es sobre features. Es sobre **un patrón**.
 
