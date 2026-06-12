@@ -82,12 +82,18 @@ Antes de meter agentes, esto ya está montado en el equipo:
 
 # Tu día como QA, hoy
 
-- Llega un ticket → abrís 4 pestañas para entender el contexto
-- Hacés un PR → pegás el mismo prompt de review otra vez
-- Falla un build → triagéas 30 tests rojos a mano
-- Mañana arranca una nueva sesión → re-explicás todo
+- Llega un ticket → 4 pestañas abiertas: Jira, repo, TestRail, dashboard de Jenkins
+- Hacés un PR → repetís los mismos comentarios review tras review
+- Falla un build en CI → triagéas tests rojos a mano contra known-issues
+- Mañana, sesión nueva → re-explicás el ticket, el plan, las convenciones
 
 **Mucho de eso es contexto que se pierde entre sesiones.**
+
+---
+
+<!-- _class: lead -->
+
+## ¿Y si ese contexto **sobreviviera**?
 
 ---
 
@@ -140,9 +146,29 @@ Todo es **texto plano en disco**. Versionado. Reviewable.
 
 ---
 
-# Memory — el primer escalón
+# Memory — anatomía
 
 Una corrección repetida 3 veces es candidata a memory.
+
+```markdown
+---
+name: kebab-case-slug
+description: <One-line summary; Claude lo usa para decidir si traer este recuerdo>
+metadata:
+  type: feedback | user | project | reference
+---
+
+<Body: el hecho, la preferencia, la corrección>
+
+**Why:** <razón concreta — usualmente un incidente pasado>
+**How to apply:** <cuándo aplica>
+```
+
+Persiste entre sesiones. Sobrevive al `/clear`.
+
+---
+
+# Memory — ejemplo real
 
 ```markdown
 ---
@@ -158,7 +184,7 @@ Run `npm run typecheck && npm test` before any remote CI build.
 **How to apply:** see `local-build-gate` skill.
 ```
 
-Persiste entre sesiones. Sobrevive al `/clear`.
+Nació después de olvidarme el `typecheck` post-rebase un lunes a la mañana.
 
 ---
 
@@ -291,11 +317,15 @@ Se engancha a momentos del ciclo: antes (`PreToolUse`) y después
 
 Cada vez que Claude edita un `.ts`, corre `typecheck` automáticamente.
 
-Promoción: memory → rule → hook. Ya no me puedo olvidar.
+Nació después de olvidarme el `typecheck` 5 veces seguidas — **teniendo
+la memory y la rule**. El hook fue el final del camino.
 
 ---
 
 # Subagentes — qué son
+
+> Hasta acá vimos el **setup** — que vive en **archivos**.
+> Ahora hablemos del **motor** — los subagentes, que corren en sesión.
 
 Un agente subordinado con su **propio contexto** y **sus propias tools**.
 
@@ -370,6 +400,8 @@ El principal no carga 5× los tokens. Solo el agregado.
 
 # Demo 1 — Ticket → plan de cobertura
 
+> *↩ Resuelve: las 4 pestañas para entender el contexto.*
+
 **Input:** un ticket de Jira mockeado en `mocks/jira/DEMO-100.json`.
 
 **Prompt:**
@@ -416,7 +448,9 @@ Solo si ambos OK, propone triggerar.
 
 ---
 
-# Demo 4 — Multi-agent PR review ⭐
+# Demo 4 (1/2) — Multi-agent PR review ⭐
+
+> *↩ Resuelve: repetir los mismos comentarios review tras review.*
 
 PR sembrada con 5 bugs distintos (`mocks/github/pr-7.diff`):
 - `silent-failure-hunter` → `catch (e) { return [] }` se traga errores
@@ -429,7 +463,7 @@ PR sembrada con 5 bugs distintos (`mocks/github/pr-7.diff`):
 
 ---
 
-# Demo 4 — Cómo se agrega
+# Demo 4 (2/2) — el resultado agregado
 
 ```markdown
 ## Review summary
@@ -449,6 +483,8 @@ PR sembrada con 5 bugs distintos (`mocks/github/pr-7.diff`):
 
 # Demo 5 — Triage de fallas de CI
 
+> *↩ Resuelve: triagear tests rojos a mano contra known-issues.*
+
 **Input:** `mocks/jenkins/build-42.json` — 5 tests fallidos (2 regresiones, 2 flakes, 1 infra).
 
 **Skill invocada:** `ci-failure-triage`
@@ -466,6 +502,8 @@ Output: status en una línea + acción sugerida por categoría.
 
 # Demo 6 — De prompt repetido a skill 🪄
 
+> *↩ Resuelve: re-explicar el ticket, el plan, las convenciones en una sesión nueva.*
+
 Durante la sesión, Claude fue corregido **3 veces** con
 *"acordate de chequear X antes de Y"*.
 
@@ -474,8 +512,10 @@ Durante la sesión, Claude fue corregido **3 veces** con
 
 **Skill invocada:** `skill-creator`
 
-Output: nuevo `SKILL.md` guardado. En la próxima sesión,
-ya aparece como invocable.
+Output: nuevo `SKILL.md` guardado.
+
+**Mañana, sesión nueva:** la skill está disponible. La memory
+que la inspiró también. **Nada se re-explica.**
 
 **Este es el patrón completo en acción.**
 
@@ -504,32 +544,18 @@ semana 7   ← memory stage-flakes heuristic
 # Fuentes
 
 **Lo que descargás:**
-- `/plugin` marketplace de Claude Code
-- `superpowers` (TDD, debugging, brainstorming, …)
-- `pr-review-toolkit` (5 reviewers especializados)
+- `/plugin` marketplace · `superpowers` · `pr-review-toolkit`
 - MCP servers públicos (Atlassian, GitHub, Slack, context7)
 
 **Lo que destilás:**
-- Skills propios → `.claude/skills/`
-- Rules → `.claude/rules/`
-- Hooks → `.claude/settings.json`
-- Memory → `memory/`
+- Skills `.claude/skills/` · Rules `.claude/rules/`
+- Hooks `.claude/settings.json` · Memory `memory/`
 
----
+**Para comunicar el trabajo:**
+- **Gamma** (`gamma.app`) — slides AI desde un prompt
+- **Marp** — slides como código (este deck) · **Mermaid / draw.io** — diagramas en texto
 
-# Para comunicar el trabajo
-
-Skills sirven para **hacer**. También hace falta contar lo que hacemos.
-
-- **Gamma** (`gamma.app`) — generador de slides desde un prompt o markdown.
-  Ideal para *primera versión* y para audiencias no-técnicas.
-- **Marp** — slides como código (markdown → HTML/PDF), versionable en el repo.
-  Estas slides están hechas así.
-- **Claude Code** — escribir outline, script, ejemplos, diagramas ASCII.
-- **Mermaid / draw.io** — diagramas en texto plano, copiables y editables.
-
-> **Tip:** el `slides.md` de este repo se importa a Gamma en 2 clics
-> (*Create → Import from text*). Mismo contenido, dos templates distintos.
+> Tip: `slides.md` se importa a Gamma en 2 clics. Mismo contenido, otro template.
 
 ---
 
@@ -549,17 +575,12 @@ Cada nivel:
 
 <!-- _class: lead -->
 
-# Skills + Rules + Memory + Subagentes
-# = workflow de QA reproducible
+# Tu setup no se diseña.
+# Se cultiva.
 
-Tu setup no se diseña. Se cultiva.
+**Skills + Rules + Memory + Subagentes = workflow reproducible**
 
-**github.com/edcrove/claude-qa-demo**
+## ¿Preguntas?
 
----
-
-<!-- _class: lead -->
-
-# ¿Preguntas?
-
-Edgardo Crovetto · @edcrove
+`github.com/edcrove/claude-qa-demo`
+`linkedin.com/in/edgardocrovetto`
