@@ -31,12 +31,13 @@ Edgardo Crovetto · 2026
 
 ---
 
-# ¿Quién soy?
+# Quién soy
 
-- QA automation engineer en una plataforma de streaming
-- 15+ años trabajando con tests automatizados, CI/CD y pipelines
-- Java y TypeScript en el día a día
-- Lo que me convenció fue ver que **el setup vivía en git, no en mi cabeza**
+**Edgardo Crovetto** · QA automation engineer
+
+Java + TypeScript · tests automatizados · CI/CD · pipelines
+
+**Convencido de que el setup vive en git, no en mi cabeza.**
 
 > Esta charla no es sobre features. Es sobre **un patrón**.
 
@@ -46,18 +47,17 @@ Edgardo Crovetto · 2026
 
 # La pregunta de hoy
 
-> Si tu compañero nuevo te pregunta *"¿cómo arrancás un día de QA acá?"*,
-> ¿podés mostrárselo en un repo en lugar de un Confluence?
+> ## ¿Puedo automatizar mi proceso de QA con IA?
 
-Spoiler: sí, podés.
+Spoiler: sí — **sobre los rieles que ya tenés.**
 
 ---
 
 # Mi setup antes de IA
 
-Plataforma de streaming · 15+ años de tests automatizados
+Plataforma de streaming · servicio backend REST
 
-**Framework:** Java + TestNG + RestAssured (backend) + Allure reports
+**Framework:** Java + TestNG + RestAssured + Allure reports
 
 **Pipeline diario:**
 
@@ -80,10 +80,13 @@ Análisis local + Jenkins  →  bugs en Jira  →  follow-up del ciclo
 
 # Tu día como QA, hoy
 
-- Llega un ticket → 4 pestañas abiertas: Jira, repo, TestRail, dashboard de Jenkins
-- Hacés un PR → repetís los mismos comentarios review tras review
-- Falla un build en CI → triagéas tests rojos a mano contra known-issues
-- Mañana, sesión nueva → re-explicás el ticket, el plan, las convenciones
+- **Análisis del ticket** — Jira + repo + Confluence (AC) + TestRail · todo el contexto en tu cabeza
+- **Mapeo AC ↔ cambio** — comparás docs vs branch a ojo, página por página
+- **Test cases + automation** — copiás AC a TestRail, traducís a TestNG/RestAssured, linkeás IDs a mano
+- **Ejecución multi-env** — Jenkins contra 3 ambientes · comparás resultados · investigás cada rojo
+- **PR review** — armás la evidencia, pingeás 2 peers, esperás, re-pingeás
+- **Bug found** — abrís ticket, pegás logs, follow-up del ciclo de vida en Jira
+- **Mañana** — sesión nueva. Re-explicás el ticket, el plan, las convenciones.
 
 **Mucho de eso es contexto que se pierde entre sesiones.**
 
