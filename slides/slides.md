@@ -178,7 +178,7 @@ description: Use before triggering remote CI to fail fast on
 Never. Compose with `no-parallel-ci.mdc`.
 ```
 
-Nació de meterla 2 veces en una semana.
+Nació después de romper el build dos veces en la misma semana.
 
 ---
 
@@ -215,7 +215,7 @@ Before triggering a CI build:
 that looks like real regressions but isn't.
 ```
 
-Nació de 90 minutos triagueando flakes que no existían.
+Nació después de 90 minutos cazando flakes fantasma.
 
 ---
 
@@ -235,9 +235,10 @@ Nació de 90 minutos triagueando flakes que no existían.
 }
 ```
 
-Triggers disponibles: `PreToolUse`, `PostToolUse`, `Stop`, etc.
+Se engancha a momentos del ciclo: antes (`PreToolUse`) y después
+(`PostToolUse`) de cada tool, cierre de sesión (`Stop`), entre otros.
 
-**Lo ejecuta la harness, no el modelo** — es determinista.
+**No depende del modelo:** lo dispara el runtime de Claude Code y siempre se ejecuta.
 
 ---
 
