@@ -33,12 +33,15 @@ Edgardo Crovetto · 2026
 
 # ¿Quién soy?
 
-- QA / STE en una plataforma de streaming
-- 10+ años trabajando con tests automatizados
+- QA automation engineer en una plataforma de streaming · 🇺🇾 Uruguay
+- 10+ años trabajando con tests automatizados, CI/CD y pipelines
 - Java y TypeScript en el día a día
+- Admin de la comunidad **Under Test** (testing & automation)
 - Convertido a "agentes" cuando descubrí que **el setup se podía versionar**
 
 > Esta charla no es sobre features. Es sobre **un patrón**.
+
+`linkedin.com/in/edgardocrovetto`
 
 ---
 
