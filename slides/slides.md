@@ -37,7 +37,7 @@ Edgardo Crovetto · 2026
 
 Java + TypeScript · tests automatizados · CI/CD · pipelines
 
-**Lo mío es mejorar procesos — encontrar lo que se repite y darle estructura.**
+**Me gusta mejorar procesos — sobre todo los que ya estaban funcionando.**
 
 > Esta charla no es sobre features. Es sobre **un patrón**.
 
