@@ -53,6 +53,28 @@ Spoiler: sí, podés.
 
 ---
 
+# El día a día — el contexto
+
+Antes de meter agentes, esto ya está montado en el equipo:
+
+**Planning**
+- Tickets en **Notion / Jira** → asignados al sprint para validar y
+  automatizar una feature
+
+**Código**
+- Framework de automation en el **repo de código**
+- **Build + deploy** automático a ambientes de prueba
+- **CI/CD (Jenkins)** corre tests automatizados + regression
+
+**Calidad del PR**
+- Coding standards para el código de automation · **checkstyle** en el build
+- Mínimo **2 reviewers** por PR · evidencia de ejecución de CI/CD pegada
+- Branch name con el ticket: `DEMO-100-add-channels-coverage`
+
+> Claude no reemplaza estos rieles. **Se mueve sobre ellos — más rápido.**
+
+---
+
 # Tu día como QA, hoy
 
 - Llega un ticket → abrís 4 pestañas para entender el contexto
