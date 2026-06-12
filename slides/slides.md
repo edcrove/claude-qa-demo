@@ -6,12 +6,13 @@ paginate: true
 backgroundColor: "#1a1d24"
 color: "#e8e8e8"
 style: |
-  section { font-family: 'Inter', 'Helvetica Neue', sans-serif; }
-  h1 { color: #d97757; }
-  h2 { color: #c8c8c8; font-weight: 400; }
-  code { background: #2d3139; color: #e8a373; padding: 2px 6px; border-radius: 3px; }
-  pre { background: #11141a; border-left: 3px solid #d97757; }
-  pre code { background: transparent; color: #d4d4d4; }
+  section { font-family: 'Inter', 'Helvetica Neue', sans-serif; padding: 50px 60px; font-size: 26px; }
+  section h1 { color: #d97757; font-size: 1.6em; margin-top: 0; }
+  section h2 { color: #c8c8c8; font-weight: 400; font-size: 1.2em; }
+  section p, section li { font-size: 0.95em; line-height: 1.5; }
+  code { background: #2d3139; color: #e8a373; padding: 2px 6px; border-radius: 3px; font-size: 0.85em; }
+  pre { background: #11141a; border-left: 3px solid #d97757; padding: 12px 16px; margin: 8px 0; }
+  pre code { background: transparent; color: #d4d4d4; font-size: 0.62em; line-height: 1.35; padding: 0; }
   table { border-collapse: collapse; }
   table th { background: #2d3139; color: #d97757; }
   table td, table th { border: 1px solid #3a3f4a; padding: 8px 12px; }
@@ -77,7 +78,7 @@ Spoiler: sí, podés.
 ~/.claude/CLAUDE.md          ← preferencias globales (tu identidad)
 └── proyecto/CLAUDE.md       ← convenciones del repo
     ├── .claude/skills/      ← workflows invocables
-    ├── .cursor/rules/       ← guardrails siempre cargados
+    ├── .claude/rules/       ← guardrails siempre cargados
     ├── memory/              ← hechos entre sesiones
     └── .claude/settings.json ← hooks automáticos
 ```
@@ -480,7 +481,7 @@ semana 7   ← memory stage-flakes heuristic
 
 **Lo que destilás:**
 - Skills propios → `.claude/skills/`
-- Rules → `.cursor/rules/`
+- Rules → `.claude/rules/`
 - Hooks → `.claude/settings.json`
 - Memory → `memory/`
 

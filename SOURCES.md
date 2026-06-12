@@ -21,7 +21,7 @@ All under `.claude/skills/`. Adapt freely:
 
 ## Rules authored for this demo
 
-All under `.cursor/rules/`. These are read by both Cursor and Claude Code:
+All under `.claude/rules/`. These are also readable by Cursor (which scans `.mdc` files):
 
 - `english-only.mdc`
 - `no-parallel-ci.mdc`

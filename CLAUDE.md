@@ -7,9 +7,9 @@ Every artifact here is plain text on disk. Read, fork, copy what works.
 
 ## Workspace rules
 
-@.cursor/rules/english-only.mdc
-@.cursor/rules/no-parallel-ci.mdc
-@.cursor/rules/status-format.mdc
+@.claude/rules/english-only.mdc
+@.claude/rules/no-parallel-ci.mdc
+@.claude/rules/status-format.mdc
 
 ## Skills
 

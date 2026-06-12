@@ -11,7 +11,7 @@ Everything here is plain text on disk. Clone it, read it, copy what works.
 |------|---------|
 | `CLAUDE.md` | Project conventions Claude loads at session start |
 | `.claude/skills/` | 5 invocable workflows |
-| `.cursor/rules/` | 3 always-on guardrails |
+| `.claude/rules/` | 3 always-on guardrails |
 | `.claude/settings.json` | 1 PostToolUse hook |
 | `memory/` | Sample cross-session memory |
 | `mocks/` | Offline Jira / Jenkins / GitHub fixtures |
@@ -20,7 +20,7 @@ Everything here is plain text on disk. Clone it, read it, copy what works.
 | `evolution-timeline.md` | How this repo grew week by week |
 | `SOURCES.md` | Where to download the pre-existing pieces |
 | `scripts/` | `check-leaks.sh` and `prep-demo.sh` |
-| `slides/` | Marp deck (3 slides) |
+| `slides/` | Marp deck (~30 slides, ~30 min talk) |
 
 ## Running the demo app
 
