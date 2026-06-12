@@ -404,7 +404,7 @@ PR sembrada con 5 bugs distintos (`mocks/github/pr-7.diff`):
 ## Review summary
 
 **Blockers:** silent-failure-hunter found 1
-**Suggestions:** type-design-analyzer found 1, comment-analyzer found 1
+**Suggestions:** type-design-analyzer found 1, comment-analyzer found 1, pr-test-analyzer found 1
 **Nitpicks:** code-reviewer found 1
 
 <details><summary>Per-axis details</summary>
@@ -418,7 +418,7 @@ PR sembrada con 5 bugs distintos (`mocks/github/pr-7.diff`):
 
 # Demo 5 — Triage de fallas de CI
 
-**Input:** `mocks/jenkins/build-42.json` — 30 tests rojos.
+**Input:** `mocks/jenkins/build-42.json` — 5 tests fallidos (2 regresiones, 2 flakes, 1 infra).
 
 **Skill invocada:** `ci-failure-triage`
 
