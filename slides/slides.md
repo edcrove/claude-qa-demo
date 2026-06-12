@@ -53,30 +53,28 @@ Spoiler: sí, podés.
 
 ---
 
-# El día a día — el contexto
+# Mi setup antes de IA
 
-Antes de meter agentes, esto ya está montado en el equipo:
+Plataforma de streaming · 15+ años de tests automatizados
 
-**Planning**
-- Tickets en **Notion / Jira** → asignados al sprint para validar y
-  automatizar una feature
+**Framework:** Java + TestNG + RestAssured (backend) + Allure reports
 
-**Código**
-- Framework de automation en el **repo de código**
-- **Build + deploy** automático a ambientes de prueba
-- **CI/CD (Jenkins)** corre tests automatizados + regression
+**Pipeline diario:**
 
-**Test management**
-- **TestRail** como sistema de test cases — cada prueba automatizada
-  linkeada al ID del caso
-- CI/CD crea y reporta **test runs** con la versión del build, por proyecto
+```
+Jira ticket (changes + AC)  →  análisis del cambio
+                            →  generar tests / automation
+                            ↓
+TestRail mapea automation ↔ casos ↔ coverage
+                            ↓
+Jenkins corre build + regression
+                            ↓
+PR con review de 2 peers · checkstyle automático
+                            ↓
+Análisis local + Jenkins  →  bugs en Jira  →  follow-up del ciclo
+```
 
-**Calidad del PR**
-- Coding standards para el código de automation · **checkstyle** en el build
-- Mínimo **2 reviewers** por PR · evidencia de ejecución de CI/CD pegada
-- Branch name con el ticket: `DEMO-100-add-channels-coverage`
-
-> Claude no reemplaza estos rieles. **Se mueve sobre ellos — más rápido.**
+> Funcionaba. Pero todo el contexto de cada ticket vivía **en mi cabeza**.
 
 ---
 
@@ -101,9 +99,26 @@ Antes de meter agentes, esto ya está montado en el equipo:
 
 # La tesis
 
-# Tu setup de Claude no se diseña.
+# Mi setup no se diseñó.
 
-# Se cultiva.
+# Se cultivó.
+
+---
+
+# Cuando empezó la IA: dos pasos
+
+**1. Conectar Claude al repo del trabajo**
+- `CLAUDE.md` inicial: 5 líneas
+- Lo demás vino con el tiempo
+
+**2. Agregar MCPs, uno a uno**
+- 🎫 **Jira** — leer tickets, comentar, transicionar estados
+- ✅ **TestRail** — leer/escribir test cases · asociar runs a builds
+- 🏗️ **Jenkins** — triggerear builds · leer resultados de regression
+- 📄 **Confluence** — leer acceptance criteria, specs, decisiones
+
+A partir de ahí: **prompts del día a día**.
+No hubo plan. Aparecieron patrones.
 
 ---
 
@@ -119,6 +134,38 @@ Antes de meter agentes, esto ya está montado en el equipo:
 ```
 
 Todo es **texto plano en disco**. Versionado. Reviewable.
+
+---
+
+# MCPs — los puentes a sistemas externos
+
+Memory, skills, rules y hooks viven en tu repo.
+El trabajo real cruza varios sistemas. Los MCPs los conectan.
+
+| MCP | Para qué lo uso |
+|-----|-----------------|
+| 🎫 **Jira** | Leer ticket + AC, comentar, transicionar el estado |
+| ✅ **TestRail** | Leer/escribir test cases, asociar runs a builds |
+| 🏗️ **Jenkins** | Triggerear builds, leer resultados, descargar logs |
+| 📄 **Confluence** | Leer specs y acceptance criteria |
+
+Una sola conversación con Claude puede pasar por los **4**.
+
+---
+
+# Los workflows que emergieron
+
+De pedir cosas día a día — sin diseñarlo:
+
+- **Docs vs código** — diff entre Confluence y lo implementado
+- **AC vs branch** — diff entre Acceptance Criteria y el branch real
+- **Generar test cases** — propuestas desde los AC + el código
+- **Automatizar casos** — TestNG/RestAssured a partir del caso
+- **Multi-env Jenkins** — correr la suite contra distintos ambientes
+- **PR estructurado** — armar el PR con la evidencia que el peer espera
+- **Revisión pre-peer** — los agentes hacen el primer pase
+
+Cada uno se promovió a skill cuando se repitió **3+ veces**.
 
 ---
 
@@ -356,7 +403,9 @@ Un agente subordinado con su **propio contexto** y **sus propias tools**.
               └──────────────┘
 ```
 
-El principal no carga 5× los tokens. Solo el agregado.
+**Antes de que un peer humano vea el PR, ya pasó por 5 revisores especializados.**
+El peer review queda libre para arquitectura — no para tipos básicos o
+`catch` que tragan errores. *(Mis compañeros aplaudieron esto.)*
 
 ---
 
@@ -396,6 +445,9 @@ El principal no carga 5× los tokens. Solo el agregado.
 
 6 escenas. Repo `claude-qa-demo`. Todo offline.
 
+*El demo está en TypeScript para que entre en pantalla y compile rápido.
+El patrón es **idéntico** en Java/TestNG/RestAssured.*
+
 ---
 
 # Demo 1 — Ticket → plan de cobertura
@@ -418,6 +470,8 @@ El principal no carga 5× los tokens. Solo el agregado.
 
 # Demo 2 — TDD asistido
 
+> *↩ Resuelve: saltar el "red" y aterrizar directo en código sin test que lo respalde.*
+
 **Prompt:**
 > *"Implementá `getChannelBySlug` con TDD."*
 
@@ -434,6 +488,8 @@ El skill **fuerza** el orden. No te deja saltar el red.
 ---
 
 # Demo 3 — Gate local antes de CI
+
+> *↩ Resuelve: triggerear Jenkins con un typo y esperar 10 min para enterarte.*
 
 **Prompt:**
 > *"Triggeá un build de Jenkins para esta branch."*
@@ -521,23 +577,23 @@ que la inspiró también. **Nada se re-explica.**
 
 ---
 
-# La línea de tiempo del repo
+# Mi línea de tiempo real
 
 ```
-semana 1   CLAUDE.md inicial (5 líneas)
-semana 1   ← skill local-build-gate (después de romper CI 2 veces)
-semana 2   ← rule no-parallel-ci (después de 90 min de triage falso)
-semana 2   ← rule english-only
-semana 3   ← skill ci-failure-triage
-semana 3   ← skill known-issues-registry-update
-semana 4   ← plugin pr-review-toolkit (descargado)
-semana 4   ← skill multi-agent-pr-review (wrapper)
-semana 5   ← hook typecheck-after-edit (promoción completa)
-semana 6   ← skill ticket-coverage-gap-analysis
-semana 7   ← memory stage-flakes heuristic
+mes 1   CLAUDE.md inicial + Claude conectado al repo
+mes 1   ← MCPs: Jira, TestRail, Jenkins, Confluence
+mes 1   ← Skill: ticket-coverage-gap-analysis (de 4 pestañas a 1 prompt)
+mes 2   ← Skill: AC-vs-branch-diff (después de mergear sin validar un AC)
+mes 2   ← Rule: no-parallel-ci (90 min cazando flakes fantasma)
+mes 3   ← Plugin pr-review-toolkit + skill multi-agent-pr-review
+mes 3   ← Skill: pre-peer-review (compañeros aplaudieron)
+mes 4   ← Hook: typecheck-after-edit (memory + rule no alcanzaban)
+mes 5   ← Skill: ci-failure-triage
+mes 6   ← Memory updates con feedback de compañeros (loop abierto)
+ahora   ← El setup vive en git. Los compañeros lo PR-ean también.
 ```
 
-**Nada se diseñó. Todo respondió a un dolor concreto.**
+**Nada se planificó. Cada pieza respondió a un dolor concreto.**
 
 ---
 
