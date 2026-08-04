@@ -17,7 +17,7 @@ Everything here is plain text on disk. Clone it, read it, copy what works.
 | `mocks/` | Offline Jira / Jenkins / GitHub fixtures |
 | `skill-templates/` | Pegable templates for your own skills/rules/hooks |
 | `demo-app/` | Minimal TypeScript API used in TDD and PR scenes |
-| `docs/` | Talk design + decision log — the real why behind every artifact |
+| `docs/` | STATUS (continuation anchor), talk design, decision log, live runbook |
 | `evolution-timeline.md` | How this repo grew week by week (the demo fiction) |
 | `SOURCES.md` | Where to download the pre-existing pieces |
 | `scripts/` | `check-leaks.sh`, `prep-demo.sh`, `demo-profile.sh` |

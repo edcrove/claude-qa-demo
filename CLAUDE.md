@@ -5,6 +5,15 @@ Public demo repo for the meetup talk
 
 Every artifact here is plain text on disk. Read, fork, copy what works.
 
+## Continuity
+
+Working on the talk itself (not just the demo app)? Read `docs/STATUS.md`
+first — it is the continuation anchor: current state, environment gotchas
+(iCloud eviction, gh accounts, stage isolation), pending decisions, next
+steps. Then `docs/talk-design.md` (design + narrative devices),
+`docs/decision-log.md` (real history), `docs/runbook.md` (live demo script).
+Update `docs/STATUS.md` at the end of every working session.
+
 ## Workspace rules
 
 @.claude/rules/english-only.mdc
