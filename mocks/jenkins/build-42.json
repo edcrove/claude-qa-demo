@@ -4,38 +4,46 @@
   "env": "stage",
   "result": "UNSTABLE",
   "timestamp": "2026-05-13T22:14:00Z",
+  "branch": "feature/DEMO-100-channels-coverage",
   "passed": 280,
   "failed": 5,
   "skipped": 2,
+  "commits": [
+    {
+      "sha": "a1b2c3d",
+      "message": "feat: derive channel genre from the catalog service",
+      "files": ["src/main/java/com/acme/channels/ChannelsService.java"]
+    },
+    {
+      "sha": "e4f5a6b",
+      "message": "chore: lower items cache ttl to 30s",
+      "files": ["src/main/java/com/acme/items/ItemsCache.java"]
+    }
+  ],
   "failures": [
     {
       "test": "ChannelsApiTest.getChannelBySlug_returnsKnownChannel",
       "message": "AssertionError: expected genre 'news' but got 'sports'",
-      "category_hint": "regression",
       "stack": "at ChannelsApiTest.java:42"
     },
     {
       "test": "ChannelsApiTest.list_returnsAllChannels",
       "message": "TimeoutException: read timed out after 5000ms",
-      "category_hint": "flake",
       "stack": "at HttpClient.java:118"
     },
     {
       "test": "ChannelsApiTest.list_paginates",
       "message": "TimeoutException: read timed out after 5000ms",
-      "category_hint": "flake",
       "stack": "at HttpClient.java:118"
     },
     {
       "test": "AuthSmokeTest.loginWithDemoUser",
       "message": "ConnectException: Connection refused to auth.demo.local:8443",
-      "category_hint": "infra",
       "stack": "at AuthClient.java:25"
     },
     {
       "test": "ItemsApiTest.getById_caches",
       "message": "AssertionError: expected cache hit but request reached origin",
-      "category_hint": "regression",
       "stack": "at ItemsApiTest.java:88"
     }
   ]
