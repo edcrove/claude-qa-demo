@@ -17,7 +17,8 @@ Everything here is plain text on disk. Clone it, read it, copy what works.
 | `mocks/` | Offline Jira / Jenkins / GitHub fixtures |
 | `skill-templates/` | Pegable templates for your own skills/rules/hooks |
 | `demo-app/` | Minimal TypeScript API used in TDD and PR scenes |
-| `evolution-timeline.md` | How this repo grew week by week |
+| `docs/` | Talk design + decision log — the real why behind every artifact |
+| `evolution-timeline.md` | How this repo grew week by week (the demo fiction) |
 | `SOURCES.md` | Where to download the pre-existing pieces |
 | `scripts/` | `check-leaks.sh`, `prep-demo.sh`, `demo-profile.sh` |
 | `slides/` | Marp deck (32-slide main flow + anatomy appendix + Q&A backup) |
@@ -66,4 +67,4 @@ Cultivate, don't design. See `evolution-timeline.md`.
 
 ## License
 
-MIT — see `LICENSE` (add one if missing before pushing publicly).
+MIT — see `LICENSE`.
