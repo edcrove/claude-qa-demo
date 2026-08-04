@@ -2,11 +2,11 @@
   "hooks": {
     "PostToolUse": [
       {
-        "matcher": "Edit",
+        "matcher": "Edit|Write|MultiEdit",
         "hooks": [
           {
             "type": "command",
-            "command": "if [[ \"$CLAUDE_TOOL_FILE_PATH\" == *.ts ]]; then cd demo-app && npm run typecheck 2>&1 | tail -10; fi"
+            "command": "f=$(jq -r '.tool_input.file_path // empty'); case \"$f\" in \"$CLAUDE_PROJECT_DIR\"/*.ts) cd \"$CLAUDE_PROJECT_DIR/demo-app\" && npm run typecheck 2>&1 | tail -10;; esac"
           }
         ]
       }
