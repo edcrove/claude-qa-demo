@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
-# Reset the repo to a clean state for the next rehearsal.
+# Reset the repo to a clean state for the next rehearsal, then assert that every
+# scene still has something left to do.
 #
-# - Drops any working changes in the demo-app
-# - Clears memory entries created during the rehearsal (keeps seeds)
+# - Drops working changes and rehearsal leftovers (tracked and untracked)
 # - Reinstalls demo-app deps
+# - Verifies the initial state each demo depends on
+# - Runs the leak check
 
 set -euo pipefail
 
@@ -12,16 +14,45 @@ cd "$ROOT"
 
 echo "→ Resetting working tree..."
 git restore .
-git clean -fd demo-app/dist demo-app/coverage 2>/dev/null || true
-
-echo "→ Restoring seed memory only..."
-# Anything in memory/ not tracked by git was created during a rehearsal — remove it.
-if [[ -d memory ]]; then
-  git -C memory clean -fd
-fi
+# Untracked leftovers from a rehearsal (new skills, new memory entries, new tests).
+# node_modules and other ignored paths are left alone: no -x.
+git clean -fdq
 
 echo "→ Reinstalling demo-app deps..."
 (cd demo-app && npm install --silent)
+
+echo "→ Verifying demo state..."
+fail=0
+check() { # check <description> <0-or-1 result>
+  if [[ "$2" -eq 0 ]]; then
+    echo "   ✅ $1"
+  else
+    echo "   ❌ $1"
+    fail=1
+  fi
+}
+
+# Demo 2 needs a real red test: getChannelBySlug must exist and must NOT yet
+# validate the slug format, or there is nothing left to TDD on stage.
+grep -q 'export function getChannelBySlug' demo-app/src/api.ts && r=0 || r=1
+check "Demo 2 — getChannelBySlug exists" "$r"
+grep -qE 'isValidSlug|InvalidSlug|\[a-z0-9' demo-app/src/api.ts && r=1 || r=0
+check "Demo 2 — slug validation still missing (the gap DEMO-100 asks for)" "$r"
+
+# Demo 5 needs the registry to match against, and no giveaway hints in the mock.
+[[ -f memory/known-issues.md ]] && r=0 || r=1
+check "Demo 5 — known-issues registry present" "$r"
+grep -q 'category_hint' mocks/jenkins/build-42.json && r=1 || r=0
+check "Demo 5 — build mock has no category hints" "$r"
+
+# The typecheck hook parses its stdin JSON with jq.
+command -v jq >/dev/null 2>&1 && r=0 || r=1
+check "Hook — jq available on PATH" "$r"
+
+if [[ "$fail" -ne 0 ]]; then
+  echo "⚠️  Demo state is not rehearsal-ready — fix the ❌ above."
+  exit 1
+fi
 
 echo "→ Running leak check..."
 ./scripts/check-leaks.sh

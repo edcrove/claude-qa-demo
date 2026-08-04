@@ -9,3 +9,4 @@ coverage/
 slides/*.html
 slides/*.pdf
 slides/*.pptx
+.demo-profile/
