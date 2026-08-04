@@ -31,6 +31,22 @@ Edgardo Crovetto · 2026
 
 ---
 
+<!-- _class: lead -->
+
+# Una noche perdí 90 minutos
+
+## triageando regresiones que no existían
+
+Dos builds en paralelo compartían credenciales.
+Todo rojo. Nada roto.
+
+**Hoy eso no puede pasarme — no porque me acuerde:
+porque mi setup se acuerda por mí.**
+
+Esta charla es la historia de cómo llegué ahí.
+
+---
+
 # Quién soy
 
 **Edgardo Crovetto** · QA automation engineer
@@ -196,18 +212,22 @@ Cada uno se promovió a skill cuando se repitió **3+ veces**.
 
 ---
 
-# Las 4 piezas — y de dónde salió cada una
+# Las 4 piezas — una sola historia
 
-| Pieza | Qué es | Nació de |
+**El typecheck que me olvidaba después de cada rebase:**
+
+| | Pieza | El mismo olvido, subiendo la pirámide |
 |---|---|---|
-| **Memory** | hecho recordado entre sesiones | olvidarme el `typecheck` post-rebase un lunes |
-| **Skill** | procedimiento invocable bajo demanda | romper el build dos veces en la misma semana |
-| **Rule** | guardrail siempre cargado | 90 minutos cazando flakes fantasma |
-| **Hook** | comando que dispara la harness, sin pasar por el modelo | olvidarme el `typecheck` 5 veces más — **teniendo** memory y rule |
+| 1 | **Prompt** | *"acordate del typecheck antes de CI"* — tipeado una y otra vez |
+| 2 | **Memory** | `feedback-local-build-before-ci` — y me lo olvidé igual |
+| 3 | **Skill** | `local-build-gate` — ahora lo corre Claude por mí |
+| 4 | **Hook** | typecheck en cada edit — 5 olvidos después, **ya no depende de nadie** |
+
+La **Rule** tiene su propia cicatriz: `no-parallel-ci` — los 90 minutos del principio.
 
 Markdown y JSON en el repo. Anatomía y ejemplos completos: **apéndice**.
 
-> Ninguna se diseñó. Cada una cerró un agujero que ya me había costado tiempo.
+> Ninguna pieza se diseñó. Cada una fue admitir que acordarse no escala.
 
 ---
 
@@ -285,14 +305,14 @@ El peer review queda libre para arquitectura — no para tipos básicos o
 
 ## Un día de QA, del ticket al merge
 
-6 escenas. Repo `claude-qa-demo`. Todo offline.
+6 escenas · 9:00 → 18:00 · repo `claude-qa-demo` · todo offline
 
 *El demo está en TypeScript para que entre en pantalla y compile rápido.
 El patrón es **idéntico** en Java/TestNG/RestAssured.*
 
 ---
 
-# Demo 1 — Ticket → plan de cobertura
+# Demo 1 · 9:00 — Ticket → plan de cobertura
 
 > *↩ Resuelve: las 4 pestañas para entender el contexto.*
 
@@ -308,9 +328,11 @@ El patrón es **idéntico** en Java/TestNG/RestAssured.*
 - Gaps identificados (✅ / ⚠️ / ❌)
 - TodoWrite con casos propuestos + estimación
 
+*El plan queda con un ❌: slug malformado sin cubrir. →*
+
 ---
 
-# Demo 2 — TDD asistido
+# Demo 2 · 10:00 — TDD asistido
 
 > *↩ Resuelve: saltar el "red" y aterrizar directo en código sin test que lo respalde.*
 
@@ -329,26 +351,30 @@ Hoy `getChannelBySlug('News Channel!')` devuelve `null`, como si no existiera.
 
 El skill **fuerza** el orden. No te deja saltar el red.
 
+*Gap cerrado, tests verdes. Ahora quiero correr esto en CI. →*
+
 ---
 
-# Demo 3 — Gate local antes de CI
+# Demo 3 · 11:30 — Gate local antes de CI
 
 > *↩ Resuelve: triggerear Jenkins con un typo y esperar 10 min para enterarte.*
 
 **Prompt:**
 > *"Triggeá un build de Jenkins para esta branch."*
 
-Antes de hacer nada, Claude consulta:
-1. La rule `no-parallel-ci.mdc` → ¿hay otro corriendo?
-2. La skill `local-build-gate` → ¿pasa el typecheck local?
+Lo que pasa en vivo:
+1. `local-build-gate` → typecheck + tests locales ✅
+2. `no-parallel-ci.mdc` → **build 43 ya está corriendo en stage** (`build-43-running.json`)
+3. Claude **se niega a triggerear**: esperar ~12 min o cambiar de env
 
-Solo si ambos OK, propone triggerar.
+**El guardrail no me cuida a mí del agente — nos cuida a los dos del incidente.**
+Los 90 minutos del principio, exactamente.
 
-**Mensaje:** rules y skills se **componen**.
+*Build 43 termina, corre el mío, abro la PR. →*
 
 ---
 
-# Demo 4 (1/2) — Multi-agent PR review ⭐
+# Demo 4 (1/2) · 14:00 — Multi-agent PR review ⭐
 
 > *↩ Resuelve: repetir los mismos comentarios review tras review.*
 
@@ -379,14 +405,17 @@ PR sembrada con 5 bugs distintos (`mocks/github/pr-7.diff`):
 
 5× paralelo, contexto aislado, 1 comentario al final.
 
+*Review adentro. Antes del merge, la regression completa en Jenkins. →*
+
 ---
 
-# Demo 5 — Triage de fallas de CI
+# Demo 5 · 17:00 — Triage de fallas de CI
 
 > *↩ Resuelve: triagear tests rojos a mano contra known-issues.*
 
 **Input:** `mocks/jenkins/build-42.json` — 5 rojos **sin etiquetar**: nombre,
-mensaje, stack y los commits del branch. Nada más.
+mensaje, stack y los commits. Y es **la misma branch de hoy**:
+`feature/DEMO-100-channels-coverage`.
 
 **Skill invocada:** `ci-failure-triage` + registry `memory/known-issues.md`
 
@@ -398,9 +427,11 @@ mensaje, stack y los commits del branch. Nada más.
 
 **La categoría se deduce de la evidencia — no viene dada en el JSON.**
 
+*Triage hecho. Pero hoy, tres veces, me corregiste lo mismo... →*
+
 ---
 
-# Demo 6 — De prompt repetido a skill 🪄
+# Demo 6 · 18:00 — De prompt repetido a skill 🪄
 
 > *↩ Resuelve: re-explicar el ticket, el plan, las convenciones en una sesión nueva.*
 
@@ -415,8 +446,11 @@ Durante la sesión, Claude fue corregido **3 veces** con
 
 Output: un `SKILL.md` nuevo en `.claude/skills/`.
 
-**Mañana, sesión nueva:** la skill está disponible. La memory
-que la inspiró también. **Nada se re-explica.**
+La slide del principio terminaba:
+*"Mañana — sesión nueva. Re-explicás el ticket, el plan, las convenciones."*
+
+**Mañana — sesión nueva. No se re-explica ni el ticket,
+ni el plan, ni las convenciones.**
 
 **Este es el patrón completo en acción.**
 
@@ -439,6 +473,24 @@ ahora   ← El setup vive en git. Los compañeros lo PR-ean también.
 ```
 
 **Nada se planificó. Cada pieza respondió a un dolor concreto.**
+
+---
+
+# El agente también construye
+
+Cultivar no es solo skills, rules y memory **para** el agente.
+Es lo que el agente construye **con vos**:
+
+- **CI a tu medida** — el pipeline corre con tus reglas, no con las heredadas
+- **Linters / checkstyle** — configurados y explicados, no copiados de un gist
+- **SonarQube y quality gates** — de "algún día" a un PR
+- **Coverage y reportes** — Allure, badges, dashboards
+- **Notificaciones** — el build roto te encuentra a vos, no al revés
+
+Cada una pedía **investigación + skill técnico dedicado**. Hoy es una conversación.
+
+> **No le tengas miedo a lo desconocido: el costo de aprender colapsó.**
+> Cultivás al agente — y el agente madura el proyecto.
 
 ---
 
@@ -471,6 +523,17 @@ Cada nivel:
 - **Más estructura**, **menos ceremonia futura**
 - **Versionable**, **reviewable**, **reusable**
 - **Promociona** desde lo concreto, no desde una reunión
+
+---
+
+<!-- _class: lead -->
+
+## La pregunta del principio
+
+# ¿Puedo automatizar mi proceso de QA con IA?
+
+**Sí — lo acabás de ver.**
+**¿Se diseñó? No. Se cultivó.**
 
 ---
 
@@ -689,3 +752,39 @@ El path sale del JSON de stdin con `jq` — no de una variable de entorno.
 
 Nació después de olvidarme el `typecheck` 5 veces seguidas — **teniendo
 la memory y la rule**. El hook fue el final del camino.
+
+---
+
+<!-- _class: lead -->
+
+# Backup — Q&A
+
+## Respuestas que suelen hacer falta
+
+---
+
+# ¿Y los costos en tokens?
+
+- El día a día corre en un modelo mid-tier; el multi-agent review es el único paso caro
+- 5 subagentes = 5 contextos aislados — pagás tokens para **no** pagar contexto contaminado
+- El costo contra el que se compara: 10 min de CI roto · 90 min de flakes
+  fantasma · un review que espera 2 días
+- Memory, rules y hooks cuestan ~0: texto plano en el contexto que ya pagás
+
+---
+
+# ¿Qué pasa cuando cambia el modelo?
+
+- Los **prompts** afinados a un modelo a veces mueren con él
+- **Skills, rules y memory sobreviven** — describen tu proceso, no al modelo
+- El **hook** ni siquiera pasa por el modelo: lo ejecuta el runtime
+- Por eso la pirámide promociona hacia arriba: **cada nivel es más robusto al cambio**
+
+---
+
+# ¿Funciona offline? ¿Sirve en mi stack?
+
+- Este demo corre **100% offline**: mocks JSON en disco, cero credenciales
+- Solo los **MCPs** reales (Jira, Jenkins, TestRail) necesitan red
+- El patrón no sabe de lenguajes: idéntico en **Java/TestNG/RestAssured**
+- Todo es texto plano: clonalo y reemplazá los mocks por tus sistemas
