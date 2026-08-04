@@ -21,6 +21,16 @@ git clean -fdq
 echo "→ Reinstalling demo-app deps..."
 (cd demo-app && npm install --silent)
 
+# iCloud Drive can evict node_modules into "dataless" placeholders (4-15s per
+# cold read — typecheck appears to hang at 0% CPU). npm install over an existing
+# tree does NOT rematerialize them; a fresh install writes local files and does.
+dataless=$(find demo-app/node_modules -type f -exec ls -lO {} + 2>/dev/null | grep -c dataless || true)
+if [[ "$dataless" -gt 0 ]]; then
+  echo "→ $dataless files evicted by iCloud — reinstalling node_modules from scratch..."
+  rm -rf demo-app/node_modules
+  (cd demo-app && npm install --silent)
+fi
+
 echo "→ Verifying demo state..."
 fail=0
 check() { # check <description> <0-or-1 result>
@@ -38,6 +48,11 @@ grep -q 'export function getChannelBySlug' demo-app/src/api.ts && r=0 || r=1
 check "Demo 2 — getChannelBySlug exists" "$r"
 grep -qE 'isValidSlug|InvalidSlug|\[a-z0-9' demo-app/src/api.ts && r=1 || r=0
 check "Demo 2 — slug validation still missing (the gap DEMO-100 asks for)" "$r"
+
+# Demo 3 needs a build already RUNNING on stage so no-parallel-ci has something
+# to block live.
+jq -e 'select(.status == "RUNNING" and .env == "stage")' mocks/jenkins/build-43-running.json >/dev/null 2>&1 && r=0 || r=1
+check "Demo 3 — build 43 RUNNING on stage (the rule has something to block)" "$r"
 
 # Demo 5 needs the registry to match against, and no giveaway hints in the mock.
 [[ -f memory/known-issues.md ]] && r=0 || r=1

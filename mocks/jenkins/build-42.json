@@ -3,7 +3,7 @@
   "job": "demo-api-regression",
   "env": "stage",
   "result": "UNSTABLE",
-  "timestamp": "2026-05-13T22:14:00Z",
+  "timestamp": "2026-05-14T19:47:00Z",
   "branch": "feature/DEMO-100-channels-coverage",
   "passed": 280,
   "failed": 5,
