@@ -23,8 +23,9 @@ Keep this file updated at the end of every working session.
 
 | Fact | Detail |
 |------|--------|
-| Remote | `git@github.com-personal:edcrove/claude-qa-demo.git` — the `github.com-personal` SSH alias is **required**: the default SSH key authenticates as the work account, which has no access to this repo ("Repository not found") |
-| gh CLI | Two accounts configured; the work one is usually active. Run `gh auth switch -u edcrove` before any `gh` operation on this repo |
+| Remote & push | `https://github.com/edcrove/claude-qa-demo.git` with two **repo-local** git configs (set 2026-08-04): a same-prefix `url.insteadOf` that defeats the global `~/.gitconfig` rule rewriting every GitHub HTTPS URL to SSH, and `credential.helper = !gh auth git-credential`. Pushing requires the personal account active in gh: `gh auth switch -u edcrove` |
+| Why not SSH | Three stacked traps: (1) the global gitconfig rewrites HTTPS→SSH, (2) `~/.ssh/config` has `Host *` **before** the `github.com-personal` alias, so the work key is always offered first and GitHub authenticates as the work account, (3) the personal key on this machine is **not registered** on the GitHub account — the account's "Mac m1" key is a different key. To use SSH: register `~/.ssh/id_ed25519.pub` on the account and move `Host *` below the specific hosts |
+| gh CLI | Two accounts configured. Run `gh auth switch -u edcrove` before any `gh` operation on this repo |
 | iCloud eviction | The repo lives under `~/Documents` (iCloud-managed). `node_modules` files get evicted to `compressed,dataless` placeholders → typecheck/tests hang for minutes at 0% CPU. `prep-demo.sh` auto-detects and reinstalls. Details + measurements: decision-log §7 |
 | Stage isolation | Never present from the day-to-day config. Launch via `./scripts/demo-profile.sh` (isolated `CLAUDE_CONFIG_DIR`, no global memory, no work MCPs). `check-leaks.sh` cannot see the global config — the profile is the only protection |
 | jq | Required on PATH — the PostToolUse typecheck hook parses its stdin JSON with it |
