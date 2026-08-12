@@ -61,14 +61,19 @@ The deck (see `slides/slides.md`) applies these deliberate storytelling devices:
    reporting, notifications. Things that used to require dedicated research and
    deep tooling skill are now a conversation. Learning tools is part of
    cultivating; don't fear the unknown — the cost of learning collapsed.
-8. **Ownership doesn't cultivate away.** A recurring line, not a standalone
-   slide, planted at 3 points: mechanics (subagent review slide — "quien
-   aprueba sigue siendo responsable de lo que aprueba"), Demo 4's aggregated
-   result ("no sé, lo hizo la IA" no es una respuesta"), and the closing
-   thesis slide ("el criterio, el dominio y la firma siguen siendo tuyos").
-   The baseline the talk demonstrates is delegation of *execution*, never of
-   *accountability* — the audience should leave knowing which is which, not
-   just that more gets automated.
+8. **Ownership doesn't cultivate away.** Planted at 4 points: mechanics
+   (subagent review slide — "quien aprueba sigue siendo responsable de lo que
+   aprueba"), Demo 4's aggregated result ("no sé, lo hizo la IA" no es una
+   respuesta"), a dedicated summary slide **"Qué le toca a la persona"**
+   (agent/person table: execution vs. criterio/revisión/decisión/
+   responsabilidad — right after "El patrón", right before the callback
+   question), and the closing thesis slide ("el criterio, el dominio y la
+   firma siguen siendo tuyos"). The recurring one-liners keep the idea alive
+   scene by scene; the summary slide is where it gets stated plainly enough
+   to survive a quick skim (added 2026-08-12 after the one-liners alone read
+   as too easy to miss). The baseline the talk demonstrates is delegation of
+   *execution*, never of *accountability* — the audience should leave knowing
+   which is which, not just that more gets automated.
 
 ## The one-day arc
 
@@ -83,11 +88,12 @@ The deck (see `slides/slides.md`) applies these deliberate storytelling devices:
 
 ## Slide map
 
-`slides/slides.md` — 45 slides total:
+`slides/slides.md` — 46 slides total:
 
-- **Main flow: 32** (cold open → thesis → mechanics → 6 demos → timeline →
-  "el agente también construye" → sources → pattern → question answered →
-  "3 pasos para el lunes" → close)
+- **Main flow: 33** (cold open → thesis → mechanics → 6 demos → timeline →
+  "el agente también construye" → sources → pattern → **"qué le toca a la
+  persona" (human/agent split summary)** → question answered → "3 pasos para
+  el lunes" → close)
 - **Appendix: 9** — anatomy + real example for memory / skill / rule / hook
   (moved out of the main flow to protect demo time)
 - **Q&A backup: 4** — token costs, model churn (skills survive, prompts don't

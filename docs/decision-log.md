@@ -93,6 +93,14 @@ speaker's. Documented as narrative device #8 in `talk-design.md`. Runbook's
 Demo 4 section updated so the beat is actually performed live (reading the
 aggregated review on stage before posting), not just projected as slide text.
 
+**2026-08-12 (later same day):** author reported the recurring one-liners
+were too easy to miss skimming the deck on a phone, and asked for an
+explicit summary. Added a dedicated slide "Qué le toca a la persona" (agent
+vs. person table — execution/criterio/revisión/decisión/responsabilidad)
+right after "El patrón" and before the closing callback question. Deck is
+now 46 slides (33 main flow, was 32). `talk-design.md` slide map and device
+#8 updated to match.
+
 ### Known open items
 
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file

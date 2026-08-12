@@ -531,6 +531,21 @@ Cada nivel:
 
 ---
 
+# Qué le toca a la persona
+
+| | El agente | Vos |
+|---|---|---|
+| **Ejecución** | Corre el procedimiento, agrega resultados, propone diffs | — |
+| **Criterio** | — | Interpretás un AC ambiguo, decidís qué es "suficiente" |
+| **Revisión** | Hace el primer pase (5 subagentes en paralelo) | Leés el resultado antes de postearlo o mergear |
+| **Decisión** | — | Aprobás, bloqueás, o decidís qué se promueve a skill/rule |
+| **Responsabilidad** | — | Si preguntan por qué, la respuesta sos vos |
+
+**El agente ejecuta. La persona decide, revisa y responde por el resultado —
+eso no se delega. "No sé, lo hizo la IA" no es una respuesta válida.**
+
+---
+
 <!-- _class: lead -->
 
 ## La pregunta del principio
