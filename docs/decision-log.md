@@ -78,6 +78,19 @@ order of impact:
    "3 pasos para el lunes" closing; 3 Q&A backup slides.
 9. **MIT LICENSE added** (the README already declared it).
 
+## 2026-08-12 — Human ownership made explicit in the deck
+
+Author feedback while reviewing slides: the deck showed the automation
+baseline (pattern, 6 demos, subagent review) but never closed the loop on
+what stays human vs what the agent executes — no final statement on decision
+authority. Chose to elevate an existing buried line (`El peer review queda
+libre para arquitectura...`) into a recurring 3-point thread instead of a
+dedicated slide: (1) mechanics slide "Subagentes en paralelo" — approval
+still means responsibility; (2) Demo 4 (2/2) aggregated result — reading the
+output critically before posting, "no sé, lo hizo la IA" is not a valid
+answer; (3) closing thesis slide — criterio, dominio and firma stay the
+speaker's. Documented as narrative device #8 in `talk-design.md`.
+
 ### Known open items
 
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file

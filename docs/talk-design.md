@@ -61,6 +61,14 @@ The deck (see `slides/slides.md`) applies these deliberate storytelling devices:
    reporting, notifications. Things that used to require dedicated research and
    deep tooling skill are now a conversation. Learning tools is part of
    cultivating; don't fear the unknown — the cost of learning collapsed.
+8. **Ownership doesn't cultivate away.** A recurring line, not a standalone
+   slide, planted at 3 points: mechanics (subagent review slide — "quien
+   aprueba sigue siendo responsable de lo que aprueba"), Demo 4's aggregated
+   result ("no sé, lo hizo la IA" no es una respuesta"), and the closing
+   thesis slide ("el criterio, el dominio y la firma siguen siendo tuyos").
+   The baseline the talk demonstrates is delegation of *execution*, never of
+   *accountability* — the audience should leave knowing which is which, not
+   just that more gets automated.
 
 ## The one-day arc
 

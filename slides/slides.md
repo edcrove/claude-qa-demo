@@ -269,6 +269,8 @@ Un agente subordinado con su **propio contexto** y **sus propias tools**.
 El peer review queda libre para arquitectura — no para tipos básicos o
 `catch` que tragan errores. *(Mis compañeros aplaudieron esto.)*
 
+**Lo que no cambia: quien aprueba sigue siendo responsable de lo que aprueba.**
+
 ---
 
 # El flujo end-to-end
@@ -404,6 +406,9 @@ PR sembrada con 5 bugs distintos (`mocks/github/pr-7.diff`):
 ```
 
 5× paralelo, contexto aislado, 1 comentario al final.
+
+**Lo leo entero antes de postearlo. Si alguien pregunta por qué se bloqueó
+el PR, la respuesta soy yo — "no sé, lo hizo la IA" no es una respuesta.**
 
 *Review adentro. Antes del merge, la regression completa en Jenkins. →*
 
@@ -559,6 +564,8 @@ Arrancás con workflows que no tuviste que escribir.
 # Se cultiva.
 
 **Skills + Rules + Memory + Subagentes = workflow reproducible**
+
+**Cultivarlo no te saca del medio: el criterio, el dominio y la firma siguen siendo tuyos.**
 
 ## ¿Preguntas?
 
