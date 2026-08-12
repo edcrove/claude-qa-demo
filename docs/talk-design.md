@@ -88,16 +88,21 @@ The deck (see `slides/slides.md`) applies these deliberate storytelling devices:
 
 ## Slide map
 
-`slides/slides.md` — 46 slides total:
+`slides/slides.md` — 46 slides total (counts verified against Marp's own
+section count, not eyeballed):
 
-- **Main flow: 33** (cold open → thesis → mechanics → 6 demos → timeline →
-  "el agente también construye" → sources → pattern → **"qué le toca a la
-  persona" (human/agent split summary)** → question answered → "3 pasos para
-  el lunes" → close)
+- **Main flow: 32** (cold open → thesis → mechanics → 6 demos → timeline →
+  "el agente también construye" → sources → pattern → "qué le toca a la
+  persona" (human/agent split summary) → question answered → "3 pasos para
+  el lunes" → close). Dropped "Los workflows que emergieron" (2026-08-12,
+  QA-reviewer pass): redundant with "El flujo end-to-end", which already
+  names the same skills as a pipeline diagram right before the demos start.
 - **Appendix: 9** — anatomy + real example for memory / skill / rule / hook
   (moved out of the main flow to protect demo time)
-- **Q&A backup: 4** — token costs, model churn (skills survive, prompts don't
-  always), offline/stack portability
+- **Q&A backup: 5** — token costs, model churn (skills survive, prompts don't
+  always), offline/stack portability, **who audits the CI-triage classifier**
+  (added 2026-08-12 — the most QA-native skeptical question the deck didn't
+  have a prepared answer for)
 
 ## Title candidates
 

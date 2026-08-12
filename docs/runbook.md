@@ -46,7 +46,10 @@ refactor.
 **Watch for:** the PostToolUse hook firing typecheck after each `.ts` edit —
 call it out ("nadie lo invocó, es el runtime"). The red must be genuine: if
 Claude claims the test already passes, something restored state — abort to
-fallback.
+fallback. The skill *guides* the order, it doesn't enforce it: if Claude
+writes the implementation before the failing test, stop it and ask for the
+red first — narrate that as the skill being followed, not enforced (matches
+the slide wording: "el skill guía el orden").
 
 **Fallback:** pre-recorded clip of the red→green cycle.
 

@@ -96,7 +96,7 @@ Análisis local + Jenkins  →  bugs en Jira  →  follow-up del ciclo
 
 # Tu día como QA, hoy
 
-- **Análisis del ticket** — Jira + repo + Confluence (AC) + TestRail · todo el contexto en tu cabeza
+- **Análisis del ticket** — Jira + repo + Confluence (AC) + TestRail · nada de eso queda escrito en un solo lugar
 - **Mapeo AC ↔ cambio** — comparás docs vs branch a ojo, página por página
 - **Test cases + automation** — copiás AC a TestRail, traducís a TestNG/RestAssured, linkeás IDs a mano
 - **Ejecución multi-env** — Jenkins contra 3 ambientes · comparás resultados · investigás cada rojo
@@ -131,10 +131,7 @@ Análisis local + Jenkins  →  bugs en Jira  →  follow-up del ciclo
 - Lo demás vino con el tiempo
 
 **2. Agregar MCPs, uno a uno**
-- 🎫 **Jira** — leer tickets, comentar, transicionar estados
-- ✅ **TestRail** — leer/escribir test cases · asociar runs a builds
-- 🏗️ **Jenkins** — triggerear builds · leer resultados de regression
-- 📄 **Confluence** — leer acceptance criteria, specs, decisiones
+Jira, TestRail, Jenkins, Confluence — el detalle, en la próxima slide.
 
 A partir de ahí: **prompts del día a día**.
 No hubo plan. Aparecieron patrones.
@@ -169,22 +166,6 @@ El trabajo real cruza varios sistemas. Los MCPs los conectan.
 | 📄 **Confluence** | Leer specs y acceptance criteria |
 
 Una sola conversación con Claude puede pasar por los **4**.
-
----
-
-# Los workflows que emergieron
-
-De pedir cosas día a día — sin diseñarlo:
-
-- **Docs vs código** — diff entre Confluence y lo implementado
-- **AC vs branch** — diff entre Acceptance Criteria y el branch real
-- **Generar test cases** — propuestas desde los AC + el código
-- **Automatizar casos** — TestNG/RestAssured a partir del caso
-- **Multi-env Jenkins** — correr la suite contra distintos ambientes
-- **PR estructurado** — armar el PR con la evidencia que el peer espera
-- **Revisión pre-peer** — los agentes hacen el primer pase
-
-Cada uno se promovió a skill cuando se repitió **3+ veces**.
 
 ---
 
@@ -351,7 +332,7 @@ Hoy `getChannelBySlug('News Channel!')` devuelve `null`, como si no existiera.
 2. Validación mínima del formato → **green**
 3. Refactor opcional
 
-El skill **fuerza** el orden. No te deja saltar el red.
+El skill guía el orden — y hoy lo respetó.
 
 *Gap cerrado, tests verdes. Ahora quiero correr esto en CI. →*
 
@@ -487,12 +468,11 @@ Cultivar no es solo skills, rules y memory **para** el agente.
 Es lo que el agente construye **con vos**:
 
 - **CI a tu medida** — el pipeline corre con tus reglas, no con las heredadas
-- **Linters / checkstyle** — configurados y explicados, no copiados de un gist
-- **SonarQube y quality gates** — de "algún día" a un PR
-- **Coverage y reportes** — Allure, badges, dashboards
-- **Notificaciones** — el build roto te encuentra a vos, no al revés
+- **Linters / checkstyle / SonarQube** — configurados y explicados, no copiados de un gist
+- **Coverage y notificaciones** — Allure, dashboards, el build roto te encuentra a vos
 
-Cada una pedía **investigación + skill técnico dedicado**. Hoy es una conversación.
+El hook de typecheck que viste hace rato **es exactamente este patrón** —
+aplicado a un linter o a un quality gate, la conversación es la misma.
 
 > **No le tengas miedo a lo desconocido: el costo de aprender colapsó.**
 > Cultivás al agente — y el agente madura el proyecto.
@@ -542,7 +522,10 @@ Cada nivel:
 | **Responsabilidad** | — | Si preguntan por qué, la respuesta sos vos |
 
 **El agente ejecuta. La persona decide, revisa y responde por el resultado —
-eso no se delega. "No sé, lo hizo la IA" no es una respuesta válida.**
+eso no se delega.**
+
+*Mismo criterio que en la Demo 4: se lee entero antes de postearlo —*
+**"no sé, lo hizo la IA" no es una respuesta válida.**
 
 ---
 
@@ -810,3 +793,16 @@ la memory y la rule**. El hook fue el final del camino.
 - Solo los **MCPs** reales (Jira, Jenkins, TestRail) necesitan red
 - El patrón no sabe de lenguajes: idéntico en **Java/TestNG/RestAssured**
 - Todo es texto plano: clonalo y reemplazá los mocks por tus sistemas
+
+---
+
+# ¿Quién audita al clasificador de CI?
+
+- `ci-failure-triage` no decide a ciegas: la categoría sale de evidencia
+  visible (firma en el registry, stack, commits) — no es una caja negra
+- El registry (`memory/known-issues.md`) lo actualiza una persona, y pide
+  **2+ sightings** — un solo fallo nunca es flake
+- Si la categoría no cierra con evidencia, **regresión real es el default**
+  — el skill sesga hacia flaggear de más, no de menos
+- Igual que en la Demo 4: el agente propone la categoría, vos la confirmás
+  antes de actuar

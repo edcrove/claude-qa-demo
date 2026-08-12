@@ -101,6 +101,47 @@ right after "El patrón" and before the closing callback question. Deck is
 now 46 slides (33 main flow, was 32). `talk-design.md` slide map and device
 #8 updated to match.
 
+## 2026-08-12 (later still) — QA-reviewer pass applied
+
+Dispatched a subagent role-playing an expert QA-conference reviewer against
+the full deck + runbook + decision log. Applied its findings, plus one item
+the author caught independently (MCPs explained near-identically on two
+consecutive slides):
+
+- **Demo 2 wording fixed.** "El skill **fuerza** el orden. No te deja saltar
+  el red" contradicted the deck's own hook-vs-skill distinction (a skill is
+  model-followed, not enforced — only the hook is deterministic). Changed to
+  "El skill guía el orden — y hoy lo respetó." `runbook.md`'s Demo 2 watch-for
+  now tells the speaker to narrate an implementation-before-test moment as
+  "followed, not enforced" if it happens live, instead of treating it as an
+  abort condition.
+- **MCP duplication removed.** "Cuando empezó la IA: dos pasos" repeated the
+  same 4 MCPs with the same one-line descriptions as the very next "MCPs" table
+  slide. Step 2 now names the 4 MCPs in one line and defers detail to the
+  next slide.
+- **Pacing: cut "Los workflows que emergieron."** Redundant with "El flujo
+  end-to-end" (same skills, already shown as a pipeline diagram right before
+  the demos). Pre-Demo-1 slide count drops from 18 to 17. Deeper pacing
+  restructuring (subagent mechanics run two slides before any subagent demo)
+  is still open if a future pass wants to go further.
+- **"El agente también construye" trimmed from 5 bullets to 3** and anchored
+  to something the audience already saw live (the typecheck hook), per the
+  reviewer's read that an unanchored claims-only slide right after 6 verified
+  demos risks reading as hype.
+- **New Q&A backup slide: "¿Quién audita al clasificador de CI?"** — the
+  reviewer flagged this as the one skeptical question a QA audience would
+  ask that had no prepared answer. Ties back to the ownership thread (agent
+  proposes, person confirms).
+- **Callback made explicit.** "Qué le toca a la persona"'s closing line now
+  says "mismo criterio que en la Demo 4" instead of silently repeating the
+  Demo-4 wording near-verbatim.
+- **De-duplicated "todo el contexto en tu cabeza"**, which appeared on two
+  consecutive slides ("Mi setup antes de IA" → "Tu día como QA, hoy").
+
+Deck stays at 46 slides (32 main / 9 appendix / 5 Q&A backup) — counts
+verified against Marp's own section count, not eyeballed, after the last two
+sessions' numbers turned out to be off.
+
 ### Known open items
 
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file
