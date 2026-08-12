@@ -89,7 +89,9 @@ dedicated slide: (1) mechanics slide "Subagentes en paralelo" — approval
 still means responsibility; (2) Demo 4 (2/2) aggregated result — reading the
 output critically before posting, "no sé, lo hizo la IA" is not a valid
 answer; (3) closing thesis slide — criterio, dominio and firma stay the
-speaker's. Documented as narrative device #8 in `talk-design.md`.
+speaker's. Documented as narrative device #8 in `talk-design.md`. Runbook's
+Demo 4 section updated so the beat is actually performed live (reading the
+aggregated review on stage before posting), not just projected as slide text.
 
 ### Known open items
 

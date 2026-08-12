@@ -77,8 +77,16 @@ into one comment (Blockers / Suggestions / Nitpicks + per-axis details).
 code, `toBeDefined()`-only test, `// TODO` left in production code. Parallel
 dispatch must be visible in the UI — that is the money shot.
 
+**Say out loud, don't just let the slide say it:** before posting the
+aggregated comment, actually scroll through the per-axis details on stage —
+this is the "lo leo entero antes de postearlo" beat. Land the line: *"si
+alguien pregunta por qué se bloqueó el PR, la respuesta soy yo."* Skipping
+this turns the scene into "the AI reviewed it," which is exactly the framing
+the deck spends its close arguing against.
+
 **Fallback:** pre-rendered aggregated review (this is the most
-model-variable scene; have the screenshot ready).
+model-variable scene; have the screenshot ready) — narrate the same reading
+beat over the screenshot instead of skipping it.
 
 ## Demo 5 · 17:00 — CI triage against the registry
 
