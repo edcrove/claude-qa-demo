@@ -14,6 +14,10 @@ steps. Then `docs/talk-design.md` (design + narrative devices),
 `docs/decision-log.md` (real history), `docs/runbook.md` (live demo script).
 Update `docs/STATUS.md` at the end of every working session.
 
+Continuing from a claude.ai **chat** (no filesystem access): `docs/HANDOFF.md`
+is the self-contained capsule to attach or paste, with a kickoff prompt.
+Regenerate it whenever STATUS changes.
+
 ## Workspace rules
 
 @.claude/rules/english-only.mdc

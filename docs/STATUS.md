@@ -1,12 +1,16 @@
 # STATUS — start here to resume work
 
-**Last updated:** 2026-08-04 (evening)
+**Last updated:** 2026-08-12
 
 This is the continuation anchor. A session with zero prior context should read,
 in this order: this file → [`talk-design.md`](talk-design.md) (what the talk is)
 → [`decision-log.md`](decision-log.md) (why things are the way they are) →
 [`runbook.md`](runbook.md) (how to drive the demos live).
 Keep this file updated at the end of every working session.
+
+**Continuing from a claude.ai chat (no filesystem):** attach or paste
+[`HANDOFF.md`](HANDOFF.md) — a self-contained capsule of all of the above,
+with a ready-made kickoff prompt. Regenerate it whenever the state changes.
 
 ## Where things stand
 
