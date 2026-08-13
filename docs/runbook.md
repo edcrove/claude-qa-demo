@@ -69,7 +69,7 @@ the rule catches *the agent*, not the human.
 
 ## Demo 4 · 14:00 — Multi-agent PR review ⭐
 
-**Type:** `Revisá la PR #7 — el diff está en mocks/github/pr-7.diff.`
+**Type:** `Revisá el PR #7 — el diff está en mocks/github/pr-7.diff.`
 
 **Expected:** invokes `multi-agent-pr-review` → dispatches the 5
 `pr-review-toolkit` subagents **in parallel in a single message** → aggregates

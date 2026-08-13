@@ -361,7 +361,7 @@ Lo que pasa en vivo:
 **El guardrail no me cuida a mí del agente — nos cuida a los dos del incidente.**
 Los 90 minutos del principio, exactamente.
 
-*Build 43 termina, corre el mío, abro la PR. →*
+*Build 43 termina, corre el mío, abro el PR. →*
 
 ---
 
