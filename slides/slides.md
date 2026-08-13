@@ -35,9 +35,9 @@ Edgardo Crovetto · 2026
 
 # Una noche perdí 90 minutos
 
-## triageando regresiones que no existían
+## cazando flakes fantasma
 
-Dos builds corrieron en paralelo. Compartían credenciales sin que nadie lo supiera.
+Dos builds, mismo ambiente, mismas credenciales — sin que nadie lo supiera.
 Todo rojo. Nada roto.
 
 **Hoy eso no puede volver a pasarme.
