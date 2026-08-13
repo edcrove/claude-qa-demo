@@ -115,7 +115,7 @@ that reset and protect the live demo.
 | 11:30 | Demo 3 — rule blocks trigger | `Triggeá un build de Jenkins para esta branch.` | `local-build-gate` + `no-parallel-ci` | local gate green, then Claude finds build 43 RUNNING and **refuses** |
 | 14:00 | Demo 4 — multi-agent review ⭐ | `Revisá el PR #7 — el diff está en mocks/github/pr-7.diff.` | `multi-agent-pr-review` + pr-review-toolkit | 5 subagents in parallel, one aggregated comment, 5 seeded bugs (one per specialist) |
 | 15:00 | Demo 5 — CI triage | `Triajeá el build 44.` | `ci-failure-triage` + `memory/known-issues.md` | derives 2 flakes / 1 infra / 2 regressions from evidence (no hints in the JSON) |
-| 16:00 | Demo 6 — correction → skill | `Esto ya me lo recordaste 3 veces. ¿Lo convertimos en skill?` | `superpowers:writing-skills` | new SKILL.md; close with the "Mañana" mirror line |
+| 16:00 | Demo 6 — correction → skill | `Esto ya te lo repetí 3 veces. ¿Lo convertimos en skill?` | `superpowers:writing-skills` | new SKILL.md; close with the "Mañana" mirror line |
 
 Demo 6 needs setup: correct Claude with the same reminder ≥3 times during
 Demos 1–5. Every scene has a screenshot/clip fallback (see `runbook.md`).

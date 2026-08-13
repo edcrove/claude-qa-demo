@@ -22,9 +22,11 @@ all on stage, say that out loud. (Until 2026-08-13 `CLAUDE.md` `@`-imported ever
 `SKILL.md`, so `/context` would have shown all skills always loaded and
 contradicted the pyramid live. Do not reintroduce those imports.)
 
-During the session, deliberately correct Claude with variations of the same
-reminder (e.g. *"acordate de chequear el registry antes de llamar a algo
-regresión"*) at least **3 times** across Demos 1–5 — Demo 6 needs that setup.
+During the session, deliberately **repeat the same correction** to Claude
+(e.g. *"acordate de chequear el registry antes de llamar a algo regresión"*)
+at least **3 times** across Demos 1–5 — Demo 6 needs that setup, and its
+stage prompt is *"Esto ya te lo repetí 3 veces"*, so the repetition has to
+have actually happened and come from you.
 
 ## Demo 1 · 9:00 — Ticket → coverage plan
 
@@ -118,7 +120,7 @@ visible to the naked eye (same signature strings).
 
 ## Demo 6 · 16:00 — Repeated correction becomes a skill
 
-**Type:** `Esto ya me lo recordaste 3 veces. ¿Lo convertimos en skill?`
+**Type:** `Esto ya te lo repetí 3 veces. ¿Lo convertimos en skill?`
 
 **Expected:** invokes `superpowers:writing-skills` (marketplace alternative:
 `skill-creator`) → drafts a short `SKILL.md` from the repeated correction →

@@ -260,7 +260,7 @@ Vos invocás el skill. A partir de ahí despacha el Main agent — Claude, no vo
 
 **Antes de que un peer humano vea el PR, ya pasó por 5 revisores especializados** —
 cada uno cazando su propia clase de bug: tipos que mienten, excepciones silenciadas
-por un `catch` vacío, comentarios que no dicen la verdad. Al peer le queda lo que
+por un `catch` que las ignora, comentarios que no dicen la verdad. Al peer le queda lo que
 un especialista de tipos no puede ver: arquitectura. *(Mis compañeros aplaudieron esto.)*
 
 **Lo que no cambia: quien aprueba sigue siendo responsable de lo que aprueba.**
@@ -410,9 +410,9 @@ el PR, la respuesta soy yo — "no sé, lo hizo la IA" no es una respuesta.**
 
 Buena parte sí — y **el linter no se saca**: es más barato y no se cansa.
 
-SonarQube marca ese `catch` vacío (`S2486`). Lo que no ve es que el comentario
-dice *"sorted"* sobre código que no ordena, ni que un `toBeDefined()` no
-prueba nada.
+SonarQube marca ese `catch` que ignora la excepción (`S2486`). Lo que no ve es
+que el comentario dice *"sorted"* sobre código que no ordena, ni que un
+`toBeDefined()` no prueba nada.
 
 **El linter matchea patrones. El subagente lee.** Van juntos.
 
@@ -458,7 +458,7 @@ Durante la sesión, Claude fue corregido **3 veces** con
 *"acordate de chequear X antes de Y"*.
 
 **Prompt:**
-> *"Esto ya me lo recordaste 3 veces. ¿Lo convertimos en skill?"*
+> *"Esto ya te lo repetí 3 veces. ¿Lo convertimos en skill?"*
 
 **Skill invocada:** `superpowers:writing-skills`
 *(alternativa del marketplace: el plugin `skill-creator`)*
@@ -477,7 +477,7 @@ ni el plan, ni las convenciones.**
 
 # Y no siempre tenés que contar vos
 
-Hoy conté hasta 3 porque me acordaba. Cuando no te acordás, se lo preguntás:
+Hoy lo repetí 3 veces y lo noté. Cuando no lo notás, se lo preguntás:
 
 > *"Revisá las últimas conversaciones y decime qué skills hay que crear o actualizar."*
 
