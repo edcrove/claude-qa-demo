@@ -296,7 +296,7 @@ un especialista de tipos no puede ver: arquitectura. *(Mis compañeros aplaudier
 
 ## Un día de QA, del ticket al merge
 
-6 escenas a lo largo de una jornada de 8 horas · 9:00 → 18:00 · repo `claude-qa-demo` · todo offline
+6 escenas a lo largo de una jornada de 8 horas · 9:00 → 17:00 · repo `claude-qa-demo` · todo offline
 
 *El demo está en TypeScript para que entre en pantalla y compile rápido.
 El patrón es **idéntico** en Java/TestNG/RestAssured.*
@@ -403,7 +403,7 @@ el PR, la respuesta soy yo — "no sé, lo hizo la IA" no es una respuesta.**
 
 ---
 
-# Demo 5 · 17:00 — Triage de fallas de CI
+# Demo 5 · 16:00 — Triage de fallas de CI
 
 > *↩ Resuelve: triagear tests rojos a mano contra known-issues.*
 
@@ -425,7 +425,7 @@ mensaje, stack y los commits. Y es **la misma branch de hoy**:
 
 ---
 
-# Demo 6 · 18:00 — De prompt repetido a skill 🪄
+# Demo 6 · 17:00 — De prompt repetido a skill 🪄
 
 > *↩ Resuelve: re-explicar el ticket, el plan, las convenciones en una sesión nueva.*
 

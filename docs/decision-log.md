@@ -5,6 +5,15 @@ agent — don't have to rediscover why things are the way they are.
 `evolution-timeline.md` tells the *demo fiction* (the cultivated-setup story the
 talk narrates); this file records the actual decisions.
 
+## 2026-08-13 — Demo day shortened to an honest 8-hour workday
+
+"6 escenas · 9:00 → 18:00" is a 9-hour span, not 8, and the slide claimed an
+8-hour workday. Rather than fudge the number, moved Demo 5 (16:00, was
+17:00) and Demo 6 (17:00, was 18:00) so 9:00 → 17:00 is actually 8 hours.
+Demo 1–4 times unchanged. Propagated to `slides/slides.md` (Demo 5/6 slide
+headers + the "Ahora, en vivo" intro), `docs/runbook.md`, `docs/talk-design.md`'s
+one-day arc table, and `docs/HANDOFF.md`.
+
 ## 2026-05-14 — Repo scaffolded
 
 Built in a single Claude Code session from a written design + implementation

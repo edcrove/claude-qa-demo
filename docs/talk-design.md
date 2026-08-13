@@ -43,7 +43,7 @@ The deck (see `slides/slides.md`) applies these deliberate storytelling devices:
    forgotten typecheck climbing the levels (prompt → memory → skill → hook).
    Each level exists because the previous one was not enough. The rule keeps
    its own scar (the cold open) so both origin stories stay traceable.
-3. **The demos are one clocked day** (9:00 → 18:00). Each demo ends with an
+3. **The demos are one clocked day** (9:00 → 17:00, an 8-hour workday). Each demo ends with an
    italic handoff into the next. Demo 5 triages the very branch the day
    produced (`feature/DEMO-100-channels-coverage`), so the fiction is
    self-consistent end to end.
@@ -85,8 +85,8 @@ The deck (see `slides/slides.md`) applies these deliberate storytelling devices:
 | 10:00 | Demo 2 — TDD on the gap Demo 1 left open | `superpowers:test-driven-development` | landing on code with no red test |
 | 11:30 | Demo 3 — local gate + rule blocks the trigger | `local-build-gate` + `no-parallel-ci` | 10-minute CI runs that die on a typo |
 | 14:00 | Demo 4 — multi-agent PR review (5 parallel subagents) | `multi-agent-pr-review` + pr-review-toolkit | repeating the same review comments |
-| 17:00 | Demo 5 — CI triage against the known-issues registry | `ci-failure-triage` + `memory/known-issues.md` | triaging reds by hand |
-| 18:00 | Demo 6 — repeated correction becomes a skill | `superpowers:writing-skills` | re-explaining everything tomorrow |
+| 16:00 | Demo 5 — CI triage against the known-issues registry | `ci-failure-triage` + `memory/known-issues.md` | triaging reds by hand |
+| 17:00 | Demo 6 — repeated correction becomes a skill | `superpowers:writing-skills` | re-explaining everything tomorrow |
 
 ## Slide map
 

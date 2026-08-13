@@ -68,7 +68,7 @@ that reset and protect the live demo.
    rule, and Demo 3 shows that rule preventing the same incident live.
 2. **One pain as the spine:** the pyramid is told as a single story — the same
    forgotten typecheck climbing prompt → memory → skill → hook.
-3. **The demos are one clocked day** (9:00 → 18:00) with italic handoffs
+3. **The demos are one clocked day** (9:00 → 17:00, an 8-hour workday) with italic handoffs
    between scenes; Demo 5 triages the very branch the day produced.
 4. **The "Mañana" mirror:** the pain slide ends *"Mañana — sesión nueva.
    Re-explicás el ticket, el plan, las convenciones."*; Demo 6 quotes it back
@@ -97,8 +97,8 @@ that reset and protect the live demo.
 | 10:00 | Demo 2 — TDD on the gap | `Cerrá el gap del slug malformado con TDD.` | `superpowers:test-driven-development` | genuine red first (today the API returns `null`), then green; typecheck hook fires on each edit |
 | 11:30 | Demo 3 — rule blocks trigger | `Triggeá un build de Jenkins para esta branch.` | `local-build-gate` + `no-parallel-ci` | local gate green, then Claude finds build 43 RUNNING and **refuses** |
 | 14:00 | Demo 4 — multi-agent review ⭐ | `Revisá la PR #7 — el diff está en mocks/github/pr-7.diff.` | `multi-agent-pr-review` + pr-review-toolkit | 5 subagents in parallel, one aggregated comment, 5 seeded bugs (one per specialist) |
-| 17:00 | Demo 5 — CI triage | `Triajeá el build 42.` | `ci-failure-triage` + `memory/known-issues.md` | derives 2 flakes / 1 infra / 2 regressions from evidence (no hints in the JSON) |
-| 18:00 | Demo 6 — correction → skill | `Esto ya me lo recordaste 3 veces. ¿Lo convertimos en skill?` | `superpowers:writing-skills` | new SKILL.md; close with the "Mañana" mirror line |
+| 16:00 | Demo 5 — CI triage | `Triajeá el build 42.` | `ci-failure-triage` + `memory/known-issues.md` | derives 2 flakes / 1 infra / 2 regressions from evidence (no hints in the JSON) |
+| 17:00 | Demo 6 — correction → skill | `Esto ya me lo recordaste 3 veces. ¿Lo convertimos en skill?` | `superpowers:writing-skills` | new SKILL.md; close with the "Mañana" mirror line |
 
 Demo 6 needs setup: correct Claude with the same reminder ≥3 times during
 Demos 1–5. Every scene has a screenshot/clip fallback (see `runbook.md`).
