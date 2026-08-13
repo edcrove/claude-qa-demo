@@ -103,7 +103,7 @@ section count, not eyeballed):
   "El triage no termina en la categoría" after Demo 5, "No hace falta que
   te acuerdes vos" after Demo 6 — → timeline → "el agente también
   construye" → sources → pattern → "qué le toca a la persona" (human/agent
-  split summary) → question answered → "3 pasos para el lunes" → close).
+  split summary) → question answered → "4 pasos para el lunes" → close).
   Dropped "Los workflows que emergieron" (2026-08-13, QA-reviewer pass):
   redundant with "El flujo end-to-end", which already names the same
   skills as a pipeline diagram right before the demos start. Added the

@@ -595,16 +595,20 @@ responde por el resultado — eso no se delega.**
 
 ---
 
-# 3 pasos para el lunes
+# 4 pasos para el lunes
 
 **1. Un `CLAUDE.md` de 5 líneas** en el repo donde más trabajás.
 Nombre del proyecto, comando de test, convención de commits. Nada más.
 
-**2. Anotá la próxima corrección que repitas.**
+**2. Probá hacer todo con el agente, aunque hoy lo hagas por fuera.**
+Leer el ticket de Jira, estudiar la story, compararla contra el código.
+Ahí empiezan a aparecer los patrones repetibles.
+
+**3. Anotá la próxima corrección que repitas.**
 La segunda vez que escribís *"acordate de X antes de Y"*, eso es una memory.
 La tercera, un skill.
 
-**3. Bajá lo que ya existe:** `/plugin` → `superpowers` + `pr-review-toolkit`.
+**4. Bajá lo que ya existe:** `/plugin` → `superpowers` + `pr-review-toolkit`.
 Arrancás con workflows que no tuviste que escribir.
 
 > Nada de esto necesita presupuesto, permiso, ni una reunión de arquitectura.
