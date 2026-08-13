@@ -45,10 +45,7 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
    `github.com/edcrove/claude-qa-demo` and the pre-flight checklist assumes a
    public repo — flip visibility before the talk (`gh repo edit
    edcrove/claude-qa-demo --visibility public`, as edcrove).
-2. **Timeline divergence** — deck slide "Mi línea de tiempo real" (months 1–6)
-   vs `evolution-timeline.md` (weeks 1–7) tell different fictional stories.
-   Acceptable or unify?
-3. **`mocks/github/pr-7.diff`** is readable but not `git apply`-able. Fix or
+2. **`mocks/github/pr-7.diff`** is readable but not `git apply`-able. Fix or
    document as intentional?
 
 ## Suggested next steps

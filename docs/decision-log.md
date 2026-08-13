@@ -213,11 +213,23 @@ Demo 6 — folding it into Demo 6 itself would have blunted that slide's
 closing beat (the "Mañana" mirror payoff). Deck: 48 → 49 slides (35 main
 flow, was 34).
 
+## 2026-08-13 — Timeline divergence resolved: slide now matches evolution-timeline.md
+
+The deck's "Mi línea de tiempo real" and `evolution-timeline.md` told two
+different fictional histories — different time scale (months 1–6 vs. weeks
+1–7) and, worse, **different artifacts**. The slide invented two skills that
+don't exist anywhere in the repo ("AC-vs-branch-diff", "pre-peer-review")
+and never mentioned three that do (`local-build-gate`,
+`known-issues-registry-update`, the `english-only` rule) — a real
+credibility risk given the talk repeatedly invites the audience to clone
+and read this repo. Rewrote the slide to tell exactly
+`evolution-timeline.md`'s week-by-week story (same 7 weeks, same triggers,
+same artifact names), condensed to one line per entry. `evolution-timeline.md`
+itself wasn't touched — it's the source of truth now; the slide was the one
+that had drifted.
+
 ### Known open items
 
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file
   diff is nested inside the first hunk). Fine for the demo, broken for anyone
   who tries to apply it.
-- The deck's "Mi línea de tiempo real" (months 1–6) and
-  `evolution-timeline.md` (weeks 1–7) tell different fictional timelines with
-  different artifact sets. Decide whether that divergence is acceptable.

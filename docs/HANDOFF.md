@@ -118,9 +118,7 @@ appears within the first few main-flow slides and every demo.
 
 1. **Repo is still PRIVATE on GitHub** — slides print the URL and the
    pre-flight checklist assumes public. Flip before the talk.
-2. **Timeline divergence:** deck's "Mi línea de tiempo real" (months 1–6) vs
-   `evolution-timeline.md` (weeks 1–7) tell different fictional stories.
-3. **`mocks/github/pr-7.diff`** is readable but not `git apply`-able.
+2. **`mocks/github/pr-7.diff`** is readable but not `git apply`-able.
 
 ## Next steps
 
