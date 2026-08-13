@@ -591,7 +591,7 @@ responde por el resultado — eso no se delega.**
 # ¿Puedo automatizar mi proceso de QA con IA?
 
 **Sí — lo acabás de ver.**
-**¿Se diseñó? No. Se cultivó.**
+**¿Se diseña? No. Se cultiva.**
 
 ---
 
