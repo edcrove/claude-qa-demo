@@ -529,7 +529,7 @@ El hook de typecheck que viste hace rato **es exactamente este patrón** —
 aplicado a un linter o a un quality gate, la conversación es la misma.
 
 > **No le tengas miedo a lo desconocido: el costo de aprender colapsó.**
-> Cultivás al agente — y el agente madura el proyecto.
+> Cultivás al agente — y el proyecto queda mejor armado que antes.
 
 ---
 
