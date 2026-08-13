@@ -101,7 +101,7 @@ Análisis local + Jenkins  →  bugs en Jira  →  follow-up del ciclo
 - **Test cases + automation** — copiás AC a TestRail, traducís a TestNG/RestAssured, linkeás IDs a mano
 - **Ejecución multi-env** — Jenkins contra 3 ambientes · comparás resultados · investigás cada rojo
 - **PR review** — armás la evidencia, pingeás 2 peers, esperás, re-pingeás
-- **Bug found** — abrís ticket, pegás logs, follow-up del ciclo de vida en Jira
+- **Bug encontrado** — abrís ticket, pegás logs, follow-up del ciclo de vida en Jira
 - **Mañana** — sesión nueva. Re-explicás el ticket, el plan, las convenciones.
 
 **Mucho de eso es contexto que se pierde entre sesiones.**
