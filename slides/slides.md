@@ -253,9 +253,10 @@ Vos pedís la review. A partir de ahí, corre el Main agent — Claude, no vos:
               └──────────────┘
 ```
 
-**Antes de que un peer humano vea el PR, ya pasó por 5 revisores especializados.**
-El peer review queda libre para arquitectura — no para tipos básicos o
-`catch` que tragan errores. *(Mis compañeros aplaudieron esto.)*
+**Antes de que un peer humano vea el PR, ya pasó por 5 revisores especializados** —
+cada uno cazando su propia clase de bug: tipos que mienten, excepciones silenciadas
+por un `catch` vacío, comentarios que no dicen la verdad. Al peer le queda lo que
+un especialista de tipos no puede ver: arquitectura. *(Mis compañeros aplaudieron esto.)*
 
 **Lo que no cambia: quien aprueba sigue siendo responsable de lo que aprueba.**
 
