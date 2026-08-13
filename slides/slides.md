@@ -296,7 +296,7 @@ un especialista de tipos no puede ver: arquitectura. *(Mis compañeros aplaudier
 
 ## Un día de QA, del ticket al merge
 
-6 escenas · 9:00 → 18:00 · repo `claude-qa-demo` · todo offline
+6 escenas a lo largo de una jornada de 8 horas · 9:00 → 18:00 · repo `claude-qa-demo` · todo offline
 
 *El demo está en TypeScript para que entre en pantalla y compile rápido.
 El patrón es **idéntico** en Java/TestNG/RestAssured.*
