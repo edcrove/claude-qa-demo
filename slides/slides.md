@@ -483,6 +483,18 @@ ni el plan, ni las convenciones.**
 
 ---
 
+# No hace falta que te acuerdes vos
+
+Demo 6 arrancó porque el humano contó hasta 3. No hace falta ni eso:
+
+**Prompt:**
+> *"Revisá las conversaciones últimas y decime qué skills hay que crear o actualizar."*
+
+Claude puede mirar hacia atrás y encontrar el patrón que vos no contaste —
+la sugerencia deja de depender de que alguien lleve la cuenta.
+
+---
+
 # Mi línea de tiempo real
 
 ```

@@ -90,24 +90,29 @@ The deck (see `slides/slides.md`) applies these deliberate storytelling devices:
 
 ## Slide map
 
-`slides/slides.md` — 48 slides total (counts verified against Marp's own
+`slides/slides.md` — 49 slides total (counts verified against Marp's own
 section count, not eyeballed):
 
-- **Main flow: 34** (cold open → thesis → mechanics → 6 demos, widened with
-  two extra slides — "¿Y esto no lo hacía ya un linter?" after Demo 4, "El
-  triage no termina en la categoría" after Demo 5 — → timeline → "el agente
-  también construye" → sources → pattern → "qué le toca a la persona"
-  (human/agent split summary) → question answered → "3 pasos para el
-  lunes" → close). Dropped "Los workflows que emergieron" (2026-08-13,
-  QA-reviewer pass): redundant with "El flujo end-to-end", which already
-  names the same skills as a pipeline diagram right before the demos start.
-  Added the linter/SonarQube comparison slide (2026-08-13, author request)
-  — answers the technical audience's natural "isn't this just what a linter
-  already does?" at the exact moment it would occur to them. Added the
+- **Main flow: 35** (cold open → thesis → mechanics → 6 demos, widened with
+  three extra slides — "¿Y esto no lo hacía ya un linter?" after Demo 4,
+  "El triage no termina en la categoría" after Demo 5, "No hace falta que
+  te acuerdes vos" after Demo 6 — → timeline → "el agente también
+  construye" → sources → pattern → "qué le toca a la persona" (human/agent
+  split summary) → question answered → "3 pasos para el lunes" → close).
+  Dropped "Los workflows que emergieron" (2026-08-13, QA-reviewer pass):
+  redundant with "El flujo end-to-end", which already names the same
+  skills as a pipeline diagram right before the demos start. Added the
+  linter/SonarQube comparison slide (2026-08-13, author request) — answers
+  the technical audience's natural "isn't this just what a linter already
+  does?" at the exact moment it would occur to them. Added the
   triage-capability slide (2026-08-13, author request) — the live demo only
   shows 3-category classification against a registry; the note widens it to
   what the same pattern does on a real build: reading full logs, grouping
-  related failures, a first-pass root-cause read.
+  related failures, a first-pass root-cause read. Added the
+  conversation-mining slide (2026-08-13, author request) — Demo 6 only
+  promotes a skill when a human counts 3 repeated corrections; the note
+  widens it to asking Claude to scan past conversations and surface skill
+  candidates itself.
 - **Appendix: 9** — anatomy + real example for memory / skill / rule / hook
   (moved out of the main flow to protect demo time)
 - **Q&A backup: 5** — token costs, model churn (skills survive, prompts don't

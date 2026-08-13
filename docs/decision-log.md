@@ -201,6 +201,18 @@ slide, "El triage no termina en la categoría", right after Demo 5, with the
 existing handoff line to Demo 6 moved to its end. Deck: 47 → 48 slides (34
 main flow, was 33).
 
+## 2026-08-13 — Added the conversation-mining slide
+
+Same slide-by-slide pass: Demo 6 only promotes a repeated correction to a
+skill because the human explicitly counted 3 occurrences and asked. Author
+wanted it clarified that this doesn't require a human to keep count — you
+can ask Claude to scan past conversations directly ("Revisá las
+conversaciones últimas y decime qué skills hay que crear o actualizar").
+Added as its own slide, "No hace falta que te acuerdes vos", right after
+Demo 6 — folding it into Demo 6 itself would have blunted that slide's
+closing beat (the "Mañana" mirror payoff). Deck: 48 → 49 slides (35 main
+flow, was 34).
+
 ### Known open items
 
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file
