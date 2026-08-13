@@ -793,6 +793,9 @@ Nació después de 90 minutos cazando flaky tests fantasma.
 
 # Hook — anatomía
 
+**Prompt:**
+> *"Convertí esto en un hook — que corra solo, sin que nadie lo invoque."*
+
 ```json
 {
   "hooks": {
@@ -816,6 +819,10 @@ El comando recibe el evento como **JSON por stdin**.
 ---
 
 # Hook — ejemplo real
+
+**Prompt:**
+> *"Me olvidé el typecheck 5 veces seguidas — teniendo memory y rule.
+> Convertilo en hook: que corra en cada edit, pase lo que pase."*
 
 ```json
 {
