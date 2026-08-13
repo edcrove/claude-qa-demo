@@ -220,7 +220,7 @@ Markdown y JSON en el repo. Anatomía y ejemplos completos: **apéndice**.
 # Subagentes — qué son
 
 > Hasta acá vimos el **setup** — que vive en **archivos**.
-> Ahora hablemos del **motor** — los subagentes, que corren en sesión.
+> Ahora hablemos del **motor**: el agente en sesión. Los subagentes son una de sus piezas.
 
 Un agente subordinado con su **propio contexto** y **sus propias tools**.
 
