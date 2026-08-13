@@ -55,7 +55,7 @@ Java + TypeScript · tests automatizados · CI/CD · pipelines
 
 **Me gusta mejorar procesos — sobre todo los que ya estaban funcionando.**
 
-> Esta charla no es sobre features. Es sobre **un patrón**.
+> Esta charla no es sobre features. Es sobre **un patrón que se repite** — y lo que hacés con eso.
 
 `linkedin.com/in/edgardocrovetto`
 
