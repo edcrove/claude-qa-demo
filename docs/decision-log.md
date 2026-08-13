@@ -336,6 +336,28 @@ the cut is decided against a structure that already holds together.
    static analysis genuinely cannot judge test strength. Citing the tool
    accurately buys more credibility with this audience than overclaiming.
 
+## 2026-08-13 — Cut "Fuentes" and "El patrón"
+
+First two cuts of the timing pass, both pure redundancy removal rather than
+sacrifice — chosen by the author from the reviewer's ranked list.
+
+- **"Fuentes"** was a reference list the audience cannot act on while sitting
+  in a meetup, and every item on it already lives in `SOURCES.md`, which the
+  closing slide's repo URL points at. Its one element that existed nowhere
+  else — the disclaimer about public plugins/MCPs being used only when
+  trusted and org-approved — moved into **step 4 of "4 pasos para el lunes"**,
+  which is the slide that actually tells people to install them, and into
+  `SOURCES.md` as a blockquote at the top.
+- **"El patrón"** was the deck's *third* statement of the same five levels,
+  after "La pirámide de promoción" (which states them with the funnel nuance)
+  and "Las 4 piezas" (which states them as a story). The closing slide still
+  carries the pattern as an equation — "Memory + Skills + Rules + Hooks" —
+  so nothing is lost but the repetition.
+
+Deck: 49 → 47 slides (33 main flow, was 35). ~95 s recovered. The timing gap
+is still the top open item; the remaining prescription is tracked as a
+checklist in `STATUS.md`.
+
 ### Known open items
 
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file

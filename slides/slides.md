@@ -540,38 +540,6 @@ aplicado a un linter o a un quality gate, la conversación es la misma.
 
 ---
 
-# Fuentes
-
-**Lo que descargás:**
-- `/plugin` marketplace · `superpowers` · `pr-review-toolkit`
-- MCP servers públicos (Atlassian, GitHub, Slack, context7)
-
-**Ojo:** son plugins y MCPs públicos — usá siempre los de confianza,
-los que tu organización ya aceptó.
-
-**Lo que destilás:**
-- Skills `.claude/skills/` · Rules `.claude/rules/`
-- Hooks `.claude/settings.json` · Memory `memory/`
-
-**Para comunicar el trabajo:**
-- Confluence, Notion, armar presentaciones — el mismo patrón también sirve para eso
-
----
-
-# El patrón
-
-```
-Prompt suelto  →   Memory   →    Skill    →     Rule      →   Hook
-  (una vez)    (entre sesiones) (bajo demanda) (siempre cargada) (automático)
-```
-
-Cada nivel:
-- **Más estructura**, **menos ceremonia futura**
-- **Versionable**, **reviewable**, **reusable**
-- **Promociona** desde lo concreto, no desde una reunión
-
----
-
 # Qué le toca a la persona
 
 | | El agente | Vos |
@@ -616,7 +584,8 @@ La segunda vez que escribís *"acordate de X antes de Y"*, eso es una memory.
 La tercera, un skill.
 
 **4. Bajá lo que ya existe:** `/plugin` → `superpowers` + `pr-review-toolkit`.
-Arrancás con workflows que no tuviste que escribir.
+Arrancás con workflows que no tuviste que escribir. Son públicos: usá los de
+confianza, los que tu organización ya aceptó.
 
 > Nada de esto necesita presupuesto, permiso, ni una reunión de arquitectura.
 

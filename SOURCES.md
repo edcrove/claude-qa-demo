@@ -2,6 +2,10 @@
 
 Where to find the pre-existing pieces used in this demo.
 
+> **These are public plugins and MCP servers.** Install the ones you trust and
+> the ones your organization has already approved — the same due diligence you
+> would apply to any third-party dependency.
+
 ## Plugins
 
 - **superpowers** — TDD, debugging, brainstorming, verification-before-completion,

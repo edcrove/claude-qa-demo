@@ -83,9 +83,9 @@ The deck (see `slides/slides.md`) applies these deliberate storytelling devices:
    aprueba"), Demo 4's aggregated result ("no sé, lo hizo la IA" no es una
    respuesta"), a dedicated summary slide **"Qué le toca a la persona"**
    (agent/person table: execution vs. criterio/revisión/decisión/
-   responsabilidad — right after "El patrón", right before the callback
-   question), and the closing thesis slide ("el criterio, el dominio y la
-   firma siguen siendo tuyos"). The recurring one-liners keep the idea alive
+   responsabilidad — immediately before the callback question), and the
+   closing thesis slide ("el criterio, el dominio y la firma siguen siendo
+   tuyos"). The recurring one-liners keep the idea alive
    scene by scene; the summary slide is where it gets stated plainly enough
    to survive a quick skim (added 2026-08-13 after the one-liners alone read
    as too easy to miss). The baseline the talk demonstrates is delegation of
@@ -105,18 +105,25 @@ The deck (see `slides/slides.md`) applies these deliberate storytelling devices:
 
 ## Slide map
 
-`slides/slides.md` — 49 slides total (counts verified against Marp's own
+`slides/slides.md` — 47 slides total (counts verified against Marp's own
 section count, not eyeballed):
 
-- **Main flow: 35** (cold open → thesis → mechanics → 6 demos, widened with
+- **Main flow: 33** (cold open → thesis → mechanics → 6 demos, widened with
   three extra slides — "¿Y esto no lo hacía ya un linter?" after Demo 4,
   "El triage no termina en la categoría" after Demo 5, "No hace falta que
   te acuerdes vos" after Demo 6 — → timeline → "el agente también
-  construye" → sources → pattern → "qué le toca a la persona" (human/agent
-  split summary) → question answered → "4 pasos para el lunes" → close).
+  construye" → "qué le toca a la persona" (human/agent split summary) →
+  question answered → "4 pasos para el lunes" → close).
   Dropped "Los workflows que emergieron" (2026-08-13, QA-reviewer pass):
   redundant with "El flujo end-to-end", which already names the same
-  skills as a pipeline diagram right before the demos start. Added the
+  skills as a pipeline diagram right before the demos start. Dropped
+  **"Fuentes"** and **"El patrón"** (2026-08-13, timing pass): the first was
+  a reference list the audience cannot act on live and that already lives in
+  `SOURCES.md` (its one unique element, the public-plugin trust disclaimer,
+  moved into step 4 of "4 pasos para el lunes", where it is actionable, and
+  into `SOURCES.md`); the second was the deck's *third* statement of the same
+  five levels, after the pyramid slide and "Las 4 piezas" — and the closing
+  slide already carries the pattern as an equation. Added the
   linter/SonarQube comparison slide (2026-08-13, author request) — answers
   the technical audience's natural "isn't this just what a linter already
   does?" at the exact moment it would occur to them. Added the

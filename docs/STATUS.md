@@ -17,7 +17,7 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
 - **Repo + deck are rehearsal-ready.** All demo premises were audited and fixed
   on 2026-08-04 (see decision-log entry of that date). `./scripts/prep-demo.sh`
   passes all state assertions; `./scripts/check-leaks.sh` is clean; the deck
-  renders (49 slides: 35 main / 9 appendix / 5 Q&A backup — count verified
+  renders (47 slides: 33 main / 9 appendix / 5 Q&A backup — count verified
   against Marp's own section count).
 - **Title decided and announced:** "Tu setup de QA no se diseña: se cultiva"
   — de prompt suelto a skills, rules y hooks. Propagated across
@@ -61,20 +61,31 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
 ## Pending decisions (the author's, not the agent's)
 
 1. **THE TALK DOES NOT FIT IN 30 MINUTES.** A critical review pass estimated
-   the live path at **~43 min against a 25-min budget (~18 min over)**: the 35
+   the live path at **~43 min against a 25-min budget (~18 min over)**: the
    main-flow slides alone are ~26 min, before running a single demo, and the 6
    demos are ~17 min of wall clock once you count the agent actually
    responding (Demo 4 alone ≈ 5 min — 5 parallel subagents plus the runbook's
    instruction to read the per-axis details aloud; Demo 2 ≈ 4 min for a full
    red→green cycle with the hook firing typecheck on every edit). Even an
    all-optimistic run lands at ~34 min. **This needs a cut decision before the
-   rehearsal, not during it.** The reviewer's ranked prescription: pre-record
-   Demos 2 and 6; move the 3 "widening" slides (linter/SonarQube, triage
-   capability, conversation-mining) to the appendix; merge the two subagent
-   slides; merge the pyramid with "Las 4 piezas"; cut "El flujo end-to-end";
-   cut either "El patrón" or "Qué le toca a la persona"; cut "Fuentes";
-   compress the two opening pain slides into one. Target: **4 demos live, 2
-   pre-recorded, ~27 slides.**
+   rehearsal, not during it.**
+
+   The reviewer's ranked prescription, with what has been done so far:
+   - [x] cut "Fuentes" — content already lived in `SOURCES.md`; its unique
+         trust disclaimer moved into step 4 of "4 pasos para el lunes"
+   - [x] cut "El patrón" — was the deck's *third* statement of the same five
+         levels; the closing slide still carries it as an equation
+   - [ ] pre-record Demos 2 and 6 (**biggest single win: ~270 s**)
+   - [ ] move the 3 "widening" slides (linter/SonarQube, triage capability,
+         conversation-mining) to the appendix
+   - [ ] merge the two subagent slides — now natural, since the 2026-08-13
+         reframe made them one idea (a skill and what it does inside)
+   - [ ] merge the pyramid with "Las 4 piezas"
+   - [ ] cut "El flujo end-to-end"
+   - [ ] compress the two opening pain slides into one
+
+   Target: **4 demos live, 2 pre-recorded, ~27 slides.** Deck is at 47 (33
+   main flow) after the two cuts above.
 2. **The GitHub repo is still PRIVATE.** The slides print
    `github.com/edcrove/claude-qa-demo` and the pre-flight checklist assumes a
    public repo — flip visibility before the talk (`gh repo edit
