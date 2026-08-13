@@ -569,7 +569,7 @@ Cada nivel:
 
 | | El agente | Vos |
 |---|---|---|
-| **Ejecución** | Corre el procedimiento, agrega resultados, propone diffs | — |
+| **Ejecución** | Corre el procedimiento, agrega resultados, propone cambios de código para revisar | — |
 | **Criterio** | — | Interpretás un AC ambiguo, decidís qué es "suficiente" |
 | **Aporte** | — | Metés lo que el agente no vio: charlas, discusiones, decisiones de negocio — enriquecés, corregís |
 | **Revisión** | Hace el primer pase (5 subagentes en paralelo) | Leés el resultado antes de postearlo o mergear |
