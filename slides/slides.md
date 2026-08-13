@@ -439,6 +439,21 @@ mensaje, stack y los commits. Y es **la misma branch de hoy**:
 
 **La categoría se deduce de la evidencia — no viene dada en el JSON.**
 
+---
+
+# El triage no termina en la categoría
+
+Lo que viste categoriza contra el registry. El mismo patrón da para más:
+
+- **Lee los logs completos**, no solo el resumen del build — ahí vive el
+  troubleshooting real, no en el semáforo rojo/verde
+- **Agrupa fallas relacionadas** entre sí — mismo stack, mismo servicio, mismo commit
+- **Arma un primer análisis de causa raíz**: por dónde empezar a mirar,
+  no solo "esto es un flaky test"
+
+Hoy son 5 fallas para que entre en pantalla. En un build de cientos,
+es donde más tiempo se ahorra.
+
 *Triage hecho. Pero hoy, tres veces, me corregiste lo mismo... →*
 
 ---

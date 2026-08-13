@@ -190,6 +190,17 @@ in CI, the subagent covers what requires reading, not matching. The
 existing handoff line to Demo 5 moved from the end of Demo 4 (2/2) to the
 end of this new slide. Deck: 46 → 47 slides (33 main flow, was 32).
 
+## 2026-08-13 — Added the triage-capability slide
+
+Same request, continuing the slide-by-slide pass: the live Demo 5 only
+shows 3-category classification against the known-issues registry, but the
+real `ci-failure-triage` pattern does more — reads full logs (not just the
+build summary), groups related failures, and gives a first-pass root-cause
+read. Too much to fold into the dense Demo 5 slide, so it became its own
+slide, "El triage no termina en la categoría", right after Demo 5, with the
+existing handoff line to Demo 6 moved to its end. Deck: 47 → 48 slides (34
+main flow, was 33).
+
 ### Known open items
 
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file

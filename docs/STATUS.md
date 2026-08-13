@@ -17,7 +17,7 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
 - **Repo + deck are rehearsal-ready.** All demo premises were audited and fixed
   on 2026-08-04 (see decision-log entry of that date). `./scripts/prep-demo.sh`
   passes all state assertions; `./scripts/check-leaks.sh` is clean; the deck
-  renders (47 slides: 33 main / 9 appendix / 5 Q&A backup — count verified
+  renders (48 slides: 34 main / 9 appendix / 5 Q&A backup — count verified
   against Marp's own section count).
 - **Title decided and announced:** "Tu setup de QA no se diseña: se cultiva"
   — de prompt suelto a skills, rules y hooks. Propagated across
