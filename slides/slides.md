@@ -90,7 +90,7 @@ PR con review de 2 peers · checkstyle automático
 Análisis local + Jenkins  →  bugs en Jira  →  follow-up del ciclo
 ```
 
-> Funcionaba. Pero todo el contexto de cada ticket vivía **en mi cabeza**.
+> Funcionaba. Pero todo el conocimiento de cada ticket vivía **en mi cabeza**.
 
 ---
 
@@ -104,13 +104,13 @@ Análisis local + Jenkins  →  bugs en Jira  →  follow-up del ciclo
 - **Bug encontrado** — abrís ticket, pegás logs, follow-up del ciclo de vida en Jira
 - **Mañana** — sesión nueva. Re-explicás el ticket, el plan, las convenciones.
 
-**Mucho de eso es contexto que se pierde entre sesiones.**
+**Mucho de eso es conocimiento que se pierde entre sesiones.**
 
 ---
 
 <!-- _class: lead -->
 
-## ¿Y si ese contexto **sobreviviera**?
+## ¿Y si ese conocimiento **sobreviviera**?
 
 ---
 
@@ -297,7 +297,7 @@ El patrón es **idéntico** en Java/TestNG/RestAssured.*
 
 # Demo 1 · 9:00 — Ticket → plan de cobertura
 
-> *↩ Resuelve: las 4 pestañas para entender el contexto.*
+> *↩ Resuelve: las 4 pestañas para armar el panorama completo.*
 
 **Input:** un ticket de Jira mockeado en `mocks/jira/DEMO-100.json`.
 
