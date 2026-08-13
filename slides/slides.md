@@ -233,17 +233,19 @@ Un agente subordinado con su **propio contexto** y **sus propias tools**.
 
 # Subagentes en paralelo
 
+Vos pedís la review. A partir de ahí, corre el Main agent — Claude, no vos:
+
 ```
    ┌───────────────────────────────────────────────────────────────┐
-   │                       Main agent (vos)                        │
+   │                          Main agent                           │
    └─────┬───────┬───────┬───────┬───────┬─────────────────────────┘
          │       │       │       │       │     ◀ despacho paralelo
          ▼       ▼       ▼       ▼       ▼
      ┌──────┐┌──────┐┌──────┐┌──────┐┌──────┐
-     │ code ││silent││ type ││ comm.││ test │  ◀ 5 contextos aislados
-     │review││failur││design││analyz││analyz│
-     └──┬───┘└──┬───┘└──┬───┘└──┬───┘└──┬───┘
-        │       │       │       │       │
+     │ code ││silent││ type ││ comm.││ test │  ◀ pr-review-toolkit:
+     │review││failur││design││analyz││analyz│    code-reviewer · silent-failure-hunter ·
+     └──┬───┘└──┬───┘└──┬───┘└──┬───┘└──┬───┘    type-design-analyzer · comment-analyzer ·
+        │       │       │       │       │        pr-test-analyzer — 5 contextos aislados
         └───────┴───┬───┴───────┴───────┘
                     ▼
               ┌──────────────┐
