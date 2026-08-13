@@ -158,6 +158,8 @@ Todo es **texto plano en disco**. Versionado. Reviewable.
 Memory, skills, rules y hooks viven en tu repo.
 El trabajo real cruza varios sistemas. Los MCPs los conectan.
 
+*Conectar uno también se pide en conversación — no hay instalador que armar a mano.*
+
 | MCP | Para qué lo uso |
 |-----|-----------------|
 | 🎫 **Jira** | Leer ticket + AC, comentar, transicionar el estado |
