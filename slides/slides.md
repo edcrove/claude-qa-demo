@@ -277,9 +277,9 @@ un especialista de tipos no puede ver: arquitectura. *(Mis compañeros aplaudier
   └─────────┘   └─────────┘  └──────────┘   └──────────┘   └──────────┘
   │                 │              │             │              │
   ▼                 ▼              ▼             ▼              ▼
-  SKILL           HOOK         RULE            5 SUB-         MEMORY
-  (queda          typecheck    no-parallel-   AGENTES        known-
-  acá)            on-edit      ci             en paralelo    issues
+  ticket-         HOOK         RULE            5 SUB-         MEMORY
+  coverage-       typecheck    no-parallel-   AGENTES        known-
+  gap-analysis    on-edit      ci             en paralelo    issues
 
    ─────────── memory + rules cargadas todo el tiempo ────────────────
 
