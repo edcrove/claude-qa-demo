@@ -25,8 +25,13 @@ The promotion pyramid is the mechanism:
 
 ```
 Prompt suelto → Memory → Skill → Rule → Hook
-   (today)     (tomorrow) (week)  (month) (quarter)
+ (once)      (across sessions) (on demand) (always loaded) (automatic)
 ```
+
+Promotion is triggered by repetition, not elapsed time (a correction
+repeated 3 times is a promotion waiting to happen) — the slide's labels
+were rewritten 2026-08-13 to say what triggers each level instead of
+implying a fixed duration.
 
 Each level up: more structure, less future ceremony. A correction repeated
 3 times is a promotion waiting to happen.
