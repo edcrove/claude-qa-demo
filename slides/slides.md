@@ -693,6 +693,9 @@ Nació después de olvidarme el `typecheck` post-rebase un lunes a la mañana.
 
 # Skill — anatomía
 
+**Prompt:**
+> *"Convertí esto en un skill."*
+
 ```markdown
 ---
 name: kebab-case-name
