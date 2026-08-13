@@ -127,8 +127,8 @@ Análisis local + Jenkins  →  bugs en Jira  →  follow-up del ciclo
 # Cuando empezó la IA: dos pasos
 
 **1. Conectar Claude al repo del trabajo**
-- Todo arrancó con un `CLAUDE.md` de apenas 5 líneas, sin plan detrás
-- Lo demás vino con el tiempo — se lo pedís en la conversación, no lo escribís a mano
+- Todo arrancó con un `CLAUDE.md` de apenas 5 líneas — se lo pedís en la conversación, no lo escribís a mano
+- Lo demás vino con el tiempo
 
 **2. Agregar MCPs, uno a uno**
 Jira, TestRail, Jenkins, Confluence — el detalle, en la próxima slide.
