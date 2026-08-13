@@ -643,7 +643,10 @@ Memory · Skill · Rule · Hook
 
 # Memory — anatomía
 
-Una corrección repetida 3 veces es candidata a memory.
+Una corrección repetida **2 veces** es candidata a memory.
+
+**Prompt:**
+> *"Guardá esto en memory: <la corrección o el hecho>."*
 
 ```markdown
 ---
@@ -659,7 +662,8 @@ metadata:
 **How to apply:** <cuándo aplica>
 ```
 
-Persiste entre sesiones. Sobrevive al `/clear`.
+Ese prompt es lo único que hace falta — Claude arma el archivo. Persiste
+entre sesiones. Sobrevive al `/clear`.
 
 ---
 
