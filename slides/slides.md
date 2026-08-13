@@ -722,6 +722,10 @@ What the skill produces.
 
 # Skill — ejemplo real
 
+**Prompt:**
+> *"Rompí el build dos veces esta semana por lo mismo. Convertí el
+> chequeo local en un skill."*
+
 ```markdown
 ---
 name: local-build-gate
