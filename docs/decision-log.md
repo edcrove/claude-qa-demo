@@ -8,11 +8,13 @@ talk narrates); this file records the actual decisions.
 ## 2026-08-13 — Demo day shortened to an honest 8-hour workday
 
 "6 escenas · 9:00 → 18:00" is a 9-hour span, not 8, and the slide claimed an
-8-hour workday. Rather than fudge the number, moved Demo 5 (16:00, was
-17:00) and Demo 6 (17:00, was 18:00) so 9:00 → 17:00 is actually 8 hours.
-Demo 1–4 times unchanged. Propagated to `slides/slides.md` (Demo 5/6 slide
-headers + the "Ahora, en vivo" intro), `docs/runbook.md`, `docs/talk-design.md`'s
-one-day arc table, and `docs/HANDOFF.md`.
+8-hour workday. First pass moved Demo 5 to 16:00 and Demo 6 to 17:00 — still
+wrong, since the workday *ends* at 17:00, so nothing can *start* then.
+Final: Demo 5 at 15:00, Demo 6 at 16:00, leaving a wrap-up hour before the
+stated 17:00 end. Demo 1–4 times unchanged. Propagated to
+`slides/slides.md` (Demo 5/6 slide headers + the "Ahora, en vivo" intro),
+`docs/runbook.md`, `docs/talk-design.md`'s one-day arc table, and
+`docs/HANDOFF.md`.
 
 ## 2026-05-14 — Repo scaffolded
 

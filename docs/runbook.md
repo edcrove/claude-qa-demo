@@ -91,7 +91,7 @@ the deck spends its close arguing against.
 model-variable scene; have the screenshot ready) — narrate the same reading
 beat over the screenshot instead of skipping it.
 
-## Demo 5 · 16:00 — CI triage against the registry
+## Demo 5 · 15:00 — CI triage against the registry
 
 **Type:** `Triajeá el build 42.`
 
@@ -109,7 +109,7 @@ If asked to re-trigger, the `no-parallel-ci` rule still applies.
 **Fallback:** walk the registry and the failures manually — the match is
 visible to the naked eye (same signature strings).
 
-## Demo 6 · 17:00 — Repeated correction becomes a skill
+## Demo 6 · 16:00 — Repeated correction becomes a skill
 
 **Type:** `Esto ya me lo recordaste 3 veces. ¿Lo convertimos en skill?`
 

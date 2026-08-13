@@ -403,7 +403,7 @@ el PR, la respuesta soy yo — "no sé, lo hizo la IA" no es una respuesta.**
 
 ---
 
-# Demo 5 · 16:00 — Triage de fallas de CI
+# Demo 5 · 15:00 — Triage de fallas de CI
 
 > *↩ Resuelve: triagear tests rojos a mano contra known-issues.*
 
@@ -425,7 +425,7 @@ mensaje, stack y los commits. Y es **la misma branch de hoy**:
 
 ---
 
-# Demo 6 · 17:00 — De prompt repetido a skill 🪄
+# Demo 6 · 16:00 — De prompt repetido a skill 🪄
 
 > *↩ Resuelve: re-explicar el ticket, el plan, las convenciones en una sesión nueva.*
 
