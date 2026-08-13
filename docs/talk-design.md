@@ -141,7 +141,7 @@ and other candidates considered (2026-08-04), kept for record:
 
 Final subtitle: *"De prompt suelto a skills, rules y hooks."* — this drops
 the "Claude" mention the original constraint wanted in the subtitle. The
-name still appears early ("Cuando empezó la IA: dos pasos" names Claude
+name still appears early ("Mis primeros pasos con Claude" names Claude
 explicitly, and it recurs through every demo), so the constraint's
 underlying goal — don't let the tool disappear from the framing — still
 holds even though the literal subtitle slot doesn't say it. Not treated as

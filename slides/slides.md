@@ -124,7 +124,7 @@ Análisis local + Jenkins  →  bugs en Jira  →  follow-up del ciclo
 
 ---
 
-# Cuando empezó la IA: dos pasos
+# Mis primeros pasos con Claude
 
 **1. Conectar Claude al repo del trabajo**
 - Todo arrancó con un `CLAUDE.md` de apenas 5 líneas — se lo pedís en la conversación, no lo escribís a mano
