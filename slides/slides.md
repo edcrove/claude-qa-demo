@@ -65,7 +65,7 @@ Java + TypeScript · tests automatizados · CI/CD · pipelines
 
 > ## ¿Puedo automatizar mi proceso de QA con IA?
 
-Spoiler: sí — **sobre los rieles que ya tenés.**
+Spoiler: sí — **sobre las bases que ya tenés.**
 
 ---
 
