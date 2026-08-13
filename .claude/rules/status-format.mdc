@@ -5,8 +5,8 @@ description: When reporting CI status, use the format "✅/❌ build N — X pas
 Format CI status updates as one line:
 
 ```
-✅ build 42 — 287 passed / 0 failed (0 flakes)
-❌ build 43 — 280 passed / 5 failed (3 flakes, 2 real)
+✅ build 51 — 287 passed / 0 failed (0 flakes)
+❌ build 52 — 280 passed / 5 failed (3 flakes, 2 real)
 ```
 
 **Why:** Status is scanned, not read. A consistent format lets the team triage at

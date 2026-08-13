@@ -57,7 +57,7 @@ check "Demo 3 — build 43 RUNNING on stage (the rule has something to block)" "
 # Demo 5 needs the registry to match against, and no giveaway hints in the mock.
 [[ -f memory/known-issues.md ]] && r=0 || r=1
 check "Demo 5 — known-issues registry present" "$r"
-grep -q 'category_hint' mocks/jenkins/build-42.json && r=1 || r=0
+grep -q 'category_hint' mocks/jenkins/build-44.json && r=1 || r=0
 check "Demo 5 — build mock has no category hints" "$r"
 
 # The typecheck hook parses its stdin JSON with jq.

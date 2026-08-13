@@ -1,0 +1,51 @@
+{
+  "build": 44,
+  "job": "demo-api-regression",
+  "env": "stage",
+  "result": "UNSTABLE",
+  "startedAt": "2026-05-14T11:35:00Z",
+  "completedAt": "2026-05-14T12:18:00Z",
+  "branch": "feature/DEMO-100-channels-coverage",
+  "passed": 280,
+  "failed": 5,
+  "skipped": 2,
+  "commits": [
+    {
+      "sha": "a1b2c3d",
+      "message": "feat: derive channel genre from the catalog service",
+      "files": ["demo-app/src/api.ts"]
+    },
+    {
+      "sha": "e4f5a6b",
+      "message": "chore: lower items cache ttl to 30s",
+      "files": ["demo-app/src/items.ts"]
+    }
+  ],
+  "failures": [
+    {
+      "test": "GET /api/v1/channels/:slug > returns the channel for a known slug",
+      "message": "AssertionError: expected genre 'news' to be 'sports'",
+      "stack": "at demo-app/tests/api.test.ts:7"
+    },
+    {
+      "test": "GET /api/v1/channels > returns all channels",
+      "message": "Error: Test timed out in 5000ms",
+      "stack": "at demo-app/tests/channels.test.ts:24"
+    },
+    {
+      "test": "GET /api/v1/channels > paginates",
+      "message": "Error: Test timed out in 5000ms",
+      "stack": "at demo-app/tests/channels.test.ts:39"
+    },
+    {
+      "test": "auth > logs in with the demo user",
+      "message": "Error: connect ECONNREFUSED auth.demo.local:8443",
+      "stack": "at demo-app/tests/auth.smoke.test.ts:12"
+    },
+    {
+      "test": "GET /api/v1/items/:id > caches the response",
+      "message": "AssertionError: expected cache hit but request reached origin",
+      "stack": "at demo-app/tests/items.test.ts:88"
+    }
+  ]
+}

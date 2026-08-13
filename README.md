@@ -54,7 +54,7 @@ The repo intentionally ships **incomplete** so each scene has real work left:
 | Demo 1 | `DEMO-100` lists 4 acceptance criteria, only 2 are covered by tests | — |
 | Demo 2 | `getChannelBySlug` exists but does **not** validate the slug format — that is the red test | `prep-demo.sh` |
 | Demo 3 | `build-43-running.json` shows a build RUNNING on stage, so `no-parallel-ci` blocks the trigger live | `prep-demo.sh` |
-| Demo 5 | `memory/known-issues.md` present, and `build-42.json` carries **no** category hints | `prep-demo.sh` |
+| Demo 5 | `memory/known-issues.md` present, and `build-44.json` carries **no** category hints | `prep-demo.sh` |
 | Hook | `jq` on PATH (the hook reads its stdin JSON with it) | `prep-demo.sh` |
 
 ## The pattern

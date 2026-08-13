@@ -15,6 +15,13 @@ Inside the session, run `/context` once and confirm **only the repo's
 `CLAUDE.md`** is loaded (no global memory, no work MCPs). The profile starts on
 a mid-tier model; switch up with `/model` before Demo 4 if desired.
 
+**`/context` is also a demo asset, not just a pre-flight check.** It shows the
+3 rules and `memory/MEMORY.md` loaded, and the 5 skills *not* loaded — which is
+exactly the pyramid's distinction, visible on screen. If you show `/context` at
+all on stage, say that out loud. (Until 2026-08-13 `CLAUDE.md` `@`-imported every
+`SKILL.md`, so `/context` would have shown all skills always loaded and
+contradicted the pyramid live. Do not reintroduce those imports.)
+
 During the session, deliberately correct Claude with variations of the same
 reminder (e.g. *"acordate de chequear el registry antes de llamar a algo
 regresión"*) at least **3 times** across Demos 1–5 — Demo 6 needs that setup.
@@ -93,15 +100,15 @@ beat over the screenshot instead of skipping it.
 
 ## Demo 5 · 15:00 — CI triage against the registry
 
-**Type:** `Triajeá el build 42.`
+**Type:** `Triajeá el build 44.`
 
-**Expected:** invokes `ci-failure-triage` → reads `mocks/jenkins/build-42.json`
+**Expected:** invokes `ci-failure-triage` → reads `mocks/jenkins/build-44.json`
 (5 unlabeled failures + the day's commits) and `memory/known-issues.md` →
 classifies: 2 known flakes (timeout signatures match the registry), 1 infra
 (connection refused to auth), 2 real regressions (not in registry, commits
 touch related code) → one-line status per `status-format.mdc`
-(`❌ build 42 — 280 passed / 5 failed (2 flakes)`) → offers registry update
-via `known-issues-registry-update` (bump last-seen to build 42).
+(`❌ build 44 — 280 passed / 5 failed (2 flakes)`) → offers registry update
+via `known-issues-registry-update` (bump last-seen to build 44).
 
 **Watch for:** the categories must be *derived* — the JSON carries no hints.
 If asked to re-trigger, the `no-parallel-ci` rule still applies.

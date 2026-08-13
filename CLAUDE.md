@@ -21,17 +21,31 @@ Regenerate it whenever STATUS changes.
 
 ## Workspace rules
 
+Rules are always loaded — that is what makes them rules. They are imported
+here on purpose:
+
 @.claude/rules/english-only.mdc
 @.claude/rules/no-parallel-ci.mdc
 @.claude/rules/status-format.mdc
 
+## Memory
+
+Facts that must survive between sessions. Also always loaded:
+
+@memory/MEMORY.md
+
 ## Skills
 
-@.claude/skills/ticket-coverage-gap-analysis/SKILL.md
-@.claude/skills/local-build-gate/SKILL.md
-@.claude/skills/multi-agent-pr-review/SKILL.md
-@.claude/skills/ci-failure-triage/SKILL.md
-@.claude/skills/known-issues-registry-update/SKILL.md
+Skills live in `.claude/skills/` and are **deliberately not imported here.**
+Claude discovers them by their `description` frontmatter and loads a skill's
+body only when the situation calls for it. That on-demand loading is the
+whole difference between a skill and a rule — importing them would erase it.
+
+- `ticket-coverage-gap-analysis` — ticket → coverage map, gaps, proposed tests
+- `local-build-gate` — typecheck + tests before any remote CI build
+- `multi-agent-pr-review` — 5 specialized subagents in parallel, one summary
+- `ci-failure-triage` — classify CI failures against the known-issues registry
+- `known-issues-registry-update` — record a confirmed flake in the registry
 
 ## Demo app
 

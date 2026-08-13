@@ -425,7 +425,7 @@ patrón fijo. El subagente entra donde hace falta *leer*, no solo *matchear*.
 
 > *↩ Resuelve: triagear tests rojos a mano contra known-issues.*
 
-**Input:** `mocks/jenkins/build-42.json` — 5 rojos **sin etiquetar**: nombre,
+**Input:** `mocks/jenkins/build-44.json` — 5 rojos **sin etiquetar**: nombre,
 mensaje, stack y los commits. Y es **la misma branch de hoy**:
 `feature/DEMO-100-channels-coverage`.
 
@@ -433,8 +433,8 @@ mensaje, stack y los commits. Y es **la misma branch de hoy**:
 
 | Categoría | De dónde sale |
 |---|---|
-| Flaky test conocido | La firma matchea el registry (2× `TimeoutException`, visto hasta build 39) |
-| Infra | El ambiente no responde (`Connection refused` a auth) |
+| Flaky test conocido | La firma matchea el registry (2× `Test timed out in 5000ms`, visto hasta build 39) |
+| Infra | El ambiente no responde (`ECONNREFUSED` a auth) |
 | Regresión real | No está en el registry **y** el commit toca código relacionado |
 
 **La categoría se deduce de la evidencia — no viene dada en el JSON.**
@@ -888,8 +888,9 @@ la memory y la rule**. El hook fue el final del camino.
 
 - `ci-failure-triage` no decide a ciegas: la categoría sale de evidencia
   visible (firma en el registry, stack, commits) — no es una caja negra
-- El registry (`memory/known-issues.md`) lo actualiza una persona, y pide
-  **2+ sightings** — un solo fallo nunca es un flaky test
+- El registry (`memory/known-issues.md`) lo propone el agente y lo confirmás
+  vos antes de commitear, y pide **2+ sightings** — un solo fallo nunca es un
+  flaky test
 - Si la categoría no cierra con evidencia, **regresión real es el default**
   — el skill sesga hacia flaggear de más, no de menos
 - Igual que en la Demo 4: el agente propone la categoría, vos la confirmás

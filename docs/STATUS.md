@@ -34,6 +34,14 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
   appendix anatomy/example slides (Memory/Skill/Rule/Hook). Full detail in
   `decision-log.md`'s 2026-08-13 entries. Stopped before the 5th Q&A backup
   slide — pick up there if resuming this pass.
+- **Three repo-vs-deck contradictions fixed (2026-08-13).** A maximally-critical
+  review found the repo refuting three of the deck's own claims: skills were
+  `@`-imported in `CLAUDE.md` (so "skills load on demand" was false, and
+  `/context` on stage would have shown it), `memory/` was loaded by nobody
+  (so "sobrevive al `/clear`" was false), and the demo day was chronologically
+  impossible (build 43 "running at 11:30" per a mock that said 14:22; build 42
+  triaged at 15:00 despite being numbered *before* it). All three fixed — see
+  the decision-log entry. **The timing problem below is not fixed.**
 - **Everything is committed and pushed to origin**, working on branch
   `claude/estructura-revision-fwdb2c` (2026-08-13).
 - **No rehearsal of the full 30-minute run has happened yet** with the current
@@ -52,12 +60,40 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
 
 ## Pending decisions (the author's, not the agent's)
 
-1. **The GitHub repo is still PRIVATE.** The slides print
+1. **THE TALK DOES NOT FIT IN 30 MINUTES.** A critical review pass estimated
+   the live path at **~43 min against a 25-min budget (~18 min over)**: the 35
+   main-flow slides alone are ~26 min, before running a single demo, and the 6
+   demos are ~17 min of wall clock once you count the agent actually
+   responding (Demo 4 alone ≈ 5 min — 5 parallel subagents plus the runbook's
+   instruction to read the per-axis details aloud; Demo 2 ≈ 4 min for a full
+   red→green cycle with the hook firing typecheck on every edit). Even an
+   all-optimistic run lands at ~34 min. **This needs a cut decision before the
+   rehearsal, not during it.** The reviewer's ranked prescription: pre-record
+   Demos 2 and 6; move the 3 "widening" slides (linter/SonarQube, triage
+   capability, conversation-mining) to the appendix; merge the two subagent
+   slides; merge the pyramid with "Las 4 piezas"; cut "El flujo end-to-end";
+   cut either "El patrón" or "Qué le toca a la persona"; cut "Fuentes";
+   compress the two opening pain slides into one. Target: **4 demos live, 2
+   pre-recorded, ~27 slides.**
+2. **Two competing conceptual axes.** The reviewer could state the thesis but
+   had to reconstruct the architecture: the pyramid (files that persist) and
+   the subagents (in-session parallelism) both present as "the idea", and the
+   star demo (Demo 4) belongs to the axis that is *not* the thesis. The
+   "Subagentes — qué son" slide papers over the seam with an explicit
+   transition line. Decide whether to subordinate one axis or accept the split.
+3. **The linter/SonarQube table strawmans static analysis.** The
+   `catch (e) { return [] }` row claims a linter "puede no marcarlo" — but
+   SonarQube has `S2486` and ESLint has `no-empty` for exactly that. Also
+   "gratis" is wrong for SonarQube Developer/Enterprise. Drop that row (the
+   lying-comment and `as Channel` examples are honest and sufficient) or
+   reword it.
+4. **The GitHub repo is still PRIVATE.** The slides print
    `github.com/edcrove/claude-qa-demo` and the pre-flight checklist assumes a
    public repo — flip visibility before the talk (`gh repo edit
    edcrove/claude-qa-demo --visibility public`, as edcrove).
-2. **`mocks/github/pr-7.diff`** is readable but not `git apply`-able. Fix or
-   document as intentional?
+5. **`mocks/github/pr-7.diff`** is readable but not `git apply`-able. More
+   urgent than it looks: the talk invites cloning four times and this is the
+   star demo's artifact. Fix the nested hunk before publishing the link.
 
 ## Suggested next steps
 

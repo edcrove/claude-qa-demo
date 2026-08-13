@@ -237,6 +237,60 @@ triggers, same artifacts — now weeks 1, 1, 3, 3, 6, 6, 9, 11, 13, 16
 week headers only) and the slide, keeping them in lockstep so the
 divergence fixed earlier doesn't reopen.
 
+## 2026-08-13 — Critical-review blockers: the repo contradicted the deck
+
+A third reviewer pass (subagent, maximally-critical brief) found three claims
+the deck makes that **the repo itself refuted** — the sharpest possible
+failure mode, since the talk invites the audience to clone it four times.
+
+1. **`CLAUDE.md` `@`-imported all 5 `SKILL.md` files**, so every skill was
+   always in context — exactly what the pyramid slide defines as the property
+   that separates a *rule* from a *skill*. Worse, `runbook.md` tells the
+   speaker to run `/context` on stage, which would have displayed the
+   contradiction live. All 5 have `description` frontmatter, so Claude Code
+   discovers them on demand with no import needed: removed the imports,
+   replaced with a prose list plus an explicit note on *why* they are not
+   imported. `/context` is now an asset that demonstrates the distinction —
+   the runbook says so.
+2. **The `memory/` escalón was decorative.** Nothing imported it: the
+   feedback memory was loaded by nobody, while the appendix slide claimed
+   "Persiste entre sesiones. Sobrevive al `/clear`." Now `CLAUDE.md` imports
+   `memory/MEMORY.md`, which in turn `@`-imports the feedback memory.
+   `known-issues.md` stays deliberately on-demand (it grows per flake; the
+   triage skill reads it) and `MEMORY.md` explains that split. Also renamed
+   `feedback_local_build_before_ci.md` → `feedback-local-build-before-ci.md`
+   to match its own `name:` field and the slide that cites it.
+3. **The demo day was chronologically impossible.** Demo 3 (11:30) showed
+   "build 43 RUNNING" from a mock that said it started at 14:22; Demo 5
+   (15:00) then triaged build **42** — numbered *before* the build that was
+   still running, and timestamped 19:47, after everything. The slide claims
+   "es la misma branch de hoy" while the mock's failures pointed at
+   `src/main/java/com/acme/**`, not the TypeScript the audience just watched
+   change. Fixed: build 43 now starts 11:20 (RUNNING at 11:30, as Demo 3
+   needs); `build-42.json` → `build-44.json`, running 11:35→12:18 on today's
+   branch — after 43, before the 15:00 triage. Failures and commits now point
+   at `demo-app/`, and the first failure is
+   `GET /api/v1/channels/:slug > returns the channel for a known slug` at
+   `demo-app/tests/api.test.ts:7` — a **real** test at a **real** line, the
+   genre assertion, so the "misma branch de hoy" claim survives a clone and a
+   grep. `memory/known-issues.md` renamed its entries to the matching vitest
+   names/signatures; verified mechanically that 2 registry entries match the
+   build and the third does not, so the discrimination Demo 5 depends on is
+   real. `status-format.mdc`'s examples used builds 42/43, colliding with the
+   demo's live numbers — moved to 51/52.
+
+Also fixed from the same review: the Q&A slide claimed the registry "lo
+actualiza una persona", contradicting `ci-failure-triage` step 4, which
+invokes `known-issues-registry-update`. Reworded to "lo propone el agente y lo
+confirmás vos antes de commitear" — true, and it closes on the ownership
+thread instead of against it.
+
+Still open from that review and **not** addressed here: the talk is ~18
+minutes over budget (see STATUS.md), the deck carries two competing
+conceptual axes (pyramid vs. subagents), the linter/SonarQube table
+strawmans static analysis on the `catch` row, and the 3 "widening" slides
+are candidates to move to the appendix.
+
 ### Known open items
 
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file

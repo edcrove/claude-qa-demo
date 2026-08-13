@@ -4,9 +4,9 @@
   "env": "stage",
   "status": "RUNNING",
   "result": null,
-  "startedAt": "2026-05-14T14:22:00Z",
+  "startedAt": "2026-05-14T11:20:00Z",
   "startedBy": "teammate@acme.example",
   "branch": "feature/DEMO-101-items-pagination",
   "estimatedDurationMinutes": 12,
-  "progress": "suite 3 of 7 (ItemsApiTest)"
+  "progress": "suite 3 of 7 (items)"
 }

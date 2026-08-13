@@ -33,7 +33,7 @@ signal. Categorize on the evidence (test name, message, stack), never on a
 | Test bug | Assertion against stale data, hardcoded date, or an order the API never guaranteed | 3 |
 | Real regression | Not in the registry, the assertion is about behavior, and the change under test touches related code | 4 (default) |
 
-A bare `TimeoutException` is **not** automatically infrastructure: if the test is in
+A bare timeout is **not** automatically infrastructure: if the test is in
 the registry with that signature, it is a known flake. Only escalate to infra when
 the failure shows the environment itself is down.
 
