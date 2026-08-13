@@ -118,9 +118,9 @@ Análisis local + Jenkins  →  bugs en Jira  →  follow-up del ciclo
 
 # La tesis
 
-# Mi setup no se diseñó.
+# Mi setup no se diseña.
 
-# Se cultivó.
+# Se cultiva.
 
 ---
 
