@@ -23,6 +23,17 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
   — de prompt suelto a skills, rules y hooks. Propagated across
   `slides/slides.md`, `CLAUDE.md`, `README.md`, `talk-design.md`, this file
   and `HANDOFF.md` (2026-08-13).
+- **Full slide-by-slide content/wording pass done (2026-08-13).** Went
+  through the entire deck in order — cold open through Q&A backup —
+  fixing wording, adding 3 widening slides (linter/SonarQube comparison,
+  triage capability, conversation-mining), reworking the promotion pyramid
+  and "El patrón" (dropped fake calendar-time claims), resolving the
+  timeline divergence (`evolution-timeline.md` vs. the deck) and then
+  stretching it to ~4 months per author request, reworking "Fuentes" to
+  drop ad-like phrasing, and adding a trigger prompt example to all 8
+  appendix anatomy/example slides (Memory/Skill/Rule/Hook). Full detail in
+  `decision-log.md`'s 2026-08-13 entries. Stopped before the 5th Q&A backup
+  slide — pick up there if resuming this pass.
 - **Everything is committed and pushed to origin**, working on branch
   `claude/estructura-revision-fwdb2c` (2026-08-13).
 - **No rehearsal of the full 30-minute run has happened yet** with the current

@@ -59,6 +59,22 @@ that reset and protect the live demo.
   hook-vs-skill distinction, a redundant slide, an unanchored claims-heavy
   slide, a missing Q&A backup answer, and a near-duplicate MCP explanation
   across two consecutive slides.
+- **Full slide-by-slide pass (2026-08-13), stopped mid Q&A backup.** Went
+  through the whole deck top to bottom fixing wording and adding content:
+  3 new "widening" slides after Demo 4/5/6 (linter/SonarQube comparison,
+  triage capability beyond the demo, mining past conversations for skill
+  candidates); reworked the promotion pyramid into an explicit funnel
+  ("pocas piezas llegan hasta arriba" — not everything ends as a hook) and
+  fixed "El patrón"'s labels, which falsely implied fixed calendar
+  durations instead of repetition-triggered promotion; resolved the
+  timeline divergence between the deck and `evolution-timeline.md` (the
+  slide had invented 2 skills that don't exist in the repo and omitted 3
+  real ones), then stretched the reconciled timeline to ~4 months per
+  request; reworked "Fuentes" to drop ad-like phrasing and add a public
+  plugins/MCPs trust disclaimer; added a real trigger prompt to all 8
+  appendix anatomy/example slides. Left off before the 5th Q&A backup
+  slide ("¿Quién audita al clasificador de CI?") — resume there. Full
+  detail in `decision-log.md`'s 2026-08-13 entries.
 - **No full timed rehearsal has happened yet** with the current deck.
 
 ## The deck's storytelling devices
@@ -77,7 +93,8 @@ that reset and protect the live demo.
    rule blocks it (a mock build is RUNNING on stage).
 6. **The question gets answered:** slide 4 asks *"¿Puedo automatizar mi
    proceso de QA con IA?"*; a callback slide answers it before the closing
-   ("Sí — lo acabás de ver. ¿Se diseñó? No. Se cultivó.").
+   ("Sí — lo acabás de ver. ¿Se diseña? No. Se cultiva." — present tense
+   throughout since 2026-08-13, matching the title).
 7. **Cultivating goes beyond the agent's config:** the "El agente también
    construye" slide — the agent also builds *for the project* (CI tuned to
    your rules, linters, SonarQube, coverage, notifications). Don't fear the
