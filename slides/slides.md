@@ -539,15 +539,15 @@ aplicado a un linter o a un quality gate, la conversación es la misma.
 - `/plugin` marketplace · `superpowers` · `pr-review-toolkit`
 - MCP servers públicos (Atlassian, GitHub, Slack, context7)
 
+**Ojo:** son plugins y MCPs públicos — usá siempre los de confianza,
+los que tu organización ya aceptó.
+
 **Lo que destilás:**
 - Skills `.claude/skills/` · Rules `.claude/rules/`
 - Hooks `.claude/settings.json` · Memory `memory/`
 
 **Para comunicar el trabajo:**
-- **Gamma** (`gamma.app`) — slides AI desde un prompt
-- **Marp** — slides como código (este deck) · **Mermaid / draw.io** — diagramas en texto
-
-> Tip: `slides.md` se importa a Gamma en 2 clics. Mismo contenido, otro template.
+- Confluence, Notion, armar presentaciones — el mismo patrón también sirve para eso
 
 ---
 
