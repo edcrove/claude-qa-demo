@@ -173,24 +173,27 @@ Una sola conversación con Claude puede pasar por los **4**.
 
 # La pirámide de promoción
 
+La forma es a propósito: **pocas piezas llegan hasta arriba.**
+Cada una se queda en el nivel que el problema realmente pide.
+
 ```
                   ╔════════════╗
-                  ║    HOOK    ║   ◀ lo ejecuta la harness (determinista)
+                  ║    HOOK    ║   ◀ corre solo, nadie lo invoca — solo para lo 100% mecánico
                   ╚════════════╝
                 ╔════════════════╗
-                ║      RULE      ║  ◀ guardrail, siempre cargado
+                ║      RULE      ║  ◀ siempre cargada, pero Claude decide cómo aplicarla
                 ╚════════════════╝
               ╔════════════════════╗
-              ║       SKILL        ║ ◀ procedimiento invocable bajo demanda
+              ║       SKILL        ║ ◀ lo invocás cuando hace falta — la mayoría se queda acá
               ╚════════════════════╝
             ╔════════════════════════╗
-            ║        MEMORY          ║ ◀ hecho recordado entre sesiones
+            ║        MEMORY          ║ ◀ un hecho que Claude recuerda de una sesión a otra
             ╚════════════════════════╝
           ╔════════════════════════════╗
-          ║      PROMPT SUELTO         ║ ◀ lo que tipeás hoy
+          ║      PROMPT SUELTO         ║ ◀ lo que tipeás hoy, una sola vez
           ╚════════════════════════════╝
 
-          más estructura  ↑           ↑  menos ceremonia futura
+Subir de nivel = más estructura ahora, menos que repetir después.
 ```
 
 ---
