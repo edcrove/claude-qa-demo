@@ -749,6 +749,9 @@ Nació después de romper el build dos veces en la misma semana.
 
 # Rule — anatomía
 
+**Prompt:**
+> *"Convertí esto en una rule — quiero que esté siempre presente."*
+
 ```markdown
 ---
 description: One-line summary, ≤ 120 chars, present tense
@@ -765,6 +768,10 @@ A diferencia de un skill, **siempre está cargada** en el contexto.
 ---
 
 # Rule — ejemplo real
+
+**Prompt:**
+> *"Esto no puede volver a pasar. Regla: nunca triggerear un build
+> si ya hay otro corriendo en el mismo ambiente."*
 
 ```markdown
 ---
