@@ -73,7 +73,7 @@ Spoiler: sí — **sobre las bases que ya tenés.**
 
 Plataforma de streaming · servicio backend REST
 
-**Framework:** Java + TestNG + RestAssured + Allure reports
+**Framework:** Java + TestNG + RestAssured + Allure reports + Jira + TestRail + Jenkins
 
 **Pipeline diario:**
 
