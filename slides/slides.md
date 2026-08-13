@@ -209,31 +209,36 @@ Subir de nivel = más estructura ahora, menos que repetir después.
 | 3 | **Skill** | `local-build-gate` — ahora lo corre Claude por mí |
 | 4 | **Hook** | typecheck en cada edit — 5 olvidos después, **ya no depende de nadie** |
 
-La **Rule** tiene su propia cicatriz: `no-parallel-ci` — los 90 minutos del principio.
+**Fijate que saltea la Rule** — y no es un olvido. Una rule me lo *recuerda*,
+y el problema era justamente que recordármelo no alcanzaba. No es una escalera
+que subís entera: es un menú, y cada dolor entra por donde le corresponde.
 
-Markdown y JSON en el repo. Anatomía y ejemplos completos: **apéndice**.
+La **Rule** tiene su propia cicatriz: `no-parallel-ci` — los 90 minutos del principio.
 
 > Ninguna pieza se diseñó. Cada una fue admitir que acordarse no escala.
 
 ---
 
-# Subagentes — qué son
+# Un skill no siempre ejecuta: a veces delega
 
-> Hasta acá vimos el **setup** — que vive en **archivos**.
-> Ahora hablemos del **motor**: el agente en sesión. Los subagentes son una de sus piezas.
+`multi-agent-pr-review` es un `SKILL.md` como cualquier otro — markdown en tu
+repo. Lo distinto es lo que hace adentro: en vez de correr pasos él mismo,
+**despacha especialistas.**
 
-Un agente subordinado con su **propio contexto** y **sus propias tools**.
+Un **subagente** es un agente subordinado, con su propio contexto y sus propias tools:
 
-- No ven tu historial — vos los preparás
-- No te contaminan — el principal solo ve el resumen final
-- Pueden ser **especializados** (code-reviewer, debugger, etc.)
-- Se despachan en **paralelo** sin que se pisen
+- No ve tu historial — el skill le arma el encargo
+- No te contamina — al principal solo le vuelve el resumen
+- Es **especializado** (code-reviewer, silent-failure-hunter, etc.)
+- Se despachan en **paralelo**, sin pisarse
+
+Sigue siendo la misma pirámide. Sigue siendo un archivo que podés versionar.
 
 ---
 
-# Subagentes en paralelo
+# El skill por dentro
 
-Vos pedís la review. A partir de ahí, corre el Main agent — Claude, no vos:
+Vos invocás el skill. A partir de ahí despacha el Main agent — Claude, no vos:
 
 ```
    ┌───────────────────────────────────────────────────────────────┐
@@ -403,19 +408,21 @@ el PR, la respuesta soy yo — "no sé, lo hizo la IA" no es una respuesta.**
 
 # ¿Y esto no lo hacía ya un linter?
 
-**No lo mismo.** Un linter o SonarQube matchea patrones fijos — reglas
-que alguien escribió de antemano. No lee.
+Buena parte sí. La diferencia no es *quién encuentra más*, es **qué tipo de
+cosa puede encontrar**: el análisis estático matchea patrones escritos de
+antemano; el subagente compara el código contra lo que se supone que hace.
 
 | | Linter / SonarQube | Subagente |
 |---|---|---|
-| Qué mira | Sintaxis, reglas estáticas | Semántica: qué dice el código vs. qué debería hacer |
-| `catch (e) { return [] }` | Puede no marcarlo — sintaxis válida | Lo caza: el error desaparece en silencio |
-| Comentario "sorted" sobre código sin ordenar | No lo detecta — no lee inglés | Lo detecta: compara la prosa contra la lógica |
-| Costo | Determinista, gratis, corre en cada commit | Tokens — se paga por juicio, no por sintaxis |
+| `catch (e) { return [] }` | **Lo marca** — `S2486`, excepción ignorada | Además ve *qué rompe*: ese `[]` es indistinguible de "no hay canales" |
+| Comentario "sorted" sobre código que no ordena | No lo ve — no compara prosa contra lógica | Lo detecta |
+| Test que solo hace `toBeDefined()` | Suma a la cobertura como cualquier otro | Dice que no prueba nada |
+| Costo | Fijo: corre en cada commit sin costo por corrida | Tokens — pagás por juicio |
 | Cuándo | Siempre, en CI | Bajo demanda, cuando el caso lo pide |
 
-**No compiten.** SonarQube sigue corriendo en cada commit para lo que sí es
-patrón fijo. El subagente entra donde hace falta *leer*, no solo *matchear*.
+**No compiten, y el linter no se saca.** Sigue corriendo en cada commit para
+todo lo que sí es patrón fijo — es más barato y no se cansa. El subagente entra
+donde hace falta *leer*, no solo *matchear*.
 
 *Review adentro. Antes del merge, la regression completa en Jenkins. →*
 
@@ -620,7 +627,7 @@ Arrancás con workflows que no tuviste que escribir.
 # Tu setup no se diseña.
 # Se cultiva.
 
-**Skills + Rules + Memory + Subagentes = workflow reproducible**
+**Memory + Skills + Rules + Hooks = workflow reproducible**
 
 **Cultivarlo no te saca del medio: el criterio, el dominio y la firma siguen siendo tuyos.**
 
@@ -821,7 +828,7 @@ El comando recibe el evento como **JSON por stdin**.
 # Hook — ejemplo real
 
 **Prompt:**
-> *"Me olvidé el typecheck 5 veces seguidas — teniendo memory y rule.
+> *"Me olvidé el typecheck 5 veces seguidas — teniendo memory y skill.
 > Convertilo en hook: que corra en cada edit, pase lo que pase."*
 
 ```json
@@ -844,7 +851,7 @@ El comando recibe el evento como **JSON por stdin**.
 El path sale del JSON de stdin con `jq` — no de una variable de entorno.
 
 Nació después de olvidarme el `typecheck` 5 veces seguidas — **teniendo
-la memory y la rule**. El hook fue el final del camino.
+el memory y el skill**. El hook fue el final del camino.
 
 ---
 

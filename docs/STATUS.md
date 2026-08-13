@@ -34,7 +34,7 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
   appendix anatomy/example slides (Memory/Skill/Rule/Hook). Full detail in
   `decision-log.md`'s 2026-08-13 entries. Stopped before the 5th Q&A backup
   slide — pick up there if resuming this pass.
-- **Three repo-vs-deck contradictions fixed (2026-08-13).** A maximally-critical
+- **Three repo-vs-deck contradictions + the structural findings fixed (2026-08-13).** A maximally-critical
   review found the repo refuting three of the deck's own claims: skills were
   `@`-imported in `CLAUDE.md` (so "skills load on demand" was false, and
   `/context` on stage would have shown it), `memory/` was loaded by nobody
@@ -75,23 +75,11 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
    cut either "El patrón" or "Qué le toca a la persona"; cut "Fuentes";
    compress the two opening pain slides into one. Target: **4 demos live, 2
    pre-recorded, ~27 slides.**
-2. **Two competing conceptual axes.** The reviewer could state the thesis but
-   had to reconstruct the architecture: the pyramid (files that persist) and
-   the subagents (in-session parallelism) both present as "the idea", and the
-   star demo (Demo 4) belongs to the axis that is *not* the thesis. The
-   "Subagentes — qué son" slide papers over the seam with an explicit
-   transition line. Decide whether to subordinate one axis or accept the split.
-3. **The linter/SonarQube table strawmans static analysis.** The
-   `catch (e) { return [] }` row claims a linter "puede no marcarlo" — but
-   SonarQube has `S2486` and ESLint has `no-empty` for exactly that. Also
-   "gratis" is wrong for SonarQube Developer/Enterprise. Drop that row (the
-   lying-comment and `as Channel` examples are honest and sufficient) or
-   reword it.
-4. **The GitHub repo is still PRIVATE.** The slides print
+2. **The GitHub repo is still PRIVATE.** The slides print
    `github.com/edcrove/claude-qa-demo` and the pre-flight checklist assumes a
    public repo — flip visibility before the talk (`gh repo edit
    edcrove/claude-qa-demo --visibility public`, as edcrove).
-5. **`mocks/github/pr-7.diff`** is readable but not `git apply`-able. More
+3. **`mocks/github/pr-7.diff`** is readable but not `git apply`-able. More
    urgent than it looks: the talk invites cloning four times and this is the
    star demo's artifact. Fix the nested hunk before publishing the link.
 

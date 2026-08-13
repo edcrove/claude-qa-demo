@@ -18,8 +18,18 @@ team's own process.
 
 ## Central message
 
-> Skills + Rules + Memory + Subagents = a reproducible QA workflow.
+> Memory + Skills + Rules + Hooks = a reproducible QA workflow.
 > It is not designed up front: it is cultivated.
+
+Subagents are deliberately **not** in that equation (they were until
+2026-08-13). They are not a peer of the pyramid's levels — they are what one
+particular skill (`multi-agent-pr-review`) does inside itself. Listing them
+alongside skills/rules/memory set up a second conceptual axis competing with
+the thesis, which a critical reviewer flagged as the deck's main structural
+weakness: the star demo belonged to the axis that was *not* the thesis. The
+equation now names exactly the pyramid's persistent artifacts, and hooks —
+previously missing from it despite being the pyramid's top level and the
+payoff of the typecheck story — are back in.
 
 The promotion pyramid is the mechanism:
 

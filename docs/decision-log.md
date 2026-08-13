@@ -291,6 +291,51 @@ conceptual axes (pyramid vs. subagents), the linter/SonarQube table
 strawmans static analysis on the `catch` row, and the 3 "widening" slides
 are candidates to move to the appendix.
 
+## 2026-08-13 — Conceptual fixes: one axis, and a pyramid that admits it isn't a ladder
+
+Second round from the critical review, addressing the structural findings
+rather than the factual ones. Deliberately done **before** the timing cut, so
+the cut is decided against a structure that already holds together.
+
+1. **The two competing axes are gone.** The reviewer's sharpest finding: the
+   deck presented the pyramid (artifacts that persist in files) *and*
+   subagents (in-session parallelism) as two co-equal "big ideas", with the
+   star demo belonging to the axis that was **not** the thesis. The root was
+   the thesis statement itself — "Skills + Rules + Memory + **Subagentes** =
+   workflow reproducible" — which listed subagents as a peer of the pyramid's
+   levels (and, oddly, omitted hooks). Fixes: the closing equation is now
+   "Memory + Skills + Rules + Hooks", exactly the pyramid's artifacts; the
+   slide "Subagentes — qué son" became **"Un skill no siempre ejecuta: a
+   veces delega"**, framing subagents as what `multi-agent-pr-review` (a
+   plain `SKILL.md` in this repo) does *inside itself*; "Subagentes en
+   paralelo" became **"El skill por dentro"**. This is not a rhetorical
+   dodge — it is what the repo actually does, and it puts Demo 4 back on the
+   thesis's axis. It also removes the seam the old slide papered over with an
+   explicit "hasta acá vimos el setup, ahora el motor" transition.
+2. **The pyramid stops pretending to be a ladder.** The typecheck story goes
+   prompt → memory → skill → hook and **skips RULE**, which the deck
+   previously left as an unexplained gap. Now stated outright, and turned
+   into the argument instead of a hole: a rule would have *reminded* him, and
+   the whole problem was that being reminded wasn't enough — so it had to
+   become deterministic. "No es una escalera que subís entera: es un menú, y
+   cada dolor entra por donde le corresponde."
+3. **Fixed a three-way contradiction about that same rule.** The appendix
+   Hook slides claimed the hook was born "teniendo la memory y la rule" —
+   but no typecheck rule exists in `.claude/rules/` (only `english-only`,
+   `no-parallel-ci`, `status-format`), *and* the main "Las 4 piezas" table
+   shows the story skipping rule. Corrected to "memory y skill", which is
+   what actually happened and what the repo shows.
+4. **The linter/SonarQube table no longer strawmans static analysis.** The
+   `catch (e) { return [] }` row claimed a linter "puede no marcarlo" — the
+   one example where static analysis is strongest. Rewritten to *cite the
+   real rule* (`S2486`) and move the distinction to consequence vs. shape:
+   the linter flags the pattern, the subagent says why that `[]` is
+   indistinguishable from "no hay canales". Also dropped the claim that
+   SonarQube is "gratis" (Developer/Enterprise are paid) in favour of "costo
+   fijo, sin costo por corrida", and added the `toBeDefined()` row, where
+   static analysis genuinely cannot judge test strength. Citing the tool
+   accurately buys more credibility with this audience than overclaiming.
+
 ### Known open items
 
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file
