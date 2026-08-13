@@ -228,6 +228,15 @@ same artifact names), condensed to one line per entry. `evolution-timeline.md`
 itself wasn't touched — it's the source of truth now; the slide was the one
 that had drifted.
 
+## 2026-08-13 — Stretched the timeline to ~4 months
+
+Author felt weeks 1–7 read too compressed. Spread the same 11 milestones
+further apart — same weeks-as-unit (kept, per author's choice), same
+triggers, same artifacts — now weeks 1, 1, 3, 3, 6, 6, 9, 11, 13, 16
+(~4 months). Updated both `evolution-timeline.md` (the source of truth,
+week headers only) and the slide, keeping them in lockstep so the
+divergence fixed earlier doesn't reopen.
+
 ### Known open items
 
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file

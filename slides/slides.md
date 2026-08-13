@@ -498,17 +498,17 @@ la sugerencia deja de depender de que alguien lleve la cuenta.
 # Mi línea de tiempo real
 
 ```
-semana 1   CLAUDE.md inicial: 5 líneas — nombre, comando de test, convención de commits
-semana 1   ← Skill: local-build-gate (CI roto 2 veces por un typo que typecheck cazaba en 2 seg)
-semana 2   ← Rule: no-parallel-ci (90 min cazando flaky tests fantasma en stage)
-semana 2   ← Rule: english-only (un compañero no podía revisar un commit en español)
-semana 3   ← Skill: ci-failure-triage (las mismas 3 preguntas cada lunes)
-semana 3   ← Skill: known-issues-registry-update (perdía el registro de qué flake ya vi)
-semana 4   ← Plugin pr-review-toolkit + Skill: multi-agent-pr-review (de secuencial a paralelo)
-semana 5   ← Hook: typecheck-after-edit (memory + rule no alcanzaban)
-semana 6   ← Skill: ticket-coverage-gap-analysis (la misma conversación 4 sprints seguidos)
-semana 7   ← Memory: heurística de flakes en stage (80% de los rojos eran flakes, no regresiones)
-ahora      ← El setup vive en git. Los compañeros lo PR-ean también.
+semana 1    CLAUDE.md inicial: 5 líneas — nombre, comando de test, convención de commits
+semana 1    ← Skill: local-build-gate (CI roto 2 veces por un typo que typecheck cazaba en 2 seg)
+semana 3    ← Rule: no-parallel-ci (90 min cazando flaky tests fantasma en stage)
+semana 3    ← Rule: english-only (un compañero no podía revisar un commit en español)
+semana 6    ← Skill: ci-failure-triage (las mismas 3 preguntas cada lunes)
+semana 6    ← Skill: known-issues-registry-update (perdía el registro de qué flake ya vi)
+semana 9    ← Plugin pr-review-toolkit + Skill: multi-agent-pr-review (de secuencial a paralelo)
+semana 11   ← Hook: typecheck-after-edit (memory + rule no alcanzaban)
+semana 13   ← Skill: ticket-coverage-gap-analysis (la misma conversación 4 sprints seguidos)
+semana 16   ← Memory: heurística de flakes en stage (80% de los rojos eran flakes, no regresiones)
+ahora       ← El setup vive en git. Los compañeros lo PR-ean también.
 ```
 
 **Nada se planificó. Cada pieza respondió a un dolor concreto.**
