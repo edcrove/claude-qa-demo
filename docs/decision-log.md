@@ -406,6 +406,39 @@ Deck: 47 → 45 slides (31 main flow, was 33). Remaining on the timing
 checklist: pre-record Demos 2 and 6 (the biggest single win), cut "El flujo
 end-to-end", compress the two opening pain slides.
 
+## 2026-08-13 — Deck restyled, and 13 slides were being clipped
+
+Author reported slides rendering "out of bounds". Measured rather than
+eyeballed: rendered the deck and walked every `<section>` in a real browser
+comparing content height against the frame. **13 of 45 slides overflowed**,
+the worst by 341 px — "Qué le toca a la persona" was using 961 px of a 620 px
+box, so roughly its bottom third was being clipped on the projector and
+nobody would have noticed until the talk.
+
+Fixed together with a restyle, since both live in the same `style:` block:
+
+- **Visual identity.** The old look was stock gaia-inverted. New design leans
+  on what the talk is actually about — plain text on disk: a left gutter rail
+  with an accent tab (like an editor's line-number column), `#` prefixed
+  headings in monospace (markdown flavour), code blocks styled as editor
+  panes with a rounded border, and a teal secondary accent against the
+  existing Claude orange.
+- **Tables became rules instead of boxes** — uppercase letter-spaced headers
+  on a hairline, no cell borders, no zebra striping. This is where most of
+  the vertical space came back. Note gaia fights this: its own `th`/`tr`
+  background and border rules needed `!important` overrides, which is why
+  those declarations look heavy-handed.
+- **Tighter vertical rhythm** — line-height, heading margins and code
+  line-height all trimmed, without shrinking the base font (24px), which
+  would have hurt readability from the back of a room.
+- **`<!-- _class: dense -->`** as an opt-in escape hatch for the two slides
+  that still did not fit; better than shrinking the whole deck for two
+  outliers.
+
+Result: **0 of 45 slides overflow.** Added `scripts/check-slide-overflow.js`
+so this cannot regress silently, and put it in the pre-flight checklist. It
+needs playwright and exits non-zero when something is clipped.
+
 ### Known open items
 
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file

@@ -6,20 +6,92 @@ paginate: true
 backgroundColor: "#1a1d24"
 color: "#e8e8e8"
 style: |
-  section { font-family: 'Inter', 'Helvetica Neue', sans-serif; padding: 50px 60px; font-size: 26px; }
-  section h1 { color: #d97757; font-size: 1.6em; margin-top: 0; }
-  section h2 { color: #c8c8c8; font-weight: 400; font-size: 1.2em; }
-  section p, section li { font-size: 0.95em; line-height: 1.5; }
-  code { background: #2d3139; color: #e8a373; padding: 2px 6px; border-radius: 3px; font-size: 0.85em; }
-  pre { background: #11141a; border-left: 3px solid #d97757; padding: 12px 16px; margin: 8px 0; }
-  pre code { background: transparent; color: #d4d4d4; font-size: 0.62em; line-height: 1.35; padding: 0; }
-  table { border-collapse: collapse; }
-  table th { background: #2d3139; color: #d97757; }
-  table td, table th { border: 1px solid #3a3f4a; padding: 8px 12px; }
-  blockquote { border-left: 4px solid #d97757; color: #b8b8b8; }
-  a { color: #e8a373; }
-  section.lead h1 { color: #d97757; font-size: 1.8em; }
-  section.lead h2 { color: #e8e8e8; font-weight: 300; }
+  /* ── palette ─────────────────────────────────────────────── */
+  :root {
+    --ink: #e8eaed;      --muted: #949cab;   --dim: #5b6472;
+    --accent: #d97757;   --accent2: #6fb3a0; --line: #262c36;
+    --panel: #0f1218;
+  }
+  /* ── the slide is a text buffer: gutter rail on the left ─── */
+  section {
+    font-family: 'Inter', 'Helvetica Neue', sans-serif;
+    font-size: 24px; line-height: 1.42;
+    padding: 40px 56px 40px 74px;
+    color: var(--ink);
+    background:
+      linear-gradient(90deg, var(--panel) 0 34px, transparent 34px),
+      linear-gradient(180deg, #171b22 0%, #12151b 100%);
+  }
+  section::before {
+    content: ''; position: absolute; left: 33px; top: 0; bottom: 0;
+    width: 1px; background: var(--line);
+  }
+  section::after {
+    content: ''; position: absolute; left: 0; top: 50px;
+    width: 34px; height: 3px; background: var(--accent);
+  }
+  /* ── headings: markdown-flavoured, this deck is plain text ─ */
+  section h1 {
+    color: var(--ink); font-size: 1.42em; font-weight: 600;
+    letter-spacing: -0.015em; margin: 0 0 .5em; line-height: 1.15;
+  }
+  section h1::before {
+    content: '#'; color: var(--accent); font-family: ui-monospace, monospace;
+    font-weight: 400; margin-right: .4em;
+  }
+  section h2 { color: var(--muted); font-weight: 400; font-size: 1.08em; margin: 0 0 .5em; }
+  section p { margin: .5em 0; }
+  section ul { margin: .4em 0; padding-left: 1.1em; }
+  section li { margin: .18em 0; }
+  section li::marker { color: var(--accent); }
+  strong { color: #fff; font-weight: 650; }
+  em { color: var(--muted); }
+  /* ── code: editor panes ──────────────────────────────────── */
+  code { background: #232936; color: #eda87f; padding: 1px 6px; border-radius: 4px; font-size: .84em; }
+  pre {
+    background: var(--panel); border: 1px solid var(--line);
+    border-left: 3px solid var(--accent); border-radius: 6px;
+    padding: 10px 14px; margin: .5em 0;
+  }
+  pre code { background: transparent; color: #cfd6e0; font-size: .58em; line-height: 1.3; padding: 0; }
+  /* ── tables: rules, not boxes — lighter and much shorter ─── */
+  table { border-collapse: collapse; width: 100%; margin: .4em 0; font-size: .93em; }
+  section table, section table thead, section table tbody,
+  section table tr, section table th, section table td {
+    background: transparent !important; background-color: transparent !important;
+  }
+  section table th {
+    color: var(--accent2) !important; text-align: left;
+    font-size: .74em; font-weight: 600; text-transform: uppercase;
+    letter-spacing: .07em;
+    border: none !important; border-bottom: 1px solid var(--accent2) !important;
+    padding: 3px 12px 4px 0;
+  }
+  section table td {
+    border: none !important; border-bottom: 1px solid var(--line) !important;
+    padding: 5px 12px 5px 0; vertical-align: top;
+  }
+  section table tr:last-child td { border-bottom: none !important; }
+  blockquote {
+    border-left: 2px solid var(--accent2); color: var(--muted);
+    margin: .5em 0; padding-left: .8em; font-size: .95em;
+  }
+  blockquote strong { color: var(--ink); }
+  a { color: var(--accent); }
+  section::part(pagination), section:after { }
+  /* ── lead slides: no gutter, centred, big ────────────────── */
+  section.lead {
+    padding: 60px 90px;
+    background: radial-gradient(ellipse at 30% 0%, #1d222b 0%, #12151b 70%);
+  }
+  section.lead::before, section.lead::after { display: none; }
+  section.lead h1 { color: var(--accent); font-size: 1.85em; letter-spacing: -0.02em; }
+  section.lead h1::before { content: none; }
+  section.lead h2 { color: var(--ink); font-weight: 300; font-size: 1.25em; }
+  /* ── dense: opt-in for the few content-heavy slides ──────── */
+  section.dense { font-size: 21px; line-height: 1.34; }
+  section.dense h1 { font-size: 1.3em; margin-bottom: .35em; }
+  section.dense pre code { font-size: .55em; }
 ---
 
 <!-- _class: lead -->
@@ -202,6 +274,8 @@ propia cicatriz — `no-parallel-ci`, los 90 minutos del principio.
 > Ninguna pieza se diseñó. Cada una fue admitir que acordarse no escala.
 
 ---
+
+<!-- _class: dense -->
 
 # Un skill no siempre ejecuta: a veces delega
 
@@ -491,6 +565,8 @@ aplicado a un linter o a un quality gate, la conversación es la misma.
 > Cultivás al agente — y el proyecto queda mejor armado que antes.
 
 ---
+
+<!-- _class: dense -->
 
 # Qué le toca a la persona
 

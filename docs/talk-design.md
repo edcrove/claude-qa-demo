@@ -202,6 +202,9 @@ CLAUDE.md, MCP server names, tokens in autocomplete) — that is what
       the repo's `CLAUDE.md` is loaded
 - [ ] terminal font ≥ 16pt, notifications off
 - [ ] slides rendered locally (`slides/slides.html`), no Wi-Fi needed
+- [ ] `node scripts/check-slide-overflow.js <rendered.html>` → "every slide
+      fits" (Marp silently clips content that runs past the bottom edge; this
+      caught 13 clipped slides on 2026-08-13)
 - [ ] backup recording on the desktop
 
 ## Out of scope
