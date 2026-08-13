@@ -669,6 +669,10 @@ entre sesiones. Sobrevive al `/clear`.
 
 # Memory — ejemplo real
 
+**Prompt:**
+> *"Guardá esto en memory: corré typecheck y tests locales antes de
+> cualquier build remoto. Me olvidé 2 veces después de un rebase."*
+
 ```markdown
 ---
 name: feedback-local-build-before-ci
