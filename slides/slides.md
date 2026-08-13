@@ -399,6 +399,24 @@ PR sembrado con 5 bugs distintos (`mocks/github/pr-7.diff`):
 **Lo leo entero antes de postearlo. Si alguien pregunta por qué se bloqueó
 el PR, la respuesta soy yo — "no sé, lo hizo la IA" no es una respuesta.**
 
+---
+
+# ¿Y esto no lo hacía ya un linter?
+
+**No lo mismo.** Un linter o SonarQube matchea patrones fijos — reglas
+que alguien escribió de antemano. No lee.
+
+| | Linter / SonarQube | Subagente |
+|---|---|---|
+| Qué mira | Sintaxis, reglas estáticas | Semántica: qué dice el código vs. qué debería hacer |
+| `catch (e) { return [] }` | Puede no marcarlo — sintaxis válida | Lo caza: el error desaparece en silencio |
+| Comentario "sorted" sobre código sin ordenar | No lo detecta — no lee inglés | Lo detecta: compara la prosa contra la lógica |
+| Costo | Determinista, gratis, corre en cada commit | Tokens — se paga por juicio, no por sintaxis |
+| Cuándo | Siempre, en CI | Bajo demanda, cuando el caso lo pide |
+
+**No compiten.** SonarQube sigue corriendo en cada commit para lo que sí es
+patrón fijo. El subagente entra donde hace falta *leer*, no solo *matchear*.
+
 *Review adentro. Antes del merge, la regression completa en Jenkins. →*
 
 ---

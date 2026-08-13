@@ -175,6 +175,21 @@ Also fixed while touching these files: three decision-log entries from this
 same working session were mis-dated 2026-08-12 instead of 2026-08-13 —
 corrected, since this file's whole purpose is being the accurate history.
 
+## 2026-08-13 — Added the linter/SonarQube comparison slide
+
+Author, mid slide-by-slide pass: wanted Demo 4's aggregated-review slide
+followed by an explicit comparison against non-agentic static analysis
+(SonarQube, linters) — the technical differentiator question a QA/dev
+audience would naturally ask right at that moment, and the deck didn't
+answer it anywhere. New slide "¿Y esto no lo hacía ya un linter?" inserted
+right after Demo 4 (2/2), before Demo 5: a table contrasting what static
+tools catch (fixed patterns) against what a subagent catches (semantic
+mismatches — a comment lying about sorting, a `catch` block silencing an
+error), closing on "no compiten" — SonarQube keeps running deterministically
+in CI, the subagent covers what requires reading, not matching. The
+existing handoff line to Demo 5 moved from the end of Demo 4 (2/2) to the
+end of this new slide. Deck: 46 → 47 slides (33 main flow, was 32).
+
 ### Known open items
 
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file

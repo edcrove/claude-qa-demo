@@ -46,7 +46,7 @@ that reset and protect the live demo.
   leak check (`scripts/check-leaks.sh`) pass; deck renders.
 - **Title decided and announced:** "Tu setup de QA no se diseña: se cultiva"
   — de prompt suelto a skills, rules y hooks. No longer a pending decision.
-- **Deck: 46 slides** — 32 main flow, 9 appendix (anatomy + real example of
+- **Deck: 47 slides** — 33 main flow, 9 appendix (anatomy + real example of
   memory/skill/rule/hook), 5 Q&A backup (token costs, model churn, offline,
   who audits the CI-triage classifier). Count verified against Marp's own
   section count, not eyeballed.
