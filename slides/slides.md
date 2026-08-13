@@ -554,8 +554,8 @@ los que tu organización ya aceptó.
 # El patrón
 
 ```
-Prompt suelto  →  Memory  →  Skill  →  Rule  →  Hook
-   (hoy)         (mañana)   (semana)   (mes)   (trimestre)
+Prompt suelto  →   Memory   →    Skill    →     Rule      →   Hook
+  (una vez)    (entre sesiones) (bajo demanda) (siempre cargada) (automático)
 ```
 
 Cada nivel:
