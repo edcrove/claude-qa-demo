@@ -358,6 +358,28 @@ Deck: 49 → 47 slides (33 main flow, was 35). ~95 s recovered. The timing gap
 is still the top open item; the remaining prescription is tracked as a
 checklist in `STATUS.md`.
 
+## 2026-08-13 — The 3 widening slides became passing notes
+
+The reviewer wanted all three moved out of the main flow; the author kept
+them but had them rewritten as **notas al pasar** — short enough to say while
+moving, instead of full arguments. That addresses the reviewer's actual
+complaint (a register change to brochure right after six evidence-heavy
+scenes) without losing the content.
+
+- **"¿Y esto no lo hacía ya un linter?"** — lost its 5-row comparison table.
+  Now three sentences that still cite `S2486` by name and still land "el
+  linter matchea patrones, el subagente lee. Van juntos." Roughly 60 s → 20 s.
+- **"El triage no termina en la categoría"** — 3 bullets + closing collapsed
+  into one sentence that keeps the honest framing ("son 5 fallas para que
+  entren en pantalla") and the three capabilities.
+- **"No hace falta que te acuerdes vos"** → **"Y no siempre tenés que contar
+  vos".** This one needed more than trimming: the reviewer's sharpest point
+  was that it *deactivated Demo 6 retroactively* — the audience had just felt
+  the moment of counting to 3, and the next slide said counting wasn't
+  necessary. Rewritten to extend instead of negate: "Hoy conté hasta 3 porque
+  me acordaba. Cuando no te acordás, se lo preguntás… El patrón es el mismo —
+  cambia quién lo detecta." Demo 6's mirror payoff survives intact.
+
 ### Known open items
 
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file

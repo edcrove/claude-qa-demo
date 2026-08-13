@@ -76,8 +76,9 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
    - [x] cut "El patrón" — was the deck's *third* statement of the same five
          levels; the closing slide still carries it as an equation
    - [ ] pre-record Demos 2 and 6 (**biggest single win: ~270 s**)
-   - [ ] move the 3 "widening" slides (linter/SonarQube, triage capability,
-         conversation-mining) to the appendix
+   - [x] the 3 "widening" slides stay in the flow but were rewritten as
+         *notas al pasar* (~60 s → ~20 s each); "No hace falta que te
+         acuerdes vos" also reframed so it stops negating Demo 6's payoff
    - [ ] merge the two subagent slides — now natural, since the 2026-08-13
          reframe made them one idea (a skill and what it does inside)
    - [ ] merge the pyramid with "Las 4 piezas"

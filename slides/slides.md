@@ -408,21 +408,13 @@ el PR, la respuesta soy yo — "no sé, lo hizo la IA" no es una respuesta.**
 
 # ¿Y esto no lo hacía ya un linter?
 
-Buena parte sí. La diferencia no es *quién encuentra más*, es **qué tipo de
-cosa puede encontrar**: el análisis estático matchea patrones escritos de
-antemano; el subagente compara el código contra lo que se supone que hace.
+Buena parte sí — y **el linter no se saca**: es más barato y no se cansa.
 
-| | Linter / SonarQube | Subagente |
-|---|---|---|
-| `catch (e) { return [] }` | **Lo marca** — `S2486`, excepción ignorada | Además ve *qué rompe*: ese `[]` es indistinguible de "no hay canales" |
-| Comentario "sorted" sobre código que no ordena | No lo ve — no compara prosa contra lógica | Lo detecta |
-| Test que solo hace `toBeDefined()` | Suma a la cobertura como cualquier otro | Dice que no prueba nada |
-| Costo | Fijo: corre en cada commit sin costo por corrida | Tokens — pagás por juicio |
-| Cuándo | Siempre, en CI | Bajo demanda, cuando el caso lo pide |
+SonarQube marca ese `catch` vacío (`S2486`). Lo que no ve es que el comentario
+dice *"sorted"* sobre código que no ordena, ni que un `toBeDefined()` no
+prueba nada.
 
-**No compiten, y el linter no se saca.** Sigue corriendo en cada commit para
-todo lo que sí es patrón fijo — es más barato y no se cansa. El subagente entra
-donde hace falta *leer*, no solo *matchear*.
+**El linter matchea patrones. El subagente lee.** Van juntos.
 
 *Review adentro. Antes del merge, la regression completa en Jenkins. →*
 
@@ -450,16 +442,9 @@ mensaje, stack y los commits. Y es **la misma branch de hoy**:
 
 # El triage no termina en la categoría
 
-Lo que viste categoriza contra el registry. El mismo patrón da para más:
-
-- **Lee los logs completos**, no solo el resumen del build — ahí vive el
-  troubleshooting real, no en el semáforo rojo/verde
-- **Agrupa fallas relacionadas** entre sí — mismo stack, mismo servicio, mismo commit
-- **Arma un primer análisis de causa raíz**: por dónde empezar a mirar,
-  no solo "esto es un flaky test"
-
-Hoy son 5 fallas para que entre en pantalla. En un build de cientos,
-es donde más tiempo se ahorra.
+Son 5 fallas para que entren en pantalla. En un build de cientos, el mismo
+skill lee los **logs completos**, agrupa las fallas relacionadas entre sí y
+te dice **por dónde empezar a mirar** — no solo "esto es un flaky test".
 
 *Triage hecho. Pero hoy, tres veces, me corregiste lo mismo... →*
 
@@ -490,15 +475,13 @@ ni el plan, ni las convenciones.**
 
 ---
 
-# No hace falta que te acuerdes vos
+# Y no siempre tenés que contar vos
 
-Demo 6 arrancó porque el humano contó hasta 3. No hace falta ni eso:
+Hoy conté hasta 3 porque me acordaba. Cuando no te acordás, se lo preguntás:
 
-**Prompt:**
-> *"Revisá las conversaciones últimas y decime qué skills hay que crear o actualizar."*
+> *"Revisá las últimas conversaciones y decime qué skills hay que crear o actualizar."*
 
-Claude puede mirar hacia atrás y encontrar el patrón que vos no contaste —
-la sugerencia deja de depender de que alguien lleve la cuenta.
+El patrón es el mismo — cambia quién lo detecta.
 
 ---
 
