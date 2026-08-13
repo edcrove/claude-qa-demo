@@ -37,11 +37,11 @@ Edgardo Crovetto · 2026
 
 ## triageando regresiones que no existían
 
-Dos builds en paralelo compartían credenciales.
+Dos builds corrieron en paralelo. Compartían credenciales sin que nadie lo supiera.
 Todo rojo. Nada roto.
 
-**Hoy eso no puede pasarme — no porque me acuerde:
-porque mi setup se acuerda por mí.**
+**Hoy eso no puede volver a pasarme.
+Y no es porque yo me acuerde: es porque mi setup se acuerda por mí.**
 
 Esta charla es la historia de cómo llegué ahí.
 
