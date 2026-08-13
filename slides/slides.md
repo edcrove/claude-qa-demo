@@ -369,7 +369,7 @@ Los 90 minutos del principio, exactamente.
 
 > *↩ Resuelve: repetir los mismos comentarios review tras review.*
 
-PR sembrada con 5 bugs distintos (`mocks/github/pr-7.diff`):
+PR sembrado con 5 bugs distintos (`mocks/github/pr-7.diff`):
 - `silent-failure-hunter` → `catch (e) { return [] }` se traga errores
 - `type-design-analyzer` → `as Channel` miente
 - `comment-analyzer` → comentario que dice "sorted" pero no ordena
