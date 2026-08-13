@@ -35,7 +35,7 @@ Edgardo Crovetto · 2026
 
 # Una noche perdí 90 minutos
 
-## cazando flakes fantasma
+## cazando flaky tests fantasma
 
 Dos builds, mismo ambiente, mismas credenciales — sin que nadie lo supiera.
 Todo rojo. Nada roto.
@@ -407,7 +407,7 @@ mensaje, stack y los commits. Y es **la misma branch de hoy**:
 
 | Categoría | De dónde sale |
 |---|---|
-| Flake conocido | La firma matchea el registry (2× `TimeoutException`, visto hasta build 39) |
+| Flaky test conocido | La firma matchea el registry (2× `TimeoutException`, visto hasta build 39) |
 | Infra | El ambiente no responde (`Connection refused` a auth) |
 | Regresión real | No está en el registry **y** el commit toca código relacionado |
 
@@ -449,7 +449,7 @@ mes 1   CLAUDE.md inicial + Claude conectado al repo
 mes 1   ← MCPs: Jira, TestRail, Jenkins, Confluence
 mes 1   ← Skill: ticket-coverage-gap-analysis (de 4 pestañas a 1 prompt)
 mes 2   ← Skill: AC-vs-branch-diff (después de mergear sin validar un AC)
-mes 2   ← Rule: no-parallel-ci (90 min cazando flakes fantasma)
+mes 2   ← Rule: no-parallel-ci (90 min cazando flaky tests fantasma)
 mes 3   ← Plugin pr-review-toolkit + skill multi-agent-pr-review
 mes 3   ← Skill: pre-peer-review (compañeros aplaudieron)
 mes 4   ← Hook: typecheck-after-edit (memory + rule no alcanzaban)
@@ -706,7 +706,7 @@ Before triggering a CI build:
 that looks like real regressions but isn't.
 ```
 
-Nació después de 90 minutos cazando flakes fantasma.
+Nació después de 90 minutos cazando flaky tests fantasma.
 
 ---
 
@@ -772,8 +772,8 @@ la memory y la rule**. El hook fue el final del camino.
 
 - El día a día corre en un modelo mid-tier; el multi-agent review es el único paso caro
 - 5 subagentes = 5 contextos aislados — pagás tokens para **no** pagar contexto contaminado
-- El costo contra el que se compara: 10 min de CI roto · 90 min de flakes
-  fantasma · un review que espera 2 días
+- El costo contra el que se compara: 10 min de CI roto · 90 min de flaky
+  tests fantasma · un review que espera 2 días
 - Memory, rules y hooks cuestan ~0: texto plano en el contexto que ya pagás
 
 ---
@@ -801,7 +801,7 @@ la memory y la rule**. El hook fue el final del camino.
 - `ci-failure-triage` no decide a ciegas: la categoría sale de evidencia
   visible (firma en el registry, stack, commits) — no es una caja negra
 - El registry (`memory/known-issues.md`) lo actualiza una persona, y pide
-  **2+ sightings** — un solo fallo nunca es flake
+  **2+ sightings** — un solo fallo nunca es un flaky test
 - Si la categoría no cierra con evidencia, **regresión real es el default**
   — el skill sesga hacia flaggear de más, no de menos
 - Igual que en la Demo 4: el agente propone la categoría, vos la confirmás
