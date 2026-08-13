@@ -1,6 +1,6 @@
 # HANDOFF — continue this work from a Claude chat
 
-**Generated:** 2026-08-12 · regenerate whenever the state changes.
+**Generated:** 2026-08-13 · regenerate whenever the state changes.
 **Source of truth:** the repo. If this file disagrees with
 [`STATUS.md`](STATUS.md), STATUS.md wins.
 
@@ -20,12 +20,12 @@ the talk from a plain chat, in one attachable document.
 ## Kickoff prompt (copy, adjust the goal, paste)
 
 ```text
-Estoy preparando una charla de meetup: "De prompt a skill: cultivando
-workflows de QA automation con agentes de Claude" (30 min, audiencia técnica
+Estoy preparando una charla de meetup: "Tu setup de QA no se diseña: se
+cultiva" — de prompt suelto a skills, rules y hooks (30 min, audiencia técnica
 mixta dev/QA). Te adjunto el documento de handoff con todo el estado; el repo
 es github.com/edcrove/claude-qa-demo. Leé el handoff antes de responder.
 Hoy quiero trabajar en: [OBJETIVO — p.ej. "ensayar el timing", "pulir la
-slide X", "decidir el título", "preparar respuestas de Q&A"].
+slide X", "preparar respuestas de Q&A"].
 ```
 
 ## What this is
@@ -39,13 +39,26 @@ on stage: a minimal TypeScript API, 5 skills, 3 rules, 1 hook, JSON mocks for
 Jira/Jenkins/GitHub, a known-issues registry, the Marp deck, and the scripts
 that reset and protect the live demo.
 
-## Current state (2026-08-12)
+## Current state (2026-08-13)
 
 - **Repo + deck are rehearsal-ready and pushed to origin.** All demo premises
   audited and fixed 2026-08-04; state assertions (`scripts/prep-demo.sh`) and
   leak check (`scripts/check-leaks.sh`) pass; deck renders.
-- **Deck: 45 slides** — 32 main flow, 9 appendix (anatomy + real example of
-  memory/skill/rule/hook), 4 Q&A backup (token costs, model churn, offline).
+- **Title decided and announced:** "Tu setup de QA no se diseña: se cultiva"
+  — de prompt suelto a skills, rules y hooks. No longer a pending decision.
+- **Deck: 46 slides** — 32 main flow, 9 appendix (anatomy + real example of
+  memory/skill/rule/hook), 5 Q&A backup (token costs, model churn, offline,
+  who audits the CI-triage classifier). Count verified against Marp's own
+  section count, not eyeballed.
+- **A human-vs-agent accountability thread was added** across 4 points in the
+  deck (see storytelling device #8 below) after author feedback that
+  automation was shown without ever stating what stays a human call.
+- **A QA-conference-expert review pass** (dispatched as a subagent, twice —
+  once general, once role-playing a Montevideo-based reviewer for register/
+  tone fit) found and fixed: a Demo 2 line that contradicted the deck's own
+  hook-vs-skill distinction, a redundant slide, an unanchored claims-heavy
+  slide, a missing Q&A backup answer, and a near-duplicate MCP explanation
+  across two consecutive slides.
 - **No full timed rehearsal has happened yet** with the current deck.
 
 ## The deck's storytelling devices
@@ -69,6 +82,12 @@ that reset and protect the live demo.
    construye" slide — the agent also builds *for the project* (CI tuned to
    your rules, linters, SonarQube, coverage, notifications). Don't fear the
    unknown: the cost of learning collapsed.
+8. **Ownership doesn't cultivate away:** planted at 4 points — the subagent
+   mechanics slide ("quien aprueba sigue siendo responsable de lo que
+   aprueba"), Demo 4's aggregated result ("no sé, lo hizo la IA" no es una
+   respuesta"), a dedicated summary slide "Qué le toca a la persona" (agent
+   vs. person table), and the closing thesis slide. Delegation of execution,
+   never of accountability.
 
 ## The one-day demo arc (with the exact stage prompts)
 
@@ -84,29 +103,24 @@ that reset and protect the live demo.
 Demo 6 needs setup: correct Claude with the same reminder ≥3 times during
 Demos 1–5. Every scene has a screenshot/clip fallback (see `runbook.md`).
 
-## Title
+## Title — decided
 
-Working title: **"De prompt a skill: cultivando workflows de QA automation con
-agentes de Claude"**. Alternatives considered (2026-08-04):
-
-| Candidate | Angle |
-|---|---|
-| Tu setup de QA no se diseña: se cultiva | thesis-first; bookends the closing slide |
-| De prompt a skill: tu workflow de QA no se diseña, se cultiva | minimal evolution keeping the brand |
-| De 5 líneas a 5 subagentes | concrete arc (initial CLAUDE.md → PR-review fleet) |
-| El QA que dejó de re-explicar su proyecto | pain-first |
-
-Constraints: keep "QA automation" (scopes away manual testing); keep "Claude"
-visible at least in the subtitle.
+**"Tu setup de QA no se diseña: se cultiva"** — de prompt suelto a skills,
+rules y hooks. This is how the talk was publicly announced (2026-08-13); no
+longer pending. It was the thesis-first candidate from the original
+shortlist (2026-08-04); the working title
+("De prompt a skill: cultivando workflows de QA automation con agentes de
+Claude") is retired. The final subtitle drops the literal "Claude" mention
+the original constraint wanted there — accepted, since the name still
+appears within the first few main-flow slides and every demo.
 
 ## Pending decisions (the author's)
 
 1. **Repo is still PRIVATE on GitHub** — slides print the URL and the
    pre-flight checklist assumes public. Flip before the talk.
-2. **Final title** (see above).
-3. **Timeline divergence:** deck's "Mi línea de tiempo real" (months 1–6) vs
+2. **Timeline divergence:** deck's "Mi línea de tiempo real" (months 1–6) vs
    `evolution-timeline.md` (weeks 1–7) tell different fictional stories.
-4. **`mocks/github/pr-7.diff`** is readable but not `git apply`-able.
+3. **`mocks/github/pr-7.diff`** is readable but not `git apply`-able.
 
 ## Next steps
 

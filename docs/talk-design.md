@@ -1,6 +1,8 @@
 # Talk design
 
-**Title:** "De prompt a skill: cultivando workflows de QA automation con agentes de Claude"
+**Title:** "Tu setup de QA no se diseña: se cultiva" — *de prompt suelto a
+skills, rules y hooks* (final — this is how the talk was announced,
+2026-08-13)
 **Format:** 30 minutes — ~25 talk + demos, ~5 Q&A · one shared screen (slides + terminal)
 **Audience:** mixed dev/QA technical meetup
 **Repo:** `github.com/edcrove/claude-qa-demo` (this repo — fully offline, clonable)
@@ -70,7 +72,7 @@ The deck (see `slides/slides.md`) applies these deliberate storytelling devices:
    question), and the closing thesis slide ("el criterio, el dominio y la
    firma siguen siendo tuyos"). The recurring one-liners keep the idea alive
    scene by scene; the summary slide is where it gets stated plainly enough
-   to survive a quick skim (added 2026-08-12 after the one-liners alone read
+   to survive a quick skim (added 2026-08-13 after the one-liners alone read
    as too easy to miss). The baseline the talk demonstrates is delegation of
    *execution*, never of *accountability* — the audience should leave knowing
    which is which, not just that more gets automated.
@@ -94,29 +96,37 @@ section count, not eyeballed):
 - **Main flow: 32** (cold open → thesis → mechanics → 6 demos → timeline →
   "el agente también construye" → sources → pattern → "qué le toca a la
   persona" (human/agent split summary) → question answered → "3 pasos para
-  el lunes" → close). Dropped "Los workflows que emergieron" (2026-08-12,
+  el lunes" → close). Dropped "Los workflows que emergieron" (2026-08-13,
   QA-reviewer pass): redundant with "El flujo end-to-end", which already
   names the same skills as a pipeline diagram right before the demos start.
 - **Appendix: 9** — anatomy + real example for memory / skill / rule / hook
   (moved out of the main flow to protect demo time)
 - **Q&A backup: 5** — token costs, model churn (skills survive, prompts don't
   always), offline/stack portability, **who audits the CI-triage classifier**
-  (added 2026-08-12 — the most QA-native skeptical question the deck didn't
+  (added 2026-08-13 — the most QA-native skeptical question the deck didn't
   have a prepared answer for)
 
-## Title candidates
+## Title — decided
 
-Current title is the working one. Alternatives considered (2026-08-04):
+**"Tu setup de QA no se diseña: se cultiva"** won. This is how the talk was
+publicly announced (2026-08-13) — no longer a pending decision. Runner-up
+and other candidates considered (2026-08-04), kept for record:
 
-| Candidate | Angle |
-|---|---|
-| Tu setup de QA no se diseña: se cultiva | thesis-first; bookends with the closing slide |
-| De prompt a skill: tu workflow de QA no se diseña, se cultiva | minimal evolution keeping the brand |
-| De 5 líneas a 5 subagentes | concrete arc (initial CLAUDE.md → PR review fleet) |
-| El QA que dejó de re-explicar su proyecto | pain-first |
+| Candidate | Angle | Outcome |
+|---|---|---|
+| **Tu setup de QA no se diseña: se cultiva** | thesis-first; bookends with the closing slide | **chosen — announced** |
+| De prompt a skill: cultivando workflows de QA automation con agentes de Claude | original working title | retired |
+| De prompt a skill: tu workflow de QA no se diseña, se cultiva | minimal evolution keeping the brand | not chosen |
+| De 5 líneas a 5 subagentes | concrete arc (initial CLAUDE.md → PR review fleet) | not chosen |
+| El QA que dejó de re-explicar su proyecto | pain-first | not chosen |
 
-Constraints: keep "QA automation" (scopes away manual testing) and keep
-"Claude" visible at least in the subtitle.
+Final subtitle: *"De prompt suelto a skills, rules y hooks."* — this drops
+the "Claude" mention the original constraint wanted in the subtitle. The
+name still appears early ("Cuando empezó la IA: dos pasos" names Claude
+explicitly, and it recurs through every demo), so the constraint's
+underlying goal — don't let the tool disappear from the framing — still
+holds even though the literal subtitle slot doesn't say it. Not treated as
+a violation worth re-opening the title decision over.
 
 ## Sanitization (rule #1)
 

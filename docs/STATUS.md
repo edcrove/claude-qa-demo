@@ -1,6 +1,6 @@
 # STATUS — start here to resume work
 
-**Last updated:** 2026-08-12
+**Last updated:** 2026-08-13
 
 This is the continuation anchor. A session with zero prior context should read,
 in this order: this file → [`talk-design.md`](talk-design.md) (what the talk is)
@@ -17,9 +17,14 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
 - **Repo + deck are rehearsal-ready.** All demo premises were audited and fixed
   on 2026-08-04 (see decision-log entry of that date). `./scripts/prep-demo.sh`
   passes all state assertions; `./scripts/check-leaks.sh` is clean; the deck
-  renders (45 slides: 32 main / 9 appendix / 4 Q&A backup).
-- **Everything is committed on local `main` and pushed to origin**
-  (2026-08-04, approved by the author).
+  renders (46 slides: 32 main / 9 appendix / 5 Q&A backup — count verified
+  against Marp's own section count).
+- **Title decided and announced:** "Tu setup de QA no se diseña: se cultiva"
+  — de prompt suelto a skills, rules y hooks. Propagated across
+  `slides/slides.md`, `CLAUDE.md`, `README.md`, `talk-design.md`, this file
+  and `HANDOFF.md` (2026-08-13).
+- **Everything is committed and pushed to origin**, working on branch
+  `claude/estructura-revision-fwdb2c` (2026-08-13).
 - **No rehearsal of the full 30-minute run has happened yet** with the current
   deck and fixed demos.
 
@@ -40,11 +45,10 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
    `github.com/edcrove/claude-qa-demo` and the pre-flight checklist assumes a
    public repo — flip visibility before the talk (`gh repo edit
    edcrove/claude-qa-demo --visibility public`, as edcrove).
-2. **Final talk title** — candidates and constraints in `talk-design.md`.
-3. **Timeline divergence** — deck slide "Mi línea de tiempo real" (months 1–6)
+2. **Timeline divergence** — deck slide "Mi línea de tiempo real" (months 1–6)
    vs `evolution-timeline.md` (weeks 1–7) tell different fictional stories.
    Acceptable or unify?
-4. **`mocks/github/pr-7.diff`** is readable but not `git apply`-able. Fix or
+3. **`mocks/github/pr-7.diff`** is readable but not `git apply`-able. Fix or
    document as intentional?
 
 ## Suggested next steps

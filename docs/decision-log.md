@@ -78,7 +78,7 @@ order of impact:
    "3 pasos para el lunes" closing; 3 Q&A backup slides.
 9. **MIT LICENSE added** (the README already declared it).
 
-## 2026-08-12 — Human ownership made explicit in the deck
+## 2026-08-13 — Human ownership made explicit in the deck
 
 Author feedback while reviewing slides: the deck showed the automation
 baseline (pattern, 6 demos, subagent review) but never closed the loop on
@@ -93,7 +93,7 @@ speaker's. Documented as narrative device #8 in `talk-design.md`. Runbook's
 Demo 4 section updated so the beat is actually performed live (reading the
 aggregated review on stage before posting), not just projected as slide text.
 
-**2026-08-12 (later same day):** author reported the recurring one-liners
+**2026-08-13 (later same day):** author reported the recurring one-liners
 were too easy to miss skimming the deck on a phone, and asked for an
 explicit summary. Added a dedicated slide "Qué le toca a la persona" (agent
 vs. person table — execution/criterio/revisión/decisión/responsabilidad)
@@ -101,7 +101,7 @@ right after "El patrón" and before the closing callback question. Deck is
 now 46 slides (33 main flow, was 32). `talk-design.md` slide map and device
 #8 updated to match.
 
-## 2026-08-12 (later still) — QA-reviewer pass applied
+## 2026-08-13 (later still) — QA-reviewer pass applied
 
 Dispatched a subagent role-playing an expert QA-conference reviewer against
 the full deck + runbook + decision log. Applied its findings, plus one item
@@ -142,6 +142,28 @@ Deck stays at 46 slides (32 main / 9 appendix / 5 Q&A backup) — counts
 verified against Marp's own section count, not eyeballed, after the last two
 sessions' numbers turned out to be off.
 
+## 2026-08-13 — Final title decided and announced
+
+The talk was publicly announced as **"Tu setup de QA no se diseña: se
+cultiva"** — de prompt suelto a skills, rules y hooks (the author shared the
+actual meetup listing). This was one of the candidates already sitting in
+`talk-design.md` since 2026-08-04. Resolves pending decision #2 from
+`STATUS.md`. Propagated everywhere the old working title
+("De prompt a skill: cultivando workflows de QA automation con agentes de
+Claude") appeared: `slides/slides.md` title slide, `CLAUDE.md`, `README.md`,
+`docs/talk-design.md` (title field + candidates table, now marked with an
+outcome column), `docs/STATUS.md`, `docs/HANDOFF.md`.
+
+One tradeoff accepted knowingly: the final subtitle ("De prompt suelto a
+skills, rules y hooks") drops the literal "Claude" mention the original
+title constraint wanted in the subtitle slot. Not re-opening the decision
+over it — the name still appears within the first few main-flow slides and
+throughout every demo.
+
+Also fixed while touching these files: three decision-log entries from this
+same working session were mis-dated 2026-08-12 instead of 2026-08-13 —
+corrected, since this file's whole purpose is being the accurate history.
+
 ### Known open items
 
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file
@@ -150,4 +172,3 @@ sessions' numbers turned out to be off.
 - The deck's "Mi línea de tiempo real" (months 1–6) and
   `evolution-timeline.md` (weeks 1–7) tell different fictional timelines with
   different artifact sets. Decide whether that divergence is acceptable.
-- Title final choice pending — candidates in `docs/talk-design.md`.

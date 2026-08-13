@@ -24,8 +24,8 @@ style: |
 
 <!-- _class: lead -->
 
-# De prompt a skill
-## Cultivando workflows de QA automation con agentes de Claude
+# Tu setup de QA no se diseña: se cultiva
+## De prompt suelto a skills, rules y hooks.
 
 Edgardo Crovetto · 2026
 

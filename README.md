@@ -1,7 +1,7 @@
 # claude-qa-demo
 
-Companion repo for the meetup talk **"De prompt a skill: cultivando workflows
-de QA automation con agentes de Claude"**.
+Companion repo for the meetup talk **"Tu setup de QA no se diseña: se
+cultiva"** — de prompt suelto a skills, rules y hooks.
 
 Everything here is plain text on disk. Clone it, read it, copy what works.
 
