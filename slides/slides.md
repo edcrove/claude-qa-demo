@@ -173,47 +173,31 @@ Una sola conversación con Claude puede pasar por los **4**.
 
 # La pirámide de promoción
 
-La forma es a propósito: **pocas piezas llegan hasta arriba.**
-Cada una se queda en el nivel que el problema realmente pide.
+**Una sola historia:** el typecheck que me olvidaba después de cada rebase,
+subiendo un nivel cada vez que el anterior no alcanzó.
 
 ```
                   ╔════════════╗
-                  ║    HOOK    ║   ◀ corre solo, nadie lo invoca — solo para lo 100% mecánico
+                  ║    HOOK    ║   ◀ typecheck en cada edit — corre solo, ya no depende de nadie
                   ╚════════════╝
                 ╔════════════════╗
-                ║      RULE      ║  ◀ siempre cargada, pero Claude decide cómo aplicarla
+                ║      RULE      ║  ◀ siempre cargada — pero Claude decide cómo aplicarla
                 ╚════════════════╝
               ╔════════════════════╗
-              ║       SKILL        ║ ◀ lo invocás cuando hace falta — la mayoría se queda acá
+              ║       SKILL        ║ ◀ local-build-gate — lo corre Claude cuando hace falta
               ╚════════════════════╝
             ╔════════════════════════╗
-            ║        MEMORY          ║ ◀ un hecho que Claude recuerda de una sesión a otra
+            ║        MEMORY          ║ ◀ feedback-local-build-before-ci — y me lo olvidé igual
             ╚════════════════════════╝
           ╔════════════════════════════╗
-          ║      PROMPT SUELTO         ║ ◀ lo que tipeás hoy, una sola vez
+          ║      PROMPT SUELTO         ║ ◀ "acordate del typecheck antes de CI", una y otra vez
           ╚════════════════════════════╝
-
-Subir de nivel = más estructura ahora, menos que repetir después.
 ```
 
----
-
-# Las 4 piezas — una sola historia
-
-**El typecheck que me olvidaba después de cada rebase:**
-
-| | Pieza | El mismo olvido, subiendo la pirámide |
-|---|---|---|
-| 1 | **Prompt** | *"acordate del typecheck antes de CI"* — tipeado una y otra vez |
-| 2 | **Memory** | `feedback-local-build-before-ci` — y me lo olvidé igual |
-| 3 | **Skill** | `local-build-gate` — ahora lo corre Claude por mí |
-| 4 | **Hook** | typecheck en cada edit — 5 olvidos después, **ya no depende de nadie** |
-
-**Fijate que saltea la Rule** — y no es un olvido. Una rule me lo *recuerda*,
-y el problema era justamente que recordármelo no alcanzaba. No es una escalera
-que subís entera: es un menú, y cada dolor entra por donde le corresponde.
-
-La **Rule** tiene su propia cicatriz: `no-parallel-ci` — los 90 minutos del principio.
+**Saltea la Rule** — y no es olvido: una rule me lo *recuerda*, y el problema
+era justamente que recordármelo no alcanzaba. **Pocas piezas llegan hasta
+arriba**: no es una escalera que subís entera, es un menú. La Rule tiene su
+propia cicatriz — `no-parallel-ci`, los 90 minutos del principio.
 
 > Ninguna pieza se diseñó. Cada una fue admitir que acordarse no escala.
 
@@ -222,23 +206,9 @@ La **Rule** tiene su propia cicatriz: `no-parallel-ci` — los 90 minutos del pr
 # Un skill no siempre ejecuta: a veces delega
 
 `multi-agent-pr-review` es un `SKILL.md` como cualquier otro — markdown en tu
-repo. Lo distinto es lo que hace adentro: en vez de correr pasos él mismo,
-**despacha especialistas.**
-
-Un **subagente** es un agente subordinado, con su propio contexto y sus propias tools:
-
-- No ve tu historial — el skill le arma el encargo
-- No te contamina — al principal solo le vuelve el resumen
-- Es **especializado** (code-reviewer, silent-failure-hunter, etc.)
-- Se despachan en **paralelo**, sin pisarse
-
-Sigue siendo la misma pirámide. Sigue siendo un archivo que podés versionar.
-
----
-
-# El skill por dentro
-
-Vos invocás el skill. A partir de ahí despacha el Main agent — Claude, no vos:
+repo, la misma pirámide. Lo distinto es lo que hace adentro: en vez de correr
+pasos él mismo, **despacha subagentes.** Cada uno con su propio contexto: no ve
+tu historial, y al principal solo le vuelve el resumen.
 
 ```
    ┌───────────────────────────────────────────────────────────────┐
@@ -258,10 +228,9 @@ Vos invocás el skill. A partir de ahí despacha el Main agent — Claude, no vo
               └──────────────┘
 ```
 
-**Antes de que un peer humano vea el PR, ya pasó por 5 revisores especializados** —
-cada uno cazando su propia clase de bug: tipos que mienten, excepciones silenciadas
-por un `catch` que las ignora, comentarios que no dicen la verdad. Al peer le queda lo que
-un especialista de tipos no puede ver: arquitectura. *(Mis compañeros aplaudieron esto.)*
+**Antes de que un peer humano vea el PR, ya pasó por 5 revisores especializados**,
+cada uno cazando su propia clase de bug. Al peer le queda lo que un especialista
+de tipos no puede ver: arquitectura. *(Mis compañeros aplaudieron esto.)*
 
 **Lo que no cambia: quien aprueba sigue siendo responsable de lo que aprueba.**
 

@@ -380,6 +380,32 @@ scenes) without losing the content.
   me acordaba. Cuando no te acordás, se lo preguntás… El patrón es el mismo —
   cambia quién lo detecta." Demo 6's mirror payoff survives intact.
 
+## 2026-08-13 — Two merges: the pyramid absorbs its story, the subagents become one slide
+
+Continuing the timing pass. Both merges turned out better than the originals,
+not just shorter.
+
+- **"La pirámide de promoción" + "Las 4 piezas — una sola historia" → one
+  slide.** They were the same content at two altitudes: an abstract ladder,
+  then a table telling the typecheck story through that ladder. Merged by
+  filling each pyramid level with its own real example inline — `HOOK ◀
+  typecheck en cada edit`, `SKILL ◀ local-build-gate`, `MEMORY ◀
+  feedback-local-build-before-ci`, `PROMPT SUELTO ◀ "acordate del typecheck
+  antes de CI"`. The deck's own "one pain as the spine" device now happens
+  *inside the diagram* instead of being asserted next to it, and the
+  skips-the-Rule insight and the `no-parallel-ci` scar both survive below it.
+- **"Un skill no siempre ejecuta: a veces delega" + "El skill por dentro" →
+  one slide.** Natural after the earlier reframe made them a single idea. The
+  bullet list ("no ve tu historial", "se despachan en paralelo") was mostly
+  redundant with what the ASCII diagram already shows — the diagram literally
+  labels `◀ despacho paralelo` and `5 contextos aislados` — so it collapsed
+  into two sentences above the diagram. The peer-review payoff and the
+  ownership line are unchanged.
+
+Deck: 47 → 45 slides (31 main flow, was 33). Remaining on the timing
+checklist: pre-record Demos 2 and 6 (the biggest single win), cut "El flujo
+end-to-end", compress the two opening pain slides.
+
 ### Known open items
 
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file

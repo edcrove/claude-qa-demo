@@ -17,7 +17,7 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
 - **Repo + deck are rehearsal-ready.** All demo premises were audited and fixed
   on 2026-08-04 (see decision-log entry of that date). `./scripts/prep-demo.sh`
   passes all state assertions; `./scripts/check-leaks.sh` is clean; the deck
-  renders (47 slides: 33 main / 9 appendix / 5 Q&A backup — count verified
+  renders (45 slides: 31 main / 9 appendix / 5 Q&A backup — count verified
   against Marp's own section count).
 - **Title decided and announced:** "Tu setup de QA no se diseña: se cultiva"
   — de prompt suelto a skills, rules y hooks. Propagated across
@@ -79,14 +79,16 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
    - [x] the 3 "widening" slides stay in the flow but were rewritten as
          *notas al pasar* (~60 s → ~20 s each); "No hace falta que te
          acuerdes vos" also reframed so it stops negating Demo 6's payoff
-   - [ ] merge the two subagent slides — now natural, since the 2026-08-13
-         reframe made them one idea (a skill and what it does inside)
-   - [ ] merge the pyramid with "Las 4 piezas"
+   - [x] merged the two subagent slides — natural after the reframe made
+         them one idea (a skill and what it does inside)
+   - [x] merged the pyramid with "Las 4 piezas" — each pyramid level now
+         carries its own real example inline, so the structure and the
+         typecheck story are told once, together, instead of twice
    - [ ] cut "El flujo end-to-end"
    - [ ] compress the two opening pain slides into one
 
-   Target: **4 demos live, 2 pre-recorded, ~27 slides.** Deck is at 47 (33
-   main flow) after the two cuts above.
+   Target: **4 demos live, 2 pre-recorded, ~27 slides.** Deck is at 45 (31
+   main flow) after the cuts and merges above.
 2. **The GitHub repo is still PRIVATE.** The slides print
    `github.com/edcrove/claude-qa-demo` and the pre-flight checklist assumes a
    public repo — flip visibility before the talk (`gh repo edit

@@ -105,15 +105,25 @@ The deck (see `slides/slides.md`) applies these deliberate storytelling devices:
 
 ## Slide map
 
-`slides/slides.md` — 47 slides total (counts verified against Marp's own
+`slides/slides.md` — 45 slides total (counts verified against Marp's own
 section count, not eyeballed):
 
-- **Main flow: 33** (cold open → thesis → mechanics → 6 demos, widened with
-  three extra slides — "¿Y esto no lo hacía ya un linter?" after Demo 4,
-  "El triage no termina en la categoría" after Demo 5, "No hace falta que
-  te acuerdes vos" after Demo 6 — → timeline → "el agente también
-  construye" → "qué le toca a la persona" (human/agent split summary) →
-  question answered → "4 pasos para el lunes" → close).
+- **Main flow: 31** (cold open → thesis → mechanics → 6 demos, each of the
+  last three followed by a short *nota al pasar* — "¿Y esto no lo hacía ya
+  un linter?", "El triage no termina en la categoría", "Y no siempre tenés
+  que contar vos" — → timeline → "el agente también construye" → "qué le
+  toca a la persona" (human/agent split summary) → question answered →
+  "4 pasos para el lunes" → close).
+
+  Two merges in the 2026-08-13 timing pass: **the pyramid absorbed "Las 4
+  piezas"** — each level of the ASCII pyramid now carries its own real
+  example inline (`local-build-gate` on SKILL, `feedback-local-build-before-ci`
+  on MEMORY, and so on), so the structure and the typecheck story are told
+  once, together, instead of as two consecutive slides saying the same thing
+  at different altitudes; and **the two subagent slides became one** — natural
+  after the reframe that made them a single idea (a skill, and what it does
+  inside), with the diagram carrying the explanation the bullet list used to.
+
   Dropped "Los workflows que emergieron" (2026-08-13, QA-reviewer pass):
   redundant with "El flujo end-to-end", which already names the same
   skills as a pipeline diagram right before the demos start. Dropped
