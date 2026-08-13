@@ -49,7 +49,7 @@ Esta charla es la historia de cómo llegué ahí.
 
 # Quién soy
 
-**Edgardo Crovetto** · QA automation engineer
+**Edgardo Crovetto** · Senior QA automation engineer
 
 Java + TypeScript · tests automatizados · CI/CD · pipelines
 
