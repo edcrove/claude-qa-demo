@@ -348,7 +348,7 @@ El skill guía el orden — y hoy lo respetó.
 
 # Demo 3 · 11:30 — Gate local antes de CI
 
-> *↩ Resuelve: triggerear Jenkins con un typo y esperar 10 min para enterarte.*
+> *↩ Resuelve: pushear un cambio con un typo y enterarte 10 minutos después, cuando Jenkins ya arrancó el build.*
 
 **Prompt:**
 > *"Triggeá un build de Jenkins para esta branch."*
