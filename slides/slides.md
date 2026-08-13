@@ -503,12 +503,13 @@ semana 1    ← Skill: local-build-gate (CI roto 2 veces por un typo que typeche
 semana 3    ← Rule: no-parallel-ci (90 min cazando flaky tests fantasma en stage)
 semana 3    ← Rule: english-only (un compañero no podía revisar un commit en español)
 semana 6    ← Skill: ci-failure-triage (las mismas 3 preguntas cada lunes)
-semana 6    ← Skill: known-issues-registry-update (perdía el registro de qué flake ya vi)
+semana 6    ← Skill: known-issues-registry-update (perdía el registro de qué flaky test ya vi)
 semana 9    ← Plugin pr-review-toolkit + Skill: multi-agent-pr-review (de secuencial a paralelo)
 semana 11   ← Hook: typecheck-after-edit (memory + rule no alcanzaban)
 semana 13   ← Skill: ticket-coverage-gap-analysis (la misma conversación 4 sprints seguidos)
-semana 16   ← Memory: heurística de flakes en stage (80% de los rojos eran flakes, no regresiones)
-ahora       ← El setup vive en git. Los compañeros lo PR-ean también.
+semana 16   ← Memory: heurística de flaky tests en stage (80% de los rojos eran flaky tests, no regresiones)
+ahora       ← El setup quedó versionado en el repo — los compañeros también lo mejoran, con sus propias PRs
+futuro      ← Nuevas ideas, nuevas necesidades — seguimos buscando patrones
 ```
 
 **Nada se planificó. Cada pieza respondió a un dolor concreto.**
