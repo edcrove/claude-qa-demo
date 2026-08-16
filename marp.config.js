@@ -18,4 +18,9 @@ module.exports = {
   // from Mermaid. Without this, every export needs --allow-local-files or the
   // image silently goes missing.
   allowLocalFiles: true,
+
+  // slides/themes/qa-deck.css is gaia plus a 16:10 size declaration, which is
+  // what lets `size:` in the frontmatter switch the canvas. Without this the
+  // deck's `theme: qa-deck` does not resolve.
+  themeSet: './slides/themes',
 };

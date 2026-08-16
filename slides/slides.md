@@ -1,6 +1,7 @@
 ---
 marp: true
-theme: gaia
+theme: qa-deck
+size: 16:9
 class: invert
 paginate: true
 html: true

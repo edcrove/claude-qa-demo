@@ -13,8 +13,11 @@
  * slide actually overflows, so this also fails on any image that did not load.
  *
  * Usage:
- *   npx @marp-team/marp-cli slides/slides.md -o slides/.preview.html
- *   node scripts/check-slide-overflow.js slides/.preview.html
+ *   ./scripts/build-deck.sh html
+ *   node scripts/check-slide-overflow.js slides/slides-16x9.html
+ *   node scripts/check-slide-overflow.js slides/slides-16x10.html
+ *
+ * Measurement is scale-invariant, so the same script checks either ratio.
  *
  * Needs playwright (`npm i -D playwright`). Exits non-zero if anything
  * overflows, so it can gate a rehearsal.

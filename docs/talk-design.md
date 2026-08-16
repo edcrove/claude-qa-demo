@@ -201,13 +201,14 @@ CLAUDE.md, MCP server names, tokens in autocomplete) — that is what
 - [ ] launch through `./scripts/demo-profile.sh`, run `/context`, confirm only
       the repo's `CLAUDE.md` is loaded
 - [ ] terminal font ≥ 16pt, notifications off
-- [ ] slides rendered locally **into `slides/`** (`slides/slides.html`) — the
-      diagrams are relative `diagrams/*.svg`, so exporting elsewhere silently
-      breaks them. Note the 8 emoji still come from the twemoji CDN
-      (see decision log), so "no Wi-Fi needed" holds for everything but those
-- [ ] `node scripts/check-slide-overflow.js slides/slides.html` → "every slide
-      fits" and no ❌ broken-image line (Marp silently clips content that runs
-      past the bottom edge; this caught 13 clipped slides on 2026-08-13)
+- [ ] `./scripts/build-deck.sh` → builds **both aspect ratios** into `slides/`
+      (16:9 and 16:10, HTML + PDF). **Ask the venue which one the projector
+      is**; the wrong one letterboxes. Everything renders locally — no Wi-Fi
+      needed, including the emoji
+- [ ] `node scripts/check-slide-overflow.js slides/slides-16x9.html` (and the
+      16x10 one) → "every slide fits" and no ❌ broken-image line (Marp
+      silently clips content that runs past the bottom edge; this caught 13
+      clipped slides on 2026-08-13)
 - [ ] backup recording on the desktop
 
 ## Out of scope

@@ -71,6 +71,11 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
   `display:flex` (gaia's `section` is `display:block`), and the frontmatter
   `backgroundColor` directive wipes `background-image` unless it is set
   separately with `!important`.
+- **Two aspect ratios (2026-08-16):** `./scripts/build-deck.sh` builds 16:9 and
+  16:10 (HTML + PDF) from the same `slides.md` into `slides/`. **Ask the venue
+  which the projector is** — the wrong one letterboxes, which is what prompted
+  this. Both verified at 0/45 overflowing. Build output must stay next to
+  `slides.md`; a `dist/` subdir silently breaks every relative image in the HTML.
 - **Careful with inline SVG:** a blank line inside an `<svg>` ends the markdown
   HTML block, Marp closes the tag there, and the rest of the diagram renders as
   loose text with no error raised. Keep inline SVG free of blank lines.

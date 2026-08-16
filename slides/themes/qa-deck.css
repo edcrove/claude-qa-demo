@@ -1,0 +1,19 @@
+/* @theme qa-deck */
+
+/*
+ * gaia, más una declaración de tamaños.
+ *
+ * Todo el diseño del deck vive en el bloque `style:` de slides.md a propósito
+ * — la charla dice que todo es texto plano y legible, así que las reglas están
+ * donde uno las busca. Este archivo existe sólo por una limitación de Marp:
+ * la directiva `size:` únicamente acepta tamaños que el tema haya declarado, y
+ * gaia declara 16:9 y 4:3, pero no 16:10.
+ *
+ * Con esto, `size: 16:9` o `size: 16:10` en el frontmatter cambian el lienzo
+ * sin tocar ni una regla de estilo. scripts/build-deck.sh genera las dos.
+ */
+
+@import 'gaia';
+
+/* @size 16:9 1280px 720px */
+/* @size 16:10 1280px 800px */

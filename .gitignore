@@ -9,4 +9,6 @@ coverage/
 slides/*.html
 slides/*.pdf
 slides/*.pptx
+# copia temporal que crea scripts/build-deck.sh para el build 16:10
+slides/.build-*.md
 .demo-profile/

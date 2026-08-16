@@ -595,6 +595,39 @@ which gaia's `section` does not set; and the frontmatter `backgroundColor`
 directive emits a `background` shorthand that silently wipes the gradients, so
 the washes are applied as `background-image` with `!important`.
 
+## 2026-08-16 — Two aspect ratios from one source
+
+The deck was 16:9 only (Marp's default). On a 16:10 screen that letterboxes,
+which is what the author was seeing. `./scripts/build-deck.sh` now produces
+both, HTML and PDF, from the same `slides.md`.
+
+How, and why not more simply: Marp derives the canvas from a `size:` directive,
+but only accepts sizes the *theme* declares, and gaia declares 16:9 and 4:3 —
+not 16:10. So `slides/themes/qa-deck.css` is gaia plus one `@size` line. The
+deck's styling stays inline in `slides.md`, where the talk's own argument says
+it should be readable; the theme file exists purely for that declaration.
+
+Marp CLI has no flag to override a global directive, so the 16:10 build writes
+a temp copy with the one line changed. The copy goes **inside `slides/`** on
+purpose — relative `diagrams/*.svg` and `img/*.svg` paths break anywhere else.
+
+**Two mistakes worth recording, both mine, both about verification:**
+
+- The first build looked like a failure. I was grepping the output for
+  `width:1280px;height:...` and always got 720 — but that string matches an
+  earlier rule in the cascade, not the effective size. The real markers are the
+  SVG `viewBox` and `@page`. The `size:` directive had worked the whole time;
+  I nearly rewrote the approach because of a bad probe. Verify with `viewBox`.
+- The first output location was `slides/dist/`, one level below the assets, so
+  every diagram and logo in the built **HTML** was broken — the PDFs were fine,
+  since Chromium resolves paths at build time, which is exactly the kind of
+  half-broken that ships unnoticed. `check-slide-overflow.js` caught it, which
+  is the broken-image guard added earlier this same day paying for itself.
+  Output now sits next to `slides.md`.
+
+Both ratios verified: 1280×720 and 1280×800, 0 of 45 slides overflowing in
+each, no broken images in either.
+
 ### Known open items
 
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file
