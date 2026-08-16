@@ -3,95 +3,84 @@ marp: true
 theme: gaia
 class: invert
 paginate: true
-backgroundColor: "#1a1d24"
-color: "#e8e8e8"
+backgroundColor: "#272932"
+color: "#CCC9E7"
 style: |
-  /* ── palette ─────────────────────────────────────────────── */
+  /* ── paleta ───────────────────────────────────────────────── */
   :root {
-    --ink: #e8eaed;      --muted: #949cab;   --dim: #5b6472;
-    --accent: #d97757;   --accent2: #6fb3a0; --line: #262c36;
-    --panel: #0f1218;
+    --bg:      #272932;   /* Shadow Grey — base */
+    --surface: #1E2028;   /* derivado, para paneles de codigo */
+    --ink:     #CCC9E7;   /* Periwinkle */
+    --bright:  #F4F2FB;   /* derivado, para negritas */
+    --muted:   #8C89A6;   /* derivado, periwinkle desaturado */
+    --accent:  #EECF6D;   /* Jasmine — acento primario */
+    --accent2: #DC493A;   /* Cinnabar — acento secundario */
+    --hot:     #EF2D56;   /* Watermelon — solo para las cicatrices */
+    --line:    #3B3E4B;
   }
-  /* ── the slide is a text buffer: gutter rail on the left ─── */
   section {
-    font-family: 'Inter', 'Helvetica Neue', sans-serif;
-    font-size: 24px; line-height: 1.42;
-    padding: 40px 56px 40px 74px;
-    color: var(--ink);
-    background:
-      linear-gradient(90deg, var(--panel) 0 34px, transparent 34px),
-      linear-gradient(180deg, #171b22 0%, #12151b 100%);
+    font-family:'Inter','Helvetica Neue',sans-serif; font-size:24px; line-height:1.42;
+    padding:44px 60px; color:var(--ink); background:var(--bg);
   }
-  section::before {
-    content: ''; position: absolute; left: 33px; top: 0; bottom: 0;
-    width: 1px; background: var(--line);
-  }
-  section::after {
-    content: ''; position: absolute; left: 0; top: 50px;
-    width: 34px; height: 3px; background: var(--accent);
-  }
-  /* ── headings: markdown-flavoured, this deck is plain text ─ */
+  /* ── titulos: cuadrado Jasmine como marcador ──────────────── */
   section h1 {
-    color: var(--ink); font-size: 1.42em; font-weight: 600;
-    letter-spacing: -0.015em; margin: 0 0 .5em; line-height: 1.15;
+    color:var(--bright); font-size:1.36em; font-weight:650;
+    margin:0 0 .5em; letter-spacing:-.014em; line-height:1.15;
   }
   section h1::before {
-    content: '#'; color: var(--accent); font-family: ui-monospace, monospace;
-    font-weight: 400; margin-right: .4em;
+    content:''; display:inline-block; width:14px; height:14px; border-radius:3px;
+    background:var(--accent); margin-right:.5em; vertical-align:baseline;
   }
-  section h2 { color: var(--muted); font-weight: 400; font-size: 1.08em; margin: 0 0 .5em; }
-  section p { margin: .5em 0; }
-  section ul { margin: .4em 0; padding-left: 1.1em; }
-  section li { margin: .18em 0; }
-  section li::marker { color: var(--accent); }
-  strong { color: #fff; font-weight: 650; }
-  em { color: var(--muted); }
-  /* ── code: editor panes ──────────────────────────────────── */
-  code { background: #232936; color: #eda87f; padding: 1px 6px; border-radius: 4px; font-size: .84em; }
+  section h2 { color:var(--muted); font-weight:400; font-size:1.06em; margin:0 0 .5em; }
+  section p { margin:.5em 0; }
+  section ul { margin:.4em 0; padding-left:1.1em; }
+  section li { margin:.18em 0; }
+  section li::marker { color:var(--accent); }
+  strong { color:var(--bright); font-weight:650; }
+  em { color:var(--muted); }
+  /* ── codigo ───────────────────────────────────────────────── */
+  code { background:#31343F; color:var(--accent); padding:1px 6px; border-radius:4px; font-size:.84em; }
   pre {
-    background: var(--panel); border: 1px solid var(--line);
-    border-left: 3px solid var(--accent); border-radius: 6px;
-    padding: 10px 14px; margin: .5em 0;
+    background:var(--surface); border:1px solid var(--line);
+    border-left:3px solid var(--accent); border-radius:6px;
+    padding:10px 14px; margin:.5em 0;
   }
-  pre code { background: transparent; color: #cfd6e0; font-size: .58em; line-height: 1.3; padding: 0; }
-  /* ── tables: rules, not boxes — lighter and much shorter ─── */
-  table { border-collapse: collapse; width: 100%; margin: .4em 0; font-size: .93em; }
+  pre code { background:transparent; color:var(--ink); font-size:.58em; line-height:1.3; padding:0; }
+  /* ── tablas: reglas, no cajas ─────────────────────────────── */
+  table { border-collapse:collapse; width:100%; margin:.4em 0; font-size:.93em; }
   section table, section table thead, section table tbody,
   section table tr, section table th, section table td {
-    background: transparent !important; background-color: transparent !important;
+    background:transparent !important; background-color:transparent !important;
   }
   section table th {
-    color: var(--accent2) !important; text-align: left;
-    font-size: .74em; font-weight: 600; text-transform: uppercase;
-    letter-spacing: .07em;
-    border: none !important; border-bottom: 1px solid var(--accent2) !important;
-    padding: 3px 12px 4px 0;
+    color:var(--accent2) !important; text-align:left;
+    font-size:.74em; font-weight:600; text-transform:uppercase; letter-spacing:.08em;
+    border:none !important; border-bottom:1px solid var(--accent2) !important;
+    padding:3px 12px 4px 0;
   }
   section table td {
-    border: none !important; border-bottom: 1px solid var(--line) !important;
-    padding: 5px 12px 5px 0; vertical-align: top;
+    border:none !important; border-bottom:1px solid var(--line) !important;
+    padding:5px 12px 5px 0; vertical-align:top;
   }
-  section table tr:last-child td { border-bottom: none !important; }
+  section table tr:last-child td { border-bottom:none !important; }
   blockquote {
-    border-left: 2px solid var(--accent2); color: var(--muted);
-    margin: .5em 0; padding-left: .8em; font-size: .95em;
+    border-left:3px solid var(--hot); color:var(--muted);
+    margin:.5em 0; padding-left:.8em; font-size:.95em;
   }
-  blockquote strong { color: var(--ink); }
-  a { color: var(--accent); }
-  section::part(pagination), section:after { }
-  /* ── lead slides: no gutter, centred, big ────────────────── */
+  blockquote strong { color:var(--ink); }
+  a { color:var(--accent); }
+  /* ── lead ─────────────────────────────────────────────────── */
   section.lead {
-    padding: 60px 90px;
-    background: radial-gradient(ellipse at 30% 0%, #1d222b 0%, #12151b 70%);
+    padding:60px 90px;
+    background:radial-gradient(ellipse at 30% 0%, #32353F 0%, var(--bg) 70%);
   }
-  section.lead::before, section.lead::after { display: none; }
-  section.lead h1 { color: var(--accent); font-size: 1.85em; letter-spacing: -0.02em; }
-  section.lead h1::before { content: none; }
-  section.lead h2 { color: var(--ink); font-weight: 300; font-size: 1.25em; }
-  /* ── dense: opt-in for the few content-heavy slides ──────── */
-  section.dense { font-size: 21px; line-height: 1.34; }
-  section.dense h1 { font-size: 1.3em; margin-bottom: .35em; }
-  section.dense pre code { font-size: .55em; }
+  section.lead h1 { color:var(--accent); font-size:1.85em; letter-spacing:-.02em; }
+  section.lead h1::before { display:none; }
+  section.lead h2 { color:var(--ink); font-weight:300; font-size:1.25em; }
+  /* ── dense: para las slides mas cargadas ──────────────────── */
+  section.dense { font-size:21px; line-height:1.34; }
+  section.dense h1 { font-size:1.3em; margin-bottom:.35em; }
+  section.dense pre code { font-size:.55em; }
 ---
 
 <!-- _class: lead -->
