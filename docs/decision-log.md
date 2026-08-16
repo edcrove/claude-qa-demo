@@ -517,12 +517,32 @@ siguen se emiten como HTML suelto y el navegador los muestra como texto
 corrido — el diagrama se desarma sin ningún error. Los SVG del deck no llevan
 líneas en blanco por eso.
 
+## 2026-08-16 — The deck is actually offline now
+
+Marp rewrites every unicode emoji into an `<img>` against the twemoji CDN. A
+contact sheet of all 45 slides made the cost obvious in a way that looking at
+slides one at a time had not: with no network, that is **8 broken-image icons
+scattered across 5 slides**, including the MCP table and three demo slides —
+while the *Ahora, en vivo* slide promises "todo offline".
+
+Fixed with `options: { emoji: { unicode: false } }` in `marp.config.js`. The
+emoji now render as glyphs from the system emoji font: same look, zero network.
+Verified by counting CDN URLs in the exported HTML — **12 before, 0 after** —
+and `check-slide-overflow.js` now runs with no warnings at all.
+
+### Note on tooling, not on the deck
+
+`npx @marp-team/marp-cli@latest` re-resolves the package against the registry
+on every invocation, and through this environment's proxy that intermittently
+stalls for minutes — long enough to look like the render itself had hung. It
+also briefly produced a false conclusion (that the emoji option was what hung
+the build; it was not — the same command runs in 0.6 s). Installing marp-cli
+once and calling the local binary takes the full 45-slide PNG export from
+"times out" to **5.5 s**. Worth doing before a rehearsal.
+
 ### Known open items
 
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file
   diff is nested inside the first hunk). Fine for the demo, broken for anyone
   who tries to apply it.
-- 8 emoji in the deck are `<img>` tags pointing at the twemoji CDN, so
-  "todo offline" is not literally true yet. One-line fix when the author wants
-  it: `options: { emoji: { unicode: false } }` in `marp.config.js`, which
-  falls back to the system emoji font.
+- The author's photo is still a placeholder on slide 3 (`slides/img/`).

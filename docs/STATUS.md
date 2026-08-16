@@ -116,12 +116,12 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
 3. **`mocks/github/pr-7.diff`** is readable but not `git apply`-able. More
    urgent than it looks: the talk invites cloning four times and this is the
    star demo's artifact. Fix the nested hunk before publishing the link.
-4. **The deck is not literally offline.** 8 emoji are `<img>` tags pointing at
-   the twemoji CDN, which contradicts the "todo offline" line on the *Ahora,
-   en vivo* slide. `check-slide-overflow.js` now warns about this on every run.
-   One-line fix, not applied because it changes how the emoji look:
-   `options: { emoji: { unicode: false } }` in `marp.config.js` (falls back to
-   the system emoji font). Alternative: drop the 8 emoji from the deck.
+4. ~~**The deck is not literally offline.**~~ **Fixed 2026-08-16.**
+   `options: { emoji: { unicode: false } }` in `marp.config.js` stops Marp
+   rewriting the 8 unicode emoji into twemoji CDN `<img>` tags; they now render
+   as system-font glyphs. Verified: **0 remote requests** in the exported HTML,
+   and the pre-flight check runs with no warnings. The "todo offline" line on
+   the *Ahora, en vivo* slide is now literally true.
 
 ## Suggested next steps
 
