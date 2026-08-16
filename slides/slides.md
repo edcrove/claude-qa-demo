@@ -3,6 +3,7 @@ marp: true
 theme: gaia
 class: invert
 paginate: true
+html: true
 backgroundColor: "#011627"
 color: "#FDFFFC"
 style: |
@@ -72,6 +73,9 @@ style: |
   section.lead h1 { color:var(--accent); font-size:1.85em; letter-spacing:-.02em; }
   section.lead h1::before { display:none; }
   section.lead h2 { color:var(--ink); font-weight:300; font-size:1.25em; }
+  /* ── estado de CI: rojo/verde con los colores de la paleta ── */
+  .rojo  { color: var(--hot);     font-weight:600; }
+  .verde { color: var(--accent2); font-weight:600; }
   section.dense { font-size:21px; line-height:1.34; }
   section.dense h1 { font-size:1.3em; margin-bottom:.35em; }
   section.dense pre code { font-size:.55em; }
@@ -93,7 +97,7 @@ Edgardo Crovetto · 2026
 ## cazando flaky tests fantasma
 
 Dos builds, mismo ambiente, mismas credenciales — sin que nadie lo supiera.
-Todo rojo. Nada roto.
+Todo <span class="rojo">rojo</span>. Nada roto.
 
 **Hoy eso no puede volver a pasarme.
 Y no es porque yo me acuerde: es porque mi setup se acuerda por mí.**
@@ -154,7 +158,7 @@ Análisis local + Jenkins  →  bugs en Jira  →  follow-up del ciclo
 - **Análisis del ticket** — Jira + repo + Confluence (AC) + TestRail · nada de eso queda escrito en un solo lugar
 - **Mapeo AC ↔ cambio** — comparás docs vs branch a ojo, página por página
 - **Test cases + automation** — copiás AC a TestRail, traducís a TestNG/RestAssured, linkeás IDs a mano
-- **Ejecución multi-env** — Jenkins contra 3 ambientes · comparás resultados · investigás cada rojo
+- **Ejecución multi-env** — Jenkins contra 3 ambientes · comparás resultados · investigás cada <span class="rojo">rojo</span>
 - **PR review** — armás la evidencia, pingeás 2 peers, esperás, re-pingeás
 - **Bug encontrado** — abrís ticket, pegás logs, follow-up del ciclo de vida en Jira
 - **Mañana** — sesión nueva. Re-explicás el ticket, el plan, las convenciones.
@@ -356,7 +360,7 @@ El patrón es **idéntico** en Java/TestNG/RestAssured.*
 
 # Demo 2 · 10:00 — TDD asistido
 
-> *↩ Resuelve: saltar el "red" y aterrizar directo en código sin test que lo respalde.*
+> *↩ Resuelve: saltar el "<span class="rojo">red</span>" y aterrizar directo en código sin test que lo respalde.*
 
 Demo 1 dejó un ❌: **DEMO-100 pide que un slug malformado sea rechazado.**
 Hoy `getChannelBySlug('News Channel!')` devuelve `null`, como si no existiera.
@@ -367,13 +371,13 @@ Hoy `getChannelBySlug('News Channel!')` devuelve `null`, como si no existiera.
 **Skill invocada:** `superpowers:test-driven-development`
 *(descargada del marketplace, no la escribí yo)*
 
-1. Test que espera el rechazo → **red**
-2. Validación mínima del formato → **green**
+1. Test que espera el rechazo → **<span class="rojo">red</span>**
+2. Validación mínima del formato → **<span class="verde">green</span>**
 3. Refactor opcional
 
 El skill guía el orden — y hoy lo respetó.
 
-*Gap cerrado, tests verdes. Ahora quiero correr esto en CI. →*
+*Gap cerrado, tests <span class="verde">verdes</span>. Ahora quiero correr esto en CI. →*
 
 ---
 
@@ -448,9 +452,9 @@ que el comentario dice *"sorted"* sobre código que no ordena, ni que un
 
 # Demo 5 · 15:00 — Triage de fallas de CI
 
-> *↩ Resuelve: triagear tests rojos a mano contra known-issues.*
+> *↩ Resuelve: triagear tests <span class="rojo">rojos</span> a mano contra known-issues.*
 
-**Input:** `mocks/jenkins/build-44.json` — 5 rojos **sin etiquetar**: nombre,
+**Input:** `mocks/jenkins/build-44.json` — 5 <span class="rojo">rojos</span> **sin etiquetar**: nombre,
 mensaje, stack y los commits. Y es **la misma branch de hoy**:
 `feature/DEMO-100-channels-coverage`.
 
