@@ -73,6 +73,23 @@ style: |
   section.lead h1 { color:var(--accent); font-size:1.85em; letter-spacing:-.02em; }
   section.lead h1::before { display:none; }
   section.lead h2 { color:var(--ink); font-weight:300; font-size:1.25em; }
+  /* ── diagramas SVG ────────────────────────────────────────── */
+  svg.dg { width:100%; height:auto; display:block; margin:.3em 0; }
+  .dg-box   { fill:var(--surface); stroke:var(--line); stroke-width:1.5; }
+  .dg-on    { fill:#0E2C3D; stroke:var(--accent); stroke-width:2; }
+  .dg-skip  { fill:none; stroke:var(--muted); stroke-width:1.5; stroke-dasharray:5 4; }
+  .dg-lvl   { fill:var(--ink); font:600 15px Inter,sans-serif; letter-spacing:.06em; }
+  .dg-lvl-d { fill:var(--muted); font:600 15px Inter,sans-serif; letter-spacing:.06em; }
+  .dg-note  { fill:var(--muted); font:13.5px Inter,sans-serif; }
+  .dg-note b{ fill:var(--ink); font-weight:600; }
+  .dg-tick  { fill:var(--accent); font:13px Inter,sans-serif; }
+  .dg-wire  { fill:none; stroke:var(--line); stroke-width:1.5; }
+  .dg-base  { fill:none; stroke:var(--line); stroke-width:1.5; stroke-dasharray:4 4; }
+  .dg-sm    { fill:var(--ink); font:13px Inter,sans-serif; }
+  .dg-stage { fill:var(--accent2); font:600 12px Inter,sans-serif; letter-spacing:.12em; }
+  .dg-pill  { fill:none; stroke:var(--accent2); stroke-width:1.5; }
+  .dg-pc    { fill:var(--accent2); font:600 12.5px Inter,sans-serif; letter-spacing:.06em; }
+  .dg-pn    { fill:var(--muted); font:12px Inter,sans-serif; }
   /* ── estado de CI: rojo/verde con los colores de la paleta ── */
   .rojo  { color: var(--hot);     font-weight:600; }
   .verde { color: var(--accent2); font-weight:600; }
@@ -235,23 +252,29 @@ Una sola conversación con Claude puede pasar por los **4**.
 **Una sola historia:** el typecheck que me olvidaba después de cada rebase,
 subiendo un nivel cada vez que el anterior no alcanzó.
 
-```
-                  ╔════════════╗
-                  ║    HOOK    ║   ◀ typecheck en cada edit — corre solo, ya no depende de nadie
-                  ╚════════════╝
-                ╔════════════════╗
-                ║      RULE      ║  ◀ siempre cargada — pero Claude decide cómo aplicarla
-                ╚════════════════╝
-              ╔════════════════════╗
-              ║       SKILL        ║ ◀ local-build-gate — lo corre Claude cuando hace falta
-              ╚════════════════════╝
-            ╔════════════════════════╗
-            ║        MEMORY          ║ ◀ feedback-local-build-before-ci — y me lo olvidé igual
-            ╚════════════════════════╝
-          ╔════════════════════════════╗
-          ║      PROMPT SUELTO         ║ ◀ "acordate del typecheck antes de CI", una y otra vez
-          ╚════════════════════════════╝
-```
+<div>
+<svg class="dg" viewBox="0 0 1180 268" role="img" aria-label="Pirámide de promoción">
+  <rect class="dg-on"   x="160" y="6"   width="200" height="42" rx="5"/>
+  <text class="dg-lvl"  x="260" y="33" text-anchor="middle">HOOK</text>
+  <text class="dg-note" x="400" y="32">typecheck en cada edit — corre solo, ya no depende de nadie</text>
+
+  <rect class="dg-skip" x="130" y="56"  width="260" height="42" rx="5"/>
+  <text class="dg-lvl-d" x="260" y="83" text-anchor="middle">RULE</text>
+  <text class="dg-note" x="400" y="82">siempre cargada — pero este dolor la saltea</text>
+
+  <rect class="dg-on"   x="100" y="106" width="320" height="42" rx="5"/>
+  <text class="dg-lvl"  x="260" y="133" text-anchor="middle">SKILL</text>
+  <text class="dg-note" x="450" y="132">local-build-gate — lo corre Claude cuando hace falta</text>
+
+  <rect class="dg-on"   x="70"  y="156" width="380" height="42" rx="5"/>
+  <text class="dg-lvl"  x="260" y="183" text-anchor="middle">MEMORY</text>
+  <text class="dg-note" x="480" y="182">feedback-local-build-before-ci — y me lo olvidé igual</text>
+
+  <rect class="dg-on"   x="40"  y="206" width="440" height="42" rx="5"/>
+  <text class="dg-lvl"  x="260" y="233" text-anchor="middle">PROMPT SUELTO</text>
+  <text class="dg-note" x="510" y="232">"acordate del typecheck antes de CI", una y otra vez</text>
+</svg>
+</div>
 
 **Saltea la Rule** — y no es olvido: una rule me lo *recuerda*, y el problema
 era justamente que recordármelo no alcanzaba. **Pocas piezas llegan hasta
@@ -271,23 +294,35 @@ repo, la misma pirámide. Lo distinto es lo que hace adentro: en vez de correr
 pasos él mismo, **despacha subagentes.** Cada uno con su propio contexto: no ve
 tu historial, y al principal solo le vuelve el resumen.
 
-```
-   ┌───────────────────────────────────────────────────────────────┐
-   │                          Main agent                           │
-   └─────┬───────┬───────┬───────┬───────┬─────────────────────────┘
-         │       │       │       │       │     ◀ despacho paralelo
-         ▼       ▼       ▼       ▼       ▼
-     ┌──────┐┌──────┐┌──────┐┌──────┐┌──────┐
-     │ code ││silent││ type ││ comm.││ test │  ◀ pr-review-toolkit:
-     │review││failur││design││analyz││analyz│    code-reviewer · silent-failure-hunter ·
-     └──┬───┘└──┬───┘└──┬───┘└──┬───┘└──┬───┘    type-design-analyzer · comment-analyzer ·
-        │       │       │       │       │        pr-test-analyzer — 5 contextos aislados
-        └───────┴───┬───┴───────┴───────┘
-                    ▼
-              ┌──────────────┐
-              │  Aggregator  │  ◀ un solo comentario al final
-              └──────────────┘
-```
+<div>
+<svg class="dg" viewBox="0 0 1180 300" role="img" aria-label="Un skill despacha 5 subagentes en paralelo">
+  <rect class="dg-on" x="390" y="4" width="400" height="44" rx="6"/>
+  <text class="dg-lvl" x="590" y="31" text-anchor="middle">MAIN AGENT</text>
+  <path class="dg-wire" d="M590 48 V78 M150 108 V78 H1030 V108 M370 78 V108 M590 78 V108 M810 78 V108"/>
+  <text class="dg-tick" x="600" y="72">despacho paralelo · 5 contextos aislados</text>
+  <g class="dg-sub">
+    <rect class="dg-box" x="50"  y="108" width="200" height="60" rx="6"/>
+    <text class="dg-sm" x="150"  y="133" text-anchor="middle">code-</text>
+    <text class="dg-sm" x="150"  y="151" text-anchor="middle">reviewer</text>
+    <rect class="dg-box" x="270" y="108" width="200" height="60" rx="6"/>
+    <text class="dg-sm" x="370"  y="133" text-anchor="middle">silent-failure-</text>
+    <text class="dg-sm" x="370"  y="151" text-anchor="middle">hunter</text>
+    <rect class="dg-box" x="490" y="108" width="200" height="60" rx="6"/>
+    <text class="dg-sm" x="590"  y="133" text-anchor="middle">type-design-</text>
+    <text class="dg-sm" x="590"  y="151" text-anchor="middle">analyzer</text>
+    <rect class="dg-box" x="710" y="108" width="200" height="60" rx="6"/>
+    <text class="dg-sm" x="810"  y="133" text-anchor="middle">comment-</text>
+    <text class="dg-sm" x="810"  y="151" text-anchor="middle">analyzer</text>
+    <rect class="dg-box" x="930" y="108" width="200" height="60" rx="6"/>
+    <text class="dg-sm" x="1030" y="133" text-anchor="middle">pr-test-</text>
+    <text class="dg-sm" x="1030" y="151" text-anchor="middle">analyzer</text>
+  </g>
+  <path class="dg-wire" d="M150 168 V196 H1030 V168 M370 168 V196 M590 168 V196 M810 168 V196 M590 196 V226"/>
+  <rect class="dg-on" x="450" y="226" width="280" height="44" rx="6"/>
+  <text class="dg-lvl" x="590" y="253" text-anchor="middle">AGGREGATOR</text>
+  <text class="dg-tick" x="750" y="252">un solo comentario al final</text>
+</svg>
+</div>
 
 **Antes de que un peer humano vea el PR, ya pasó por 5 revisores especializados**,
 cada uno cazando su propia clase de bug. Al peer le queda lo que un especialista
@@ -299,27 +334,52 @@ de tipos no puede ver: arquitectura. *(Mis compañeros aplaudieron esto.)*
 
 # El flujo end-to-end
 
-```
-   PLAN          IMPLEMENT       PUSH           REVIEW         TRIAGE
-   ─────         ─────────       ────           ──────         ──────
-      │             │             │               │              │
-      ▼             ▼             ▼               ▼              ▼
-  ┌─────────┐   ┌─────────┐  ┌──────────┐   ┌──────────┐   ┌──────────┐
-  │ ticket- │   │ super:  │  │ local-   │   │ multi-   │   │ ci-      │
-  │coverage │   │ TDD     │  │ build-   │   │ agent-   │   │ failure- │
-  │  -gap-  │   │ skill   │  │ gate     │   │ pr-      │   │ triage   │
-  │analysis │   │         │  │          │   │ review   │   │          │
-  └─────────┘   └─────────┘  └──────────┘   └──────────┘   └──────────┘
-  │                 │              │             │              │
-  ▼                 ▼              ▼             ▼              ▼
-  SKILL           HOOK         RULE            5 SUB-         MEMORY
-  ticket-coverage typecheck    no-parallel-   AGENTES        known-
-  -gap-analysis   on-edit      ci             en paralelo    issues
+<div>
+<svg class="dg" viewBox="0 0 1180 250" role="img" aria-label="Flujo end-to-end: etapa, skill y pieza que se activa">
+  <g class="dg-col">
+    <text class="dg-stage" x="102"  y="16" text-anchor="middle">PLAN</text>
+    <text class="dg-stage" x="345"  y="16" text-anchor="middle">IMPLEMENT</text>
+    <text class="dg-stage" x="588"  y="16" text-anchor="middle">PUSH</text>
+    <text class="dg-stage" x="831"  y="16" text-anchor="middle">REVIEW</text>
+    <text class="dg-stage" x="1074" y="16" text-anchor="middle">TRIAGE</text>
+  </g>
+  <rect class="dg-on" x="0"   y="28" width="205" height="58" rx="6"/>
+  <text class="dg-sm" x="102" y="52"  text-anchor="middle">ticket-coverage-</text>
+  <text class="dg-sm" x="102" y="70"  text-anchor="middle">gap-analysis</text>
+  <rect class="dg-on" x="243" y="28" width="205" height="58" rx="6"/>
+  <text class="dg-sm" x="345" y="52"  text-anchor="middle">superpowers:</text>
+  <text class="dg-sm" x="345" y="70"  text-anchor="middle">TDD</text>
+  <rect class="dg-on" x="486" y="28" width="205" height="58" rx="6"/>
+  <text class="dg-sm" x="588" y="62"  text-anchor="middle">local-build-gate</text>
+  <rect class="dg-on" x="729" y="28" width="205" height="58" rx="6"/>
+  <text class="dg-sm" x="831" y="52"  text-anchor="middle">multi-agent-</text>
+  <text class="dg-sm" x="831" y="70"  text-anchor="middle">pr-review</text>
+  <rect class="dg-on" x="972" y="28" width="205" height="58" rx="6"/>
+  <text class="dg-sm" x="1074" y="62" text-anchor="middle">ci-failure-triage</text>
 
-   ─────────── memory + rules cargadas todo el tiempo ────────────────
+  <path class="dg-wire" d="M102 86 V112 M345 86 V112 M588 86 V112 M831 86 V112 M1074 86 V112"/>
 
-   ⟳ Loop: corrección repetida 3× ──▶ writing-skills ──▶ skill nueva
-```
+  <rect class="dg-pill" x="0"   y="112" width="205" height="52" rx="26"/>
+  <text class="dg-pc" x="102" y="134" text-anchor="middle">SKILL</text>
+  <text class="dg-pn" x="102" y="152" text-anchor="middle">se queda acá</text>
+  <rect class="dg-pill" x="243" y="112" width="205" height="52" rx="26"/>
+  <text class="dg-pc" x="345" y="134" text-anchor="middle">HOOK</text>
+  <text class="dg-pn" x="345" y="152" text-anchor="middle">typecheck on edit</text>
+  <rect class="dg-pill" x="486" y="112" width="205" height="52" rx="26"/>
+  <text class="dg-pc" x="588" y="134" text-anchor="middle">RULE</text>
+  <text class="dg-pn" x="588" y="152" text-anchor="middle">no-parallel-ci</text>
+  <rect class="dg-pill" x="729" y="112" width="205" height="52" rx="26"/>
+  <text class="dg-pc" x="831" y="134" text-anchor="middle">5 SUBAGENTES</text>
+  <text class="dg-pn" x="831" y="152" text-anchor="middle">en paralelo</text>
+  <rect class="dg-pill" x="972" y="112" width="205" height="52" rx="26"/>
+  <text class="dg-pc" x="1074" y="134" text-anchor="middle">MEMORY</text>
+  <text class="dg-pn" x="1074" y="152" text-anchor="middle">known-issues</text>
+
+  <path class="dg-base" d="M0 190 H1177"/>
+  <text class="dg-note" x="0" y="184">memory + rules cargadas todo el tiempo</text>
+  <text class="dg-tick" x="0" y="222">⟳ corrección repetida 3× ──▶ writing-skills ──▶ skill nueva</text>
+</svg>
+</div>
 
 **Cada pieza compone con las demás.** No hay un workflow único — hay piezas.
 
