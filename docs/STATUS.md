@@ -50,6 +50,18 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
   end-to-end flow stay hand-written inline SVG on purpose — see the
   decision-log entry for the "graph vs. meaningful layout" rule.
   Export the deck **into `slides/`** or the relative diagram paths break.
+- **Visuals pass (2026-08-16):** the deck went from 3 visuals to 9. New ones:
+  cold open (two red builds on one environment), the pre-AI pipeline, the
+  `~/.claude/` tree, the 9:00→17:00 strip locating the 6 scenes, the PR
+  comment shaped like GitHub, and the timeline — which was the least readable
+  block in the deck (12 lines of monospace at .58em). The demo slides stay
+  imageless on purpose: that is where the terminal is shown.
+  **One thing is still missing and cannot be generated here: the author's
+  photo** — visible placeholder on slide 3, instructions in
+  `slides/img/README.md`.
+- **Careful with inline SVG:** a blank line inside an `<svg>` ends the markdown
+  HTML block, Marp closes the tag there, and the rest of the diagram renders as
+  loose text with no error raised. Keep inline SVG free of blank lines.
 - **Everything is committed and pushed to origin**, working on branch
   `claude/estructura-revision-fwdb2c` (2026-08-16).
 - **No rehearsal of the full 30-minute run has happened yet** with the current

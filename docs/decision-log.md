@@ -473,6 +473,50 @@ Two things fell out of the change:
   *warns* on remote ones — which is how the twemoji CDN dependency shows up
   on every run instead of only when the room has no Wi-Fi.
 
+## 2026-08-16 — Seis visuales más, y por qué no más que seis
+
+El deck tenía 45 slides y 3 visuales, todos apiñados en el bloque de mecánica
+(slides 12-14). Todo lo demás era tipografía. Lo que se agregó:
+
+- **Cold open (2)** — dos builds en <span>rojo</span> colgando de un solo
+  ambiente. Es la imagen que abre la charla y el incidente que la origina;
+  ahora se ve antes de contarlo.
+- **"Mi setup antes de IA" (5)** — el pipeline ASCII pasó a Mermaid, con la
+  flecha punteada de vuelta al ticket. El ciclo era lo que la lista no decía.
+- **"Cómo Claude conoce mi proyecto" (10)** — el árbol ASCII pasó a Mermaid.
+  Es una jerarquía: global → repo → piezas.
+- **"Ahora, en vivo" (15)** — una franja horaria de 9:00 a 17:00 con las 6
+  escenas ubicadas. Orienta antes de seis demos seguidos, y el hueco del
+  almuerzo hace que se lea como una jornada y no como una lista.
+- **"Demo 4 (2/2)" (20)** — el bloque de código pasó a tener la forma de un
+  comentario de GitHub. Es lo que la slide siempre estuvo mostrando.
+- **"Mi línea de tiempo real" (26)** — 12 líneas de monospace a .58em (casi
+  ilegibles desde el fondo) pasaron a una espina vertical con el color del
+  punto codificando el nivel de la pirámide. El *dolor* de cada pieza se
+  mantiene: era el contenido, no el adorno.
+
+Dónde **no** se puso imagen, a propósito:
+
+- **Las 6 slides de demo.** Durante la charla se sale del deck y se muestra la
+  terminal. Una imagen ahí compite con lo que se está por mostrar. Si se
+  pre-graban las Demos 2 y 6, el video reemplaza a la terminal, no a la slide.
+- **"MCPs — los puentes"** — un hub-and-spoke sería la forma correcta, pero
+  cae tres slides antes del fan-out de subagentes y las dos figuras se verían
+  iguales. La tabla dice lo mismo sin repetir la imagen.
+- **"Qué le toca a la persona"** — es una comparación de dos columnas. La
+  tabla ya es la forma correcta.
+- **El apéndice** — son anatomías de archivos; el bloque de código es el punto.
+
+Único placeholder real: la **foto del autor** en "Quién soy" (slide 3), con
+clase `.ph` — borde punteado y el nombre del archivo que hay que dejar en
+`slides/img/`. No hay forma de generarla acá.
+
+**Trampa encontrada:** una línea en blanco dentro de un `<svg>` en línea corta
+el bloque HTML de markdown, y Marp cierra el `<svg>` ahí. Los `<text>` que
+siguen se emiten como HTML suelto y el navegador los muestra como texto
+corrido — el diagrama se desarma sin ningún error. Los SVG del deck no llevan
+líneas en blanco por eso.
+
 ### Known open items
 
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file

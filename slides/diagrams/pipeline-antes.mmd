@@ -1,0 +1,11 @@
+%% El pipeline diario pre-IA (slide "Mi setup antes de IA").
+%% El punto de la flecha punteada es que esto es un ciclo, no una lista.
+%% Editá acá, no el .svg — se regenera con scripts/build-diagrams.sh.
+flowchart LR
+  T["Jira<br/>ticket + AC"] --> A["Análisis<br/>del cambio"]
+  A --> G["Tests /<br/>automation"]
+  G --> R["TestRail<br/>casos ↔ coverage"]
+  R --> J["Jenkins<br/>build + regression"]
+  J --> P["PR<br/>2 peers + checkstyle"]
+  P --> B["Bugs<br/>a Jira"]
+  B -. "el ciclo vuelve a empezar" .-> T

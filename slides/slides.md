@@ -90,6 +90,54 @@ style: |
   .dg-pill  { fill:none; stroke:var(--accent2); stroke-width:1.5; }
   .dg-pc    { fill:var(--accent2); font:600 12.5px Inter,sans-serif; letter-spacing:.06em; }
   .dg-pn    { fill:var(--muted); font:12px Inter,sans-serif; }
+  /* cold open: dos builds en rojo contra el mismo ambiente */
+  .dg-fail  { fill:#1C1016; stroke:var(--hot); stroke-width:1.5; }
+  .dg-red   { fill:var(--hot); font:600 15px Inter,sans-serif; letter-spacing:.04em; }
+  /* linea de tiempo: el color del punto codifica el nivel de la piramide */
+  .dg-wk    { fill:var(--muted); font:13.5px Inter,sans-serif; }
+  .dg-tier  { font:600 12px Inter,sans-serif; letter-spacing:.1em; }
+  .dg-future{ fill:none; stroke:var(--muted); stroke-width:1.5; }
+  .dg-t-s   { fill:var(--accent);  }
+  .dg-t-r   { fill:var(--accent2); }
+  .dg-t-h   { fill:var(--ink);     }
+  .dg-t-m   { fill:var(--muted);   }
+  .dg-d-s   { fill:var(--accent);  }
+  .dg-d-r   { fill:var(--accent2); }
+  .dg-d-h   { fill:var(--ink);     }
+  .dg-d-m   { fill:var(--muted);   }
+  .dg-ev    { fill:var(--ink); font:15px Inter,sans-serif; }
+  .dg-ev .w { fill:var(--muted); }
+  /* placeholders: lo que todavia no existe como archivo */
+  .ph {
+    border:1.5px dashed var(--muted); border-radius:8px;
+    background:linear-gradient(135deg,rgba(126,154,168,.06) 0%,transparent 60%);
+    padding:14px 18px; margin:.5em 0; text-align:center; color:var(--muted);
+  }
+  .ph b { display:block; color:var(--accent2); font-size:.8em;
+          letter-spacing:.12em; text-transform:uppercase; margin-bottom:.25em; }
+  .ph i { font-style:normal; font-size:.86em; }
+  .ph-tall { padding:40px 18px; }
+  /* el comentario agregado, con la forma que realmente tiene en GitHub */
+  .gh { border:1px solid var(--line); border-radius:8px; overflow:hidden; margin:.5em 0; }
+  .gh-bar {
+    background:#0A2A3D; color:var(--muted); font-size:.66em;
+    padding:7px 14px; border-bottom:1px solid var(--line);
+  }
+  .gh-bar b { color:var(--ink); font-weight:600; }
+  .gh-body { background:var(--surface); padding:12px 16px 14px; }
+  .gh-h { color:var(--ink); font-weight:650; font-size:.9em; margin-bottom:.45em; }
+  .gh-row { font-size:.76em; color:var(--ink); margin:.3em 0; }
+  .gh-row span {
+    display:inline-block; min-width:118px; font-weight:600;
+    font-size:.82em; letter-spacing:.09em;
+  }
+  .gh-b { color:var(--hot); }
+  .gh-s { color:var(--accent); }
+  .gh-n { color:var(--muted); }
+  .gh-det {
+    margin-top:.6em; padding-top:.5em; border-top:1px solid var(--line);
+    color:var(--accent2); font-size:.72em;
+  }
   /* ── estado de CI: rojo/verde con los colores de la paleta ── */
   .rojo  { color: var(--hot);     font-weight:600; }
   .verde { color: var(--accent2); font-weight:600; }
@@ -113,8 +161,21 @@ Edgardo Crovetto · 2026
 
 ## cazando flaky tests fantasma
 
-Dos builds, mismo ambiente, mismas credenciales — sin que nadie lo supiera.
-Todo <span class="rojo">rojo</span>. Nada roto.
+<div>
+<svg class="dg" viewBox="0 0 1080 176" role="img" aria-label="Dos builds simultáneos contra el mismo ambiente, los dos en rojo">
+  <rect class="dg-fail" x="40"  y="0" width="400" height="78" rx="6"/>
+  <text class="dg-sm"   x="62"  y="32">build #128 · regression</text>
+  <text class="dg-red"  x="62"  y="58">FAILED — 14 tests</text>
+  <rect class="dg-fail" x="640" y="0" width="400" height="78" rx="6"/>
+  <text class="dg-sm"   x="662" y="32">build #129 · regression</text>
+  <text class="dg-red"  x="662" y="58">FAILED — 11 tests</text>
+  <path class="dg-wire" d="M240 78 V106 H540 V130 M840 78 V106 H540"/>
+  <rect class="dg-skip" x="300" y="130" width="480" height="46" rx="6"/>
+  <text class="dg-sm" x="540" y="159" text-anchor="middle">stage · un solo ambiente · unas solas credenciales</text>
+</svg>
+</div>
+
+Se pisaban entre sí, y nadie lo sabía. Todo <span class="rojo">rojo</span>. **Nada roto.**
 
 **Hoy eso no puede volver a pasarme.
 Y no es porque yo me acuerde: es porque mi setup se acuerda por mí.**
@@ -124,6 +185,13 @@ Esta charla es la historia de cómo llegué ahí.
 ---
 
 # Quién soy
+
+<div class="ph">
+<b>Placeholder · foto</b>
+<i>Foto tuya, recortada en círculo, ~220 px. Guardala como
+<code>slides/img/edgardo.jpg</code> y reemplazá este bloque por
+<code>![w:220 center](img/edgardo.jpg)</code>.</i>
+</div>
 
 **Edgardo Crovetto** · Senior QA automation engineer
 
@@ -153,18 +221,7 @@ Plataforma de streaming · servicio backend REST
 
 **Pipeline diario:**
 
-```
-Jira ticket (changes + AC)  →  análisis del cambio
-                            →  generar tests / automation
-                            ↓
-TestRail mapea automation ↔ casos ↔ coverage
-                            ↓
-Jenkins corre build + regression
-                            ↓
-PR con review de 2 peers · checkstyle automático
-                            ↓
-Análisis local + Jenkins  →  bugs en Jira  →  follow-up del ciclo
-```
+![w:1060 center](diagrams/pipeline-antes.svg)
 
 > Funcionaba. Pero todo el conocimiento de cada ticket vivía **en mi cabeza**.
 
@@ -216,14 +273,7 @@ No hubo plan. Aparecieron patrones.
 
 # Cómo Claude conoce mi proyecto
 
-```
-~/.claude/CLAUDE.md          ← preferencias globales (tu identidad)
-└── proyecto/CLAUDE.md       ← convenciones del repo
-    ├── .claude/skills/      ← workflows invocables
-    ├── .claude/rules/       ← guardrails siempre cargados
-    ├── memory/              ← hechos entre sesiones
-    └── .claude/settings.json ← hooks automáticos
-```
+![w:940 center](diagrams/arbol-claude.svg)
 
 Todo es **texto plano en disco**. Versionado. Reviewable.
 
@@ -257,19 +307,15 @@ subiendo un nivel cada vez que el anterior no alcanzó.
   <rect class="dg-on"   x="160" y="6"   width="200" height="42" rx="5"/>
   <text class="dg-lvl"  x="260" y="33" text-anchor="middle">HOOK</text>
   <text class="dg-note" x="400" y="32">typecheck en cada edit — corre solo, ya no depende de nadie</text>
-
   <rect class="dg-skip" x="130" y="56"  width="260" height="42" rx="5"/>
   <text class="dg-lvl-d" x="260" y="83" text-anchor="middle">RULE</text>
   <text class="dg-note" x="400" y="82">siempre cargada — pero este dolor la saltea</text>
-
   <rect class="dg-on"   x="100" y="106" width="320" height="42" rx="5"/>
   <text class="dg-lvl"  x="260" y="133" text-anchor="middle">SKILL</text>
   <text class="dg-note" x="450" y="132">local-build-gate — lo corre Claude cuando hace falta</text>
-
   <rect class="dg-on"   x="70"  y="156" width="380" height="42" rx="5"/>
   <text class="dg-lvl"  x="260" y="183" text-anchor="middle">MEMORY</text>
   <text class="dg-note" x="480" y="182">feedback-local-build-before-ci — y me lo olvidé igual</text>
-
   <rect class="dg-on"   x="40"  y="206" width="440" height="42" rx="5"/>
   <text class="dg-lvl"  x="260" y="233" text-anchor="middle">PROMPT SUELTO</text>
   <text class="dg-note" x="510" y="232">"acordate del typecheck antes de CI", una y otra vez</text>
@@ -328,9 +374,7 @@ de tipos no puede ver: arquitectura. *(Mis compañeros aplaudieron esto.)*
   <text class="dg-sm" x="831" y="70"  text-anchor="middle">pr-review</text>
   <rect class="dg-on" x="972" y="28" width="205" height="58" rx="6"/>
   <text class="dg-sm" x="1074" y="62" text-anchor="middle">ci-failure-triage</text>
-
   <path class="dg-wire" d="M102 86 V112 M345 86 V112 M588 86 V112 M831 86 V112 M1074 86 V112"/>
-
   <rect class="dg-pill" x="0"   y="112" width="205" height="52" rx="26"/>
   <text class="dg-pc" x="102" y="134" text-anchor="middle">SKILL</text>
   <text class="dg-pn" x="102" y="152" text-anchor="middle">se queda acá</text>
@@ -346,7 +390,6 @@ de tipos no puede ver: arquitectura. *(Mis compañeros aplaudieron esto.)*
   <rect class="dg-pill" x="972" y="112" width="205" height="52" rx="26"/>
   <text class="dg-pc" x="1074" y="134" text-anchor="middle">MEMORY</text>
   <text class="dg-pn" x="1074" y="152" text-anchor="middle">known-issues</text>
-
   <path class="dg-base" d="M0 190 H1177"/>
   <text class="dg-note" x="0" y="184">memory + rules cargadas todo el tiempo</text>
   <text class="dg-tick" x="0" y="222">⟳ corrección repetida 3× ──▶ writing-skills ──▶ skill nueva</text>
@@ -363,7 +406,36 @@ de tipos no puede ver: arquitectura. *(Mis compañeros aplaudieron esto.)*
 
 ## Un día de QA, del ticket al merge
 
-6 escenas a lo largo de una jornada de 8 horas · 9:00 → 17:00 · repo `claude-qa-demo` · todo offline
+6 escenas a lo largo de una jornada de 8 horas · repo `claude-qa-demo`
+
+<div>
+<svg class="dg" viewBox="0 0 1080 104" role="img" aria-label="Las 6 escenas ubicadas en una jornada de 9:00 a 17:00">
+  <path class="dg-base" d="M75 30 H1005"/>
+  <circle class="dg-d-s" cx="75" cy="30" r="5"/>
+  <text class="dg-tick" x="75" y="20" text-anchor="middle">9:00</text>
+  <text class="dg-pn" x="75" y="52" text-anchor="middle">Ticket → plan</text>
+  <circle class="dg-d-s" cx="191" cy="30" r="5"/>
+  <text class="dg-tick" x="191" y="20" text-anchor="middle">10:00</text>
+  <text class="dg-pn" x="191" y="52" text-anchor="middle">TDD asistido</text>
+  <circle class="dg-d-s" cx="366" cy="30" r="5"/>
+  <text class="dg-tick" x="366" y="20" text-anchor="middle">11:30</text>
+  <text class="dg-pn" x="366" y="52" text-anchor="middle">Gate local</text>
+  <circle class="dg-d-s" cx="656" cy="30" r="5"/>
+  <text class="dg-tick" x="656" y="20" text-anchor="middle">14:00</text>
+  <text class="dg-pn" x="656" y="52" text-anchor="middle">PR review</text>
+  <circle class="dg-d-s" cx="773" cy="30" r="5"/>
+  <text class="dg-tick" x="773" y="20" text-anchor="middle">15:00</text>
+  <text class="dg-pn" x="773" y="52" text-anchor="middle">Triage de CI</text>
+  <circle class="dg-d-s" cx="889" cy="30" r="5"/>
+  <text class="dg-tick" x="889" y="20" text-anchor="middle">16:00</text>
+  <text class="dg-pn" x="889" y="52" text-anchor="middle">Prompt → skill</text>
+  <text class="dg-pn" x="511" y="52" text-anchor="middle">— almuerzo —</text>
+  <circle class="dg-future" cx="1005" cy="30" r="5"/>
+  <text class="dg-tick" x="1005" y="20" text-anchor="middle">17:00</text>
+  <text class="dg-pn" x="1005" y="52" text-anchor="middle">se termina</text>
+  <text class="dg-note" x="540" y="90" text-anchor="middle">todo offline · cada escena deja algo para la siguiente</text>
+</svg>
+</div>
 
 *El demo está en TypeScript para que entre en pantalla y compile rápido.
 El patrón es **idéntico** en Java/TestNG/RestAssured.*
@@ -449,17 +521,16 @@ PR sembrado con 5 bugs distintos (`mocks/github/pr-7.diff`):
 
 # Demo 4 (2/2) — el resultado agregado
 
-```markdown
-## Review summary
-
-**Blockers:** silent-failure-hunter found 1
-**Suggestions:** type-design-analyzer found 1, comment-analyzer found 1, pr-test-analyzer found 1
-**Nitpicks:** code-reviewer found 1
-
-<details><summary>Per-axis details</summary>
-...
-</details>
-```
+<div class="gh">
+  <div class="gh-bar">claude · comentó en <b>#7</b> · hace 1 minuto</div>
+  <div class="gh-body">
+    <div class="gh-h">Review summary</div>
+    <div class="gh-row"><span class="gh-b">BLOCKERS</span> silent-failure-hunter · 1</div>
+    <div class="gh-row"><span class="gh-s">SUGGESTIONS</span> type-design-analyzer · 1 &nbsp; comment-analyzer · 1 &nbsp; pr-test-analyzer · 1</div>
+    <div class="gh-row"><span class="gh-n">NITPICKS</span> code-reviewer · 1</div>
+    <div class="gh-det">▸ Per-axis details</div>
+  </div>
+</div>
 
 5× paralelo, contexto aislado, 1 comentario al final.
 
@@ -549,20 +620,57 @@ El patrón es el mismo — cambia quién lo detecta.
 
 # Mi línea de tiempo real
 
-```
-semana 1    CLAUDE.md inicial: 5 líneas — nombre, comando de test, convención de commits
-semana 1    ← Skill: local-build-gate (CI roto 2 veces por un typo que typecheck cazaba en 2 seg)
-semana 3    ← Rule: no-parallel-ci (90 min cazando flaky tests fantasma en stage)
-semana 3    ← Rule: english-only (un compañero no podía revisar un commit en español)
-semana 6    ← Skill: ci-failure-triage (las mismas 3 preguntas cada lunes)
-semana 6    ← Skill: known-issues-registry-update (perdía el registro de qué flaky test ya vi)
-semana 9    ← Plugin pr-review-toolkit + Skill: multi-agent-pr-review (de secuencial a paralelo)
-semana 11   ← Hook: typecheck-after-edit (memory + rule no alcanzaban)
-semana 13   ← Skill: ticket-coverage-gap-analysis (la misma conversación 4 sprints seguidos)
-semana 16   ← Memory: heurística de flaky tests en stage (80% de los rojos eran flaky tests, no regresiones)
-ahora       ← El setup quedó versionado en el repo — los compañeros también lo mejoran, con sus propias PRs
-futuro      ← Nuevas ideas, nuevas necesidades — seguimos buscando patrones
-```
+<div>
+<svg class="dg" viewBox="0 0 1180 414" role="img" aria-label="Línea de tiempo: qué pieza apareció en qué semana y qué dolor la causó">
+  <path class="dg-wire" d="M108 12 V404"/>
+  <circle class="dg-d-m" cx="108" cy="26" r="5"/>
+  <text class="dg-wk" x="96" y="31" text-anchor="end">semana 1</text>
+  <text class="dg-tier dg-t-m" x="126" y="31">BASE</text>
+  <text class="dg-ev" x="200" y="31">CLAUDE.md inicial: 5 líneas <tspan class="w">— nombre, comando de test, convención de commits</tspan></text>
+  <circle class="dg-d-s" cx="108" cy="60" r="5"/>
+  <text class="dg-wk" x="96" y="65" text-anchor="end">semana 1</text>
+  <text class="dg-tier dg-t-s" x="126" y="65">SKILL</text>
+  <text class="dg-ev" x="200" y="65">local-build-gate <tspan class="w">— CI roto 2 veces por un typo que typecheck cazaba en 2 seg</tspan></text>
+  <circle class="dg-d-r" cx="108" cy="94" r="5"/>
+  <text class="dg-wk" x="96" y="99" text-anchor="end">semana 3</text>
+  <text class="dg-tier dg-t-r" x="126" y="99">RULE</text>
+  <text class="dg-ev" x="200" y="99">no-parallel-ci <tspan class="w">— los 90 minutos cazando flaky tests fantasma en stage</tspan></text>
+  <circle class="dg-d-r" cx="108" cy="128" r="5"/>
+  <text class="dg-wk" x="96" y="133" text-anchor="end">semana 3</text>
+  <text class="dg-tier dg-t-r" x="126" y="133">RULE</text>
+  <text class="dg-ev" x="200" y="133">english-only <tspan class="w">— un compañero no podía revisar un commit en español</tspan></text>
+  <circle class="dg-d-s" cx="108" cy="162" r="5"/>
+  <text class="dg-wk" x="96" y="167" text-anchor="end">semana 6</text>
+  <text class="dg-tier dg-t-s" x="126" y="167">SKILL</text>
+  <text class="dg-ev" x="200" y="167">ci-failure-triage <tspan class="w">— las mismas 3 preguntas cada lunes</tspan></text>
+  <circle class="dg-d-s" cx="108" cy="196" r="5"/>
+  <text class="dg-wk" x="96" y="201" text-anchor="end">semana 6</text>
+  <text class="dg-tier dg-t-s" x="126" y="201">SKILL</text>
+  <text class="dg-ev" x="200" y="201">known-issues-registry-update <tspan class="w">— perdía el registro de qué flaky test ya vi</tspan></text>
+  <circle class="dg-d-s" cx="108" cy="230" r="5"/>
+  <text class="dg-wk" x="96" y="235" text-anchor="end">semana 9</text>
+  <text class="dg-tier dg-t-s" x="126" y="235">SKILL</text>
+  <text class="dg-ev" x="200" y="235">multi-agent-pr-review <tspan class="w">+ plugin pr-review-toolkit — de secuencial a paralelo</tspan></text>
+  <circle class="dg-d-h" cx="108" cy="264" r="5"/>
+  <text class="dg-wk" x="96" y="269" text-anchor="end">semana 11</text>
+  <text class="dg-tier dg-t-h" x="126" y="269">HOOK</text>
+  <text class="dg-ev" x="200" y="269">typecheck-after-edit <tspan class="w">— memory + rule no alcanzaban</tspan></text>
+  <circle class="dg-d-s" cx="108" cy="298" r="5"/>
+  <text class="dg-wk" x="96" y="303" text-anchor="end">semana 13</text>
+  <text class="dg-tier dg-t-s" x="126" y="303">SKILL</text>
+  <text class="dg-ev" x="200" y="303">ticket-coverage-gap-analysis <tspan class="w">— la misma conversación 4 sprints seguidos</tspan></text>
+  <circle class="dg-d-m" cx="108" cy="332" r="5"/>
+  <text class="dg-wk" x="96" y="337" text-anchor="end">semana 16</text>
+  <text class="dg-tier dg-t-m" x="126" y="337">MEMORY</text>
+  <text class="dg-ev" x="200" y="337">heurística de flaky tests en stage <tspan class="w">— 80% de los rojos no eran regresiones</tspan></text>
+  <circle class="dg-d-h" cx="108" cy="366" r="5"/>
+  <text class="dg-wk" x="96" y="371" text-anchor="end">ahora</text>
+  <text class="dg-ev" x="126" y="371">El setup quedó versionado en el repo <tspan class="w">— los compañeros lo mejoran con sus propias PRs</tspan></text>
+  <circle class="dg-future" cx="108" cy="400" r="5"/>
+  <text class="dg-wk" x="96" y="405" text-anchor="end">futuro</text>
+  <text class="dg-ev" x="126" y="405"><tspan class="w">Nuevas ideas, nuevas necesidades — seguimos buscando patrones</tspan></text>
+</svg>
+</div>
 
 **Nada se planificó. Cada pieza respondió a un dolor concreto.**
 
