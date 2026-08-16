@@ -138,6 +138,11 @@ style: |
     margin-top:.6em; padding-top:.5em; border-top:1px solid var(--line);
     color:var(--accent2); font-size:.72em;
   }
+  /* logos de herramientas de terceros, alineados con el texto de la celda */
+  img.logo {
+    height:1.5em; width:1.5em; object-fit:contain;
+    vertical-align:-.35em; margin-right:.5em;
+  }
   /* ── estado de CI: rojo/verde con los colores de la paleta ── */
   .rojo  { color: var(--hot);     font-weight:600; }
   .verde { color: var(--accent2); font-weight:600; }
@@ -288,10 +293,10 @@ El trabajo real cruza varios sistemas. Los MCPs los conectan.
 
 | MCP | Para qué lo uso |
 |-----|-----------------|
-| 🎫 **Jira** | Leer ticket + AC, comentar, transicionar el estado |
-| ✅ **TestRail** | Leer/escribir test cases, asociar runs a builds |
-| 🏗️ **Jenkins** | Triggerear builds, leer resultados, descargar logs |
-| 📄 **Confluence** | Leer specs y acceptance criteria |
+| <img class="logo" src="img/logos/jira.svg"> **Jira** | Leer ticket + AC, comentar, transicionar el estado |
+| <img class="logo" src="img/logos/testrail.svg"> **TestRail** | Leer/escribir test cases, asociar runs a builds |
+| <img class="logo" src="img/logos/jenkins.svg"> **Jenkins** | Triggerear builds, leer resultados, descargar logs |
+| <img class="logo" src="img/logos/confluence.svg"> **Confluence** | Leer specs y acceptance criteria |
 
 Una sola conversación con Claude puede pasar por los **4**.
 

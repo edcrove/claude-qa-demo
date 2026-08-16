@@ -18,6 +18,12 @@ por:
 ![w:220 center](img/edgardo.jpg)
 ```
 
+## Ya resuelto
+
+`logos/` tiene los logos de Jira, TestRail, Jenkins y Confluence para la tabla
+de MCPs (slide 11), generados por `scripts/build-logos.js`. Ver
+[`logos/README.md`](logos/README.md) para procedencia, colores y marcas.
+
 ## Por qué no hay más placeholders
 
 Las slides de demo (1 a 6) no llevan imagen a propósito: durante la charla se
