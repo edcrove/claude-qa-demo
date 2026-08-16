@@ -116,7 +116,7 @@ section count, not eyeballed):
   "4 pasos para el lunes" → close).
 
   Two merges in the 2026-08-13 timing pass: **the pyramid absorbed "Las 4
-  piezas"** — each level of the ASCII pyramid now carries its own real
+  piezas"** — each level of the pyramid now carries its own real
   example inline (`local-build-gate` on SKILL, `feedback-local-build-before-ci`
   on MEMORY, and so on), so the structure and the typecheck story are told
   once, together, instead of as two consecutive slides saying the same thing
@@ -201,10 +201,13 @@ CLAUDE.md, MCP server names, tokens in autocomplete) — that is what
 - [ ] launch through `./scripts/demo-profile.sh`, run `/context`, confirm only
       the repo's `CLAUDE.md` is loaded
 - [ ] terminal font ≥ 16pt, notifications off
-- [ ] slides rendered locally (`slides/slides.html`), no Wi-Fi needed
-- [ ] `node scripts/check-slide-overflow.js <rendered.html>` → "every slide
-      fits" (Marp silently clips content that runs past the bottom edge; this
-      caught 13 clipped slides on 2026-08-13)
+- [ ] slides rendered locally **into `slides/`** (`slides/slides.html`) — the
+      diagrams are relative `diagrams/*.svg`, so exporting elsewhere silently
+      breaks them. Note the 8 emoji still come from the twemoji CDN
+      (see decision log), so "no Wi-Fi needed" holds for everything but those
+- [ ] `node scripts/check-slide-overflow.js slides/slides.html` → "every slide
+      fits" and no ❌ broken-image line (Marp silently clips content that runs
+      past the bottom edge; this caught 13 clipped slides on 2026-08-13)
 - [ ] backup recording on the desktop
 
 ## Out of scope

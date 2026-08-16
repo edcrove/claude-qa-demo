@@ -439,8 +439,46 @@ Result: **0 of 45 slides overflow.** Added `scripts/check-slide-overflow.js`
 so this cannot regress silently, and put it in the pre-flight checklist. It
 needs playwright and exits non-zero when something is clipped.
 
+## 2026-08-16 — Diagrams: vector, and Mermaid only where it earns it
+
+The three ASCII diagrams became vector. Two different mechanisms, on purpose:
+
+- **Mermaid → static SVG at build time** for the `multi-agent-pr-review`
+  fan-out. It is a plain node-and-edge graph, which is exactly what Mermaid
+  is good at, and the source (`slides/diagrams/subagentes.mmd`) is eleven
+  readable lines — adding a sixth subagent is one line, not a coordinate
+  rewrite. Rendered by `scripts/build-diagrams.sh` (`@mermaid-js/mermaid-cli`)
+  and **committed as `.svg`**, so building the deck never needs Mermaid and
+  nothing is fetched at present time. Browser-side Mermaid was rejected for
+  the same reason the emoji are a problem: a CDN the room's Wi-Fi can break.
+- **Hand-written inline SVG** stays for the pyramid and the end-to-end flow.
+  Mermaid has no pyramid chart, and the pyramid's argument *is* its visual
+  grammar — the dashed, dimmed RULE tier is the point of the slide. The flow
+  is a two-row stage/piece grid, not a graph. Forcing either into Mermaid
+  would cost control and buy nothing.
+
+Rule of thumb this leaves behind: Mermaid when the diagram is a graph,
+hand-written SVG when the layout carries meaning.
+
+Two things fell out of the change:
+
+- The Mermaid default (`<br/>` inside every node label) made two-line boxes
+  and pushed slide 13's closing line off the bottom. Fixed at the source —
+  single-line labels, tighter `nodeSpacing`/`rankSpacing` — not by shrinking
+  the image, which would have shrunk the text with it.
+- **`check-slide-overflow.js` had been lying.** Exported to `/tmp`, the
+  relative `diagrams/*.svg` path did not resolve; a broken `<img>` measures
+  0px tall, so it reported "every slide fits" for a slide that was clipping.
+  The script now fails on any local image that did not load, and separately
+  *warns* on remote ones — which is how the twemoji CDN dependency shows up
+  on every run instead of only when the room has no Wi-Fi.
+
 ### Known open items
 
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file
   diff is nested inside the first hunk). Fine for the demo, broken for anyone
   who tries to apply it.
+- 8 emoji in the deck are `<img>` tags pointing at the twemoji CDN, so
+  "todo offline" is not literally true yet. One-line fix when the author wants
+  it: `options: { emoji: { unicode: false } }` in `marp.config.js`, which
+  falls back to the system emoji font.

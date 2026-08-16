@@ -1,6 +1,6 @@
 # STATUS — start here to resume work
 
-**Last updated:** 2026-08-13
+**Last updated:** 2026-08-16
 
 This is the continuation anchor. A session with zero prior context should read,
 in this order: this file → [`talk-design.md`](talk-design.md) (what the talk is)
@@ -42,8 +42,16 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
   impossible (build 43 "running at 11:30" per a mock that said 14:22; build 42
   triaged at 15:00 despite being numbered *before* it). All three fixed — see
   the decision-log entry. **The timing problem below is not fixed.**
+- **Visual pass done (2026-08-16):** Ink Black palette from the author's own
+  swatches, red/green accents on the CI status words, 0/45 slides overflowing,
+  and the three ASCII diagrams replaced by vector. The fan-out diagram is now
+  **Mermaid pre-rendered to SVG** (`slides/diagrams/*.mmd` →
+  `scripts/build-diagrams.sh` → committed `.svg`); the pyramid and the
+  end-to-end flow stay hand-written inline SVG on purpose — see the
+  decision-log entry for the "graph vs. meaningful layout" rule.
+  Export the deck **into `slides/`** or the relative diagram paths break.
 - **Everything is committed and pushed to origin**, working on branch
-  `claude/estructura-revision-fwdb2c` (2026-08-13).
+  `claude/estructura-revision-fwdb2c` (2026-08-16).
 - **No rehearsal of the full 30-minute run has happened yet** with the current
   deck and fixed demos.
 
@@ -96,6 +104,12 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
 3. **`mocks/github/pr-7.diff`** is readable but not `git apply`-able. More
    urgent than it looks: the talk invites cloning four times and this is the
    star demo's artifact. Fix the nested hunk before publishing the link.
+4. **The deck is not literally offline.** 8 emoji are `<img>` tags pointing at
+   the twemoji CDN, which contradicts the "todo offline" line on the *Ahora,
+   en vivo* slide. `check-slide-overflow.js` now warns about this on every run.
+   One-line fix, not applied because it changes how the emoji look:
+   `options: { emoji: { unicode: false } }` in `marp.config.js` (falls back to
+   the system emoji font). Alternative: drop the 8 emoji from the deck.
 
 ## Suggested next steps
 

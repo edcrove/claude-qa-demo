@@ -294,35 +294,7 @@ repo, la misma pirámide. Lo distinto es lo que hace adentro: en vez de correr
 pasos él mismo, **despacha subagentes.** Cada uno con su propio contexto: no ve
 tu historial, y al principal solo le vuelve el resumen.
 
-<div>
-<svg class="dg" viewBox="0 0 1180 300" role="img" aria-label="Un skill despacha 5 subagentes en paralelo">
-  <rect class="dg-on" x="390" y="4" width="400" height="44" rx="6"/>
-  <text class="dg-lvl" x="590" y="31" text-anchor="middle">MAIN AGENT</text>
-  <path class="dg-wire" d="M590 48 V78 M150 108 V78 H1030 V108 M370 78 V108 M590 78 V108 M810 78 V108"/>
-  <text class="dg-tick" x="600" y="72">despacho paralelo · 5 contextos aislados</text>
-  <g class="dg-sub">
-    <rect class="dg-box" x="50"  y="108" width="200" height="60" rx="6"/>
-    <text class="dg-sm" x="150"  y="133" text-anchor="middle">code-</text>
-    <text class="dg-sm" x="150"  y="151" text-anchor="middle">reviewer</text>
-    <rect class="dg-box" x="270" y="108" width="200" height="60" rx="6"/>
-    <text class="dg-sm" x="370"  y="133" text-anchor="middle">silent-failure-</text>
-    <text class="dg-sm" x="370"  y="151" text-anchor="middle">hunter</text>
-    <rect class="dg-box" x="490" y="108" width="200" height="60" rx="6"/>
-    <text class="dg-sm" x="590"  y="133" text-anchor="middle">type-design-</text>
-    <text class="dg-sm" x="590"  y="151" text-anchor="middle">analyzer</text>
-    <rect class="dg-box" x="710" y="108" width="200" height="60" rx="6"/>
-    <text class="dg-sm" x="810"  y="133" text-anchor="middle">comment-</text>
-    <text class="dg-sm" x="810"  y="151" text-anchor="middle">analyzer</text>
-    <rect class="dg-box" x="930" y="108" width="200" height="60" rx="6"/>
-    <text class="dg-sm" x="1030" y="133" text-anchor="middle">pr-test-</text>
-    <text class="dg-sm" x="1030" y="151" text-anchor="middle">analyzer</text>
-  </g>
-  <path class="dg-wire" d="M150 168 V196 H1030 V168 M370 168 V196 M590 168 V196 M810 168 V196 M590 196 V226"/>
-  <rect class="dg-on" x="450" y="226" width="280" height="44" rx="6"/>
-  <text class="dg-lvl" x="590" y="253" text-anchor="middle">AGGREGATOR</text>
-  <text class="dg-tick" x="750" y="252">un solo comentario al final</text>
-</svg>
-</div>
+![w:900 center](diagrams/subagentes.svg)
 
 **Antes de que un peer humano vea el PR, ya pasó por 5 revisores especializados**,
 cada uno cazando su propia clase de bug. Al peer le queda lo que un especialista

@@ -7,4 +7,9 @@
 // HTML carries no untrusted input here.
 module.exports = {
   html: true,
+
+  // The subagent diagram is an <img> pointing at slides/diagrams/*.svg, built
+  // from Mermaid. Without this, every export needs --allow-local-files or the
+  // image silently goes missing.
+  allowLocalFiles: true,
 };

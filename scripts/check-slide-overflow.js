@@ -7,9 +7,14 @@
  * editing markdown. This measures each rendered slide in a real browser and
  * prints the ones that do not fit.
  *
+ * Render the HTML *inside slides/* — the deck points at diagrams/*.svg with a
+ * relative path, so exporting anywhere else leaves the images broken, and a
+ * broken image measures 0px tall. That reads as "everything fits" when the
+ * slide actually overflows, so this also fails on any image that did not load.
+ *
  * Usage:
- *   npx @marp-team/marp-cli slides/slides.md -o /tmp/slides.html --html
- *   node scripts/check-slide-overflow.js /tmp/slides.html
+ *   npx @marp-team/marp-cli slides/slides.md -o slides/.preview.html
+ *   node scripts/check-slide-overflow.js slides/.preview.html
  *
  * Needs playwright (`npm i -D playwright`). Exits non-zero if anything
  * overflows, so it can gate a rehearsal.
@@ -38,6 +43,10 @@ if (!file) {
   await page.goto('file://' + path.resolve(file));
   await page.waitForTimeout(1500);
 
+  const brokenImages = await page.evaluate(() =>
+    [...document.images].filter((img) => !img.complete || img.naturalWidth === 0).map((img) => img.getAttribute('src'))
+  );
+
   const results = await page.evaluate(() => {
     const out = [];
     document.querySelectorAll('section').forEach((sec) => {
@@ -60,6 +69,29 @@ if (!file) {
   });
 
   await browser.close();
+
+  const isRemote = (src) => /^https?:/i.test(src);
+  const brokenLocal = [...new Set(brokenImages.filter((s) => !isRemote(s)))];
+  const brokenRemote = [...new Set(brokenImages.filter(isRemote))];
+
+  // A broken <img> measures 0px tall, so the numbers below would happily call
+  // an overflowing slide "fits". Local misses are always a bug worth failing on.
+  if (brokenLocal.length) {
+    console.error(`❌ ${brokenLocal.length} local image(s) did not load — the measurement below is not trustworthy:`);
+    for (const src of brokenLocal) console.error(`   ${src}`);
+    console.error('Export the HTML into slides/ so the relative diagram paths resolve.\n');
+    process.exitCode = 1;
+  }
+
+  // Remote misses are usually Marp rewriting unicode emoji into twemoji CDN
+  // <img>. Offline that is a live-demo risk, not a layout bug — warn, do not fail.
+  if (brokenRemote.length) {
+    console.warn(`⚠️  ${brokenRemote.length} remote image(s) did not load — the deck is not fully offline:`);
+    for (const src of brokenRemote.slice(0, 3)) console.warn(`   ${src}`);
+    if (brokenRemote.length > 3) console.warn(`   …and ${brokenRemote.length - 3} more`);
+    console.warn('These are Marp emoji fetched from a CDN. To drop the dependency, set');
+    console.warn("`options: { emoji: { unicode: false } }` in marp.config.js.\n");
+  }
 
   const bad = results.filter((r) => r.over > 0).sort((a, b) => b.over - a.over);
   console.log(`measured ${results.length} slides — ${bad.length} overflowing`);

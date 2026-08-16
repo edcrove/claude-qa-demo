@@ -1,0 +1,14 @@
+%% Fan-out del skill multi-agent-pr-review.
+%% Editá acá, no el .svg — el .svg se regenera con scripts/build-diagrams.sh.
+flowchart TB
+  M["multi-agent-pr-review<br/>un SKILL.md"]
+  M --> A["code-reviewer"]
+  M --> B["silent-failure-hunter"]
+  M --> C["type-design-analyzer"]
+  M --> D["comment-analyzer"]
+  M --> E["pr-test-analyzer"]
+  A --> G["Aggregator<br/>un comentario"]
+  B --> G
+  C --> G
+  D --> G
+  E --> G
