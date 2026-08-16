@@ -20,8 +20,32 @@ style: |
   }
   section {
     font-family:'Inter','Helvetica Neue',sans-serif; font-size:24px; line-height:1.42;
-    padding:44px 60px; color:var(--ink); background:var(--bg);
+    padding:44px 60px; color:var(--ink);
   }
+  /* Capa ambiental: dos halos muy tenues que llenan el aire de las slides
+     cortas sin competir con el texto. Es el mismo recurso que ya usaban las
+     slides lead, extendido al resto para que el deck se lea como uno solo.
+     Va como background-image y con !important a propósito: la directiva
+     backgroundColor del frontmatter emite un `background` shorthand que si no
+     borra los gradientes (background-image queda en none). */
+  section {
+    background-image:
+      radial-gradient(800px 520px at 100% 108%, rgba(46,196,182,.14) 0%, transparent 62%),
+      radial-gradient(560px 400px at -8% -10%, rgba(255,159,28,.055) 0%, transparent 60%) !important;
+  }
+  /* Slides cortas por diseño (preguntas, notas al pasar, backup de Q&A):
+     centradas en vertical. Dos líneas pegadas arriba con 400px de vacío
+     abajo se leen como un error; centradas se leen como una pausa. */
+  section.mid { display:flex; flex-direction:column; justify-content:center; }
+  /* Marca de agua: el repo que la charla invita a clonar cuatro veces.
+     Relleno con función, en el aire que dejan las slides cortas. */
+  section::before {
+    content:'github.com/edcrove/claude-qa-demo';
+    position:absolute; left:60px; bottom:22px;
+    font:12px ui-monospace,'SF Mono',Menlo,monospace; letter-spacing:.06em;
+    color:var(--muted); opacity:.34;
+  }
+  section.lead::before { display:none; }
   section h1 {
     color:var(--ink); font-size:1.36em; font-weight:650;
     margin:0 0 .5em; letter-spacing:-.014em; line-height:1.15;
@@ -128,10 +152,13 @@ style: |
     margin-top:.6em; padding-top:.5em; border-top:1px solid var(--line);
     color:var(--accent2); font-size:.72em;
   }
-  /* logos de herramientas de terceros, alineados con el texto de la celda */
+  /* Logos de terceros. Van sobre un chip claro en vez de tenidos: sobre el
+     fondo #011627 el azul de Atlassian desaparece y el line art de Jenkins se
+     emborrona. Con el chip cada marca conserva su color real y se lee. */
   img.logo {
-    height:1.5em; width:1.5em; object-fit:contain;
-    vertical-align:-.35em; margin-right:.5em;
+    height:1.62em; width:1.62em; box-sizing:border-box;
+    background:#FDFFFC; border-radius:6px; padding:3px;
+    vertical-align:-.42em; margin-right:.5em;
   }
   /* ── estado de CI: rojo/verde con los colores de la paleta ── */
   .rojo  { color: var(--hot);     font-weight:600; }
@@ -192,6 +219,8 @@ Java + TypeScript · tests automatizados · CI/CD · pipelines
 `linkedin.com/in/edgardocrovetto`
 
 ---
+
+<!-- _class: mid -->
 
 # La pregunta de hoy
 
@@ -279,9 +308,11 @@ El trabajo real cruza varios sistemas. Los MCPs los conectan.
 | <img class="logo" src="img/logos/jira.svg"> **Jira** | Leer ticket + AC, comentar, transicionar el estado |
 | <img class="logo" src="img/logos/testrail.svg"> **TestRail** | Leer/escribir test cases, asociar runs a builds |
 | <img class="logo" src="img/logos/jenkins.svg"> **Jenkins** | Triggerear builds, leer resultados, descargar logs |
+| <img class="logo" src="img/logos/github.svg"> **GitHub** | Leer el PR y su diff, postear el review, ver los checks |
 | <img class="logo" src="img/logos/confluence.svg"> **Confluence** | Leer specs y acceptance criteria |
 
-Una sola conversación con Claude puede pasar por los **4**.
+Una sola conversación con Claude puede pasar por los **5**.
+*El review de la Demo 4 se postea por acá.*
 
 ---
 
@@ -527,6 +558,8 @@ el PR, la respuesta soy yo — "no sé, lo hizo la IA" no es una respuesta.**
 
 ---
 
+<!-- _class: mid -->
+
 # ¿Y esto no lo hacía ya un linter?
 
 Buena parte sí — y **el linter no se saca**: es más barato y no se cansa.
@@ -560,6 +593,8 @@ mensaje, stack y los commits. Y es **la misma branch de hoy**:
 **La categoría se deduce de la evidencia — no viene dada en el JSON.**
 
 ---
+
+<!-- _class: mid -->
 
 # El triage no termina en la categoría
 
@@ -595,6 +630,8 @@ ni el plan, ni las convenciones.**
 **Este es el patrón completo en acción.**
 
 ---
+
+<!-- _class: mid -->
 
 # Y no siempre tenés que contar vos
 
@@ -975,6 +1012,8 @@ el memory y el skill**. El hook fue el final del camino.
 
 ---
 
+<!-- _class: mid -->
+
 # ¿Y los costos en tokens?
 
 - El día a día corre en un modelo mid-tier; el multi-agent review es el único paso caro
@@ -985,6 +1024,8 @@ el memory y el skill**. El hook fue el final del camino.
 
 ---
 
+<!-- _class: mid -->
+
 # ¿Qué pasa cuando cambia el modelo?
 
 - Los **prompts** afinados a un modelo a veces mueren con él
@@ -994,14 +1035,18 @@ el memory y el skill**. El hook fue el final del camino.
 
 ---
 
+<!-- _class: mid -->
+
 # ¿Funciona offline? ¿Sirve en mi stack?
 
 - Este demo corre **100% offline**: mocks JSON en disco, cero credenciales
-- Solo los **MCPs** reales (Jira, Jenkins, TestRail) necesitan red
+- Solo los **MCPs** reales (Jira, Jenkins, TestRail, GitHub) necesitan red
 - El patrón no sabe de lenguajes: idéntico en **Java/TestNG/RestAssured**
 - Todo es texto plano: clonalo y reemplazá los mocks por tus sistemas
 
 ---
+
+<!-- _class: mid -->
 
 # ¿Quién audita al clasificador de CI?
 

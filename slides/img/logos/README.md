@@ -1,6 +1,7 @@
 # slides/img/logos/
 
-Logos de las herramientas que los MCPs conectan (slide 11 del deck).
+Logos de las herramientas que los MCPs conectan (slide 11 del deck):
+Jira, TestRail, Jenkins, GitHub y Confluence.
 
 ## Procedencia
 
@@ -17,22 +18,25 @@ npm i simple-icons
 node scripts/build-logos.js
 ```
 
-## Colores
+## Colores: todos de marca
 
-`simple-icons` trae el color de marca de cada uno. Dos no se leen sobre el
-fondo `#011627` del deck, así que se usa la variante de la propia marca para
-fondos oscuros en vez de inventar un color:
+Los cinco usan su color real, sin retocar. Una versión anterior tuvo que
+aclarar tres de ellos para que sobrevivieran al fondo `#011627` — el azul de
+Atlassian quedaba invisible y el mayordomo de Jenkins, que es line art, se
+convertía en una mancha.
 
-| Logo | Marca | Usado | Por qué |
-|---|---|---|---|
-| Jira | `#0052CC` | `#2684FF` | Azul B200 de Atlassian; el de marca es muy oscuro |
-| Confluence | `#172B4D` | `#2684FF` | El de marca es prácticamente invisible sobre `#011627` |
-| Jenkins | `#D24939` | `#E8604F` | Aclarado: su line art se emborrona sobre fondo oscuro |
-| TestRail | `#65C179` | `#65C179` | Color de marca, sin cambios |
+Eso se resolvió en CSS y no tocando las marcas: la regla `img.logo` de
+`slides/slides.md` los apoya sobre un **chip claro** de esquinas redondeadas.
+Sobre blanco, cada color de marca funciona como fue diseñado, y los cinco
+quedan con el mismo peso visual — que era el otro problema, porque Jenkins
+tiene mucho más detalle que los demás.
+
+Si algún día cambia el fondo del deck, el chip es lo único a revisar.
 
 ## Marcas registradas
 
 Jira y Confluence son marcas de Atlassian; Jenkins, de la Continuous Delivery
-Foundation; TestRail, de Gurock/Idera. Se usan acá solo para **identificar**
-las herramientas de las que habla la charla — uso nominativo. Ni el repo ni la
-charla están afiliados ni auspiciados por ninguna de ellas.
+Foundation; TestRail, de Gurock/Idera; GitHub, de GitHub, Inc. Se usan acá solo
+para **identificar** las herramientas de las que habla la charla — uso
+nominativo. Ni el repo ni la charla están afiliados ni auspiciados por ninguna
+de ellas.

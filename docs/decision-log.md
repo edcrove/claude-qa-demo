@@ -562,6 +562,39 @@ Two things needed judgement rather than just using the brand hex:
 Trademarks are noted in `slides/img/logos/README.md`: nominative use to
 identify the tools the talk discusses, no affiliation implied.
 
+## 2026-08-16 — Logo chips, GitHub as a fifth MCP, and an ambient layer
+
+Three changes, one of them a reversal.
+
+**The logo tinting was the wrong fix.** Yesterday's entry lightened three brand
+colours so they would survive `#011627`. That was solving a background problem
+by altering trademarks. The right fix is CSS: `img.logo` now sits on a light
+rounded chip, so all five keep their real brand hex *and* read at the same
+visual weight — which was the other half of the problem, since Jenkins' butler
+carries far more detail than a flat glyph and was the logo that prompted this.
+`build-logos.js` lost its colour-override table entirely.
+
+**GitHub joins the MCP table.** It was already the odd one out: `mocks/github/`
+exists, Demo 4 posts its aggregated review to a PR, and the table listed four
+MCPs without the system that demo actually targets. Row added ("Leer el PR y su
+diff, postear el review, ver los checks"), the count updated 4 → 5, and the
+Q&A slide that enumerates which MCPs need network updated to match.
+
+**Ambient layer, in place of decorative images.** The author asked for vanity
+filler. Stock imagery would fight the deck's whole premise — plain text on
+disk — so instead: two very faint radial washes extending the treatment the
+lead slides already used, and a low-opacity monospace watermark with the repo
+URL, which is filler that does a job since the talk invites cloning four times.
+
+The bigger win was not decoration at all. Eight slides are short *by design*
+(the framing question, the three notas al pasar, the Q&A backups) and were
+sitting at the top of the frame with 400–500 px of void under them, which reads
+as a mistake rather than a pause. A `mid` class centres them vertically. Two
+implementation notes worth keeping: `justify-content` needs `display:flex`,
+which gaia's `section` does not set; and the frontmatter `backgroundColor`
+directive emits a `background` shorthand that silently wipes the gradients, so
+the washes are applied as `background-image` with `!important`.
+
 ### Known open items
 
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file
