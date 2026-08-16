@@ -107,16 +107,6 @@ style: |
   .dg-d-m   { fill:var(--muted);   }
   .dg-ev    { fill:var(--ink); font:15px Inter,sans-serif; }
   .dg-ev .w { fill:var(--muted); }
-  /* placeholders: lo que todavia no existe como archivo */
-  .ph {
-    border:1.5px dashed var(--muted); border-radius:8px;
-    background:linear-gradient(135deg,rgba(126,154,168,.06) 0%,transparent 60%);
-    padding:14px 18px; margin:.5em 0; text-align:center; color:var(--muted);
-  }
-  .ph b { display:block; color:var(--accent2); font-size:.8em;
-          letter-spacing:.12em; text-transform:uppercase; margin-bottom:.25em; }
-  .ph i { font-style:normal; font-size:.86em; }
-  .ph-tall { padding:40px 18px; }
   /* el comentario agregado, con la forma que realmente tiene en GitHub */
   .gh { border:1px solid var(--line); border-radius:8px; overflow:hidden; margin:.5em 0; }
   .gh-bar {
@@ -190,13 +180,6 @@ Esta charla es la historia de cómo llegué ahí.
 ---
 
 # Quién soy
-
-<div class="ph">
-<b>Placeholder · foto</b>
-<i>Foto tuya, recortada en círculo, ~220 px. Guardala como
-<code>slides/img/edgardo.jpg</code> y reemplazá este bloque por
-<code>![w:220 center](img/edgardo.jpg)</code>.</i>
-</div>
 
 **Edgardo Crovetto** · Senior QA automation engineer
 

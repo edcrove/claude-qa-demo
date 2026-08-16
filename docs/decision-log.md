@@ -507,9 +507,9 @@ Dónde **no** se puso imagen, a propósito:
   tabla ya es la forma correcta.
 - **El apéndice** — son anatomías de archivos; el bloque de código es el punto.
 
-Único placeholder real: la **foto del autor** en "Quién soy" (slide 3), con
-clase `.ph` — borde punteado y el nombre del archivo que hay que dejar en
-`slides/img/`. No hay forma de generarla acá.
+Se agregó un placeholder para la **foto del autor** en "Quién soy" (slide 3),
+lo único que no se podía generar acá. **El autor decidió no poner foto**
+(2026-08-16): el placeholder y su CSS se sacaron, y la slide queda tipográfica.
 
 **Trampa encontrada:** una línea en blanco dentro de un `<svg>` en línea corta
 el bloque HTML de markdown, y Marp cierra el `<svg>` ahí. Los `<text>` que
@@ -567,4 +567,3 @@ identify the tools the talk discusses, no affiliation implied.
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file
   diff is nested inside the first hunk). Fine for the demo, broken for anyone
   who tries to apply it.
-- The author's photo is still a placeholder on slide 3 (`slides/img/`).

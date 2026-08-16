@@ -5,28 +5,17 @@ los diagramas de `slides/diagrams/`. Por eso el deck se exporta **dentro de
 `slides/`** — si lo exportás a `/tmp`, las rutas no resuelven y las imágenes
 salen vacías. `scripts/check-slide-overflow.js` falla si eso pasa.
 
-## Pendiente
+## Qué hay acá
 
-| Archivo | Slide | Qué va |
-|---|---|---|
-| `edgardo.jpg` | 3 · "Quién soy" | Foto tuya, ~220 px, cuadrada (el CSS la recorta en círculo) |
+- [`logos/`](logos/README.md) — Jira, TestRail, Jenkins y Confluence para la
+  tabla de MCPs (slide 11), generados por `scripts/build-logos.js`. Ahí están
+  documentados la procedencia, los colores y las marcas.
 
-Cuando la agregues, reemplazá el bloque `<div class="ph">…</div>` de esa slide
-por:
+## Qué no hay, y por qué
 
-```markdown
-![w:220 center](img/edgardo.jpg)
-```
-
-## Ya resuelto
-
-`logos/` tiene los logos de Jira, TestRail, Jenkins y Confluence para la tabla
-de MCPs (slide 11), generados por `scripts/build-logos.js`. Ver
-[`logos/README.md`](logos/README.md) para procedencia, colores y marcas.
-
-## Por qué no hay más placeholders
-
-Las slides de demo (1 a 6) no llevan imagen a propósito: durante la charla se
-sale del deck y se muestra la terminal. Si se pre-graban las Demos 2 y 6 —
-está en la lista de recortes de tiempo en `docs/STATUS.md` — el video también
-reemplaza a la terminal, no a una slide.
+- **No hay foto del autor.** Decisión del autor (2026-08-16): la slide
+  "Quién soy" queda tipográfica.
+- **Las slides de demo (1 a 6) no llevan imagen** a propósito: durante la
+  charla se sale del deck y se muestra la terminal. Si se pre-graban las
+  Demos 2 y 6 — está en la lista de recortes de tiempo en `docs/STATUS.md` —
+  el video también reemplaza a la terminal, no a una slide.
