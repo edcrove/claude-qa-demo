@@ -3,28 +3,26 @@ marp: true
 theme: gaia
 class: invert
 paginate: true
-backgroundColor: "#272932"
-color: "#CCC9E7"
+backgroundColor: "#011627"
+color: "#FDFFFC"
 style: |
   /* ── paleta ───────────────────────────────────────────────── */
   :root {
-    --bg:      #272932;   /* Shadow Grey — base */
-    --surface: #1E2028;   /* derivado, para paneles de codigo */
-    --ink:     #CCC9E7;   /* Periwinkle */
-    --bright:  #F4F2FB;   /* derivado, para negritas */
-    --muted:   #8C89A6;   /* derivado, periwinkle desaturado */
-    --accent:  #EECF6D;   /* Jasmine — acento primario */
-    --accent2: #DC493A;   /* Cinnabar — acento secundario */
-    --hot:     #EF2D56;   /* Watermelon — solo para las cicatrices */
-    --line:    #3B3E4B;
+    --bg:      #011627;   /* Ink Black — base */
+    --surface: #04202F;   /* derivado, paneles de codigo (apenas mas claro) */
+    --ink:     #FDFFFC;   /* Porcelain */
+    --muted:   #7E9AA8;   /* derivado, gris azulado */
+    --accent:  #FF9F1C;   /* Amber Glow — acento primario */
+    --accent2: #2EC4B6;   /* Light Sea Green — acento secundario */
+    --hot:     #E71D36;   /* Strawberry Red — solo para las cicatrices */
+    --line:    #14384A;
   }
   section {
     font-family:'Inter','Helvetica Neue',sans-serif; font-size:24px; line-height:1.42;
     padding:44px 60px; color:var(--ink); background:var(--bg);
   }
-  /* ── titulos: cuadrado Jasmine como marcador ──────────────── */
   section h1 {
-    color:var(--bright); font-size:1.36em; font-weight:650;
+    color:var(--ink); font-size:1.36em; font-weight:650;
     margin:0 0 .5em; letter-spacing:-.014em; line-height:1.15;
   }
   section h1::before {
@@ -36,17 +34,15 @@ style: |
   section ul { margin:.4em 0; padding-left:1.1em; }
   section li { margin:.18em 0; }
   section li::marker { color:var(--accent); }
-  strong { color:var(--bright); font-weight:650; }
+  strong { color:var(--ink); font-weight:650; }
   em { color:var(--muted); }
-  /* ── codigo ───────────────────────────────────────────────── */
-  code { background:#31343F; color:var(--accent); padding:1px 6px; border-radius:4px; font-size:.84em; }
+  code { background:#0A2A3D; color:var(--accent); padding:1px 6px; border-radius:4px; font-size:.84em; }
   pre {
     background:var(--surface); border:1px solid var(--line);
     border-left:3px solid var(--accent); border-radius:6px;
     padding:10px 14px; margin:.5em 0;
   }
-  pre code { background:transparent; color:var(--ink); font-size:.58em; line-height:1.3; padding:0; }
-  /* ── tablas: reglas, no cajas ─────────────────────────────── */
+  pre code { background:transparent; color:#CFE0E8; font-size:.58em; line-height:1.3; padding:0; }
   table { border-collapse:collapse; width:100%; margin:.4em 0; font-size:.93em; }
   section table, section table thead, section table tbody,
   section table tr, section table th, section table td {
@@ -69,15 +65,13 @@ style: |
   }
   blockquote strong { color:var(--ink); }
   a { color:var(--accent); }
-  /* ── lead ─────────────────────────────────────────────────── */
   section.lead {
     padding:60px 90px;
-    background:radial-gradient(ellipse at 30% 0%, #32353F 0%, var(--bg) 70%);
+    background:radial-gradient(ellipse at 30% 0%, #062B3E 0%, var(--bg) 70%);
   }
   section.lead h1 { color:var(--accent); font-size:1.85em; letter-spacing:-.02em; }
   section.lead h1::before { display:none; }
   section.lead h2 { color:var(--ink); font-weight:300; font-size:1.25em; }
-  /* ── dense: para las slides mas cargadas ──────────────────── */
   section.dense { font-size:21px; line-height:1.34; }
   section.dense h1 { font-size:1.3em; margin-bottom:.35em; }
   section.dense pre code { font-size:.55em; }
