@@ -47,9 +47,11 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
   and the three ASCII diagrams replaced by vector. The fan-out diagram is now
   **Mermaid pre-rendered to SVG** (`slides/diagrams/*.mmd` →
   `scripts/build-diagrams.sh` → committed `.svg`); the pyramid and the
-  end-to-end flow stay hand-written inline SVG on purpose — see the
-  decision-log entry for the "graph vs. meaningful layout" rule.
-  Export the deck **into `slides/`** or the relative diagram paths break.
+  end-to-end flow stay hand-written inline SVG on purpose — as does the
+  `~/.claude/` tree, moved off Mermaid on 2026-08-16 because dagre would not
+  align sibling boxes. See the decision-log for the refined rule: Mermaid for
+  graphs, hand-written SVG when layout carries meaning — **and alignment is
+  meaning.** Export the deck **into `slides/`** or the relative paths break.
 - **Visuals pass (2026-08-16):** the deck went from 3 visuals to 9. New ones:
   cold open (two red builds on one environment), the pre-AI pipeline, the
   `~/.claude/` tree, the 9:00→17:00 strip locating the 6 scenes, the PR
@@ -65,12 +67,14 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
   replaced an earlier and worse fix that tinted the marks themselves.
   Trademark notes in `slides/img/logos/README.md`.
 - **Ambient layer instead of decorative images (2026-08-16):** two very faint
-  radial washes plus a monospace repo-URL watermark, and — the part that
-  actually fixed the emptiness — a `mid` class that vertically centres the 8
-  slides that are short by design. Gotchas: `justify-content` needs
-  `display:flex` (gaia's `section` is `display:block`), and the frontmatter
+  radial washes plus a monospace repo-URL watermark. Gotcha: the frontmatter
   `backgroundColor` directive wipes `background-image` unless it is set
   separately with `!important`.
+- **Headings are pinned (2026-08-16):** all 36 content headings sit at 44 px,
+  one size (33 px, set in **px** so `dense` cannot shrink them). A `mid` class
+  that vertically centred the short slides was tried and **removed** — it
+  filled the void but made the heading jump while flipping through. Consistent
+  heading position beats filled space; do not reintroduce it.
 - **Two aspect ratios (2026-08-16):** `./scripts/build-deck.sh` builds 16:9 and
   16:10 (HTML + PDF) from the same `slides.md` into `slides/`. **Ask the venue
   which the projector is** — the wrong one letterboxes, which is what prompted

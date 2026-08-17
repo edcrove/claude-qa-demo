@@ -628,6 +628,35 @@ purpose — relative `diagrams/*.svg` and `img/*.svg` paths break anywhere else.
 Both ratios verified: 1280×720 and 1280×800, 0 of 45 slides overflowing in
 each, no broken images in either.
 
+## 2026-08-16 — Titles pinned, and the tree diagram leaves Mermaid
+
+**The `mid` class is gone.** Centring the eight short slides filled their void
+but moved their titles, so flipping through the deck made the heading jump
+between the top of the frame and the middle. The author called it, and it is
+the right call: a heading that lands in the same place on every slide is worth
+more than filling space. Measured after removing it — all 36 content headings
+sit at exactly 44 px.
+
+That exposed a second, subtler jump: `dense` lowers the section font-size, and
+the heading was sized in `em`, so it shrank along with the body on those two
+slides. `section h1` is now sized in **px**, which makes it immune. The
+positions were already identical; the *size* was not.
+
+**The `~/.claude/` tree is hand-written SVG now.** Mermaid centres each node on
+its own width, so the four leaf boxes had ragged left edges — `.claude/rules/`
+sticking out past `memory/` for no reason a reader could interpret. There is no
+Mermaid setting for "same width, same left edge"; dagre computes those
+positions. Hand-writing it gives all four an identical `x` and width.
+
+This refines the rule from the earlier diagram entry. It was "Mermaid when the
+diagram is a graph, hand-written SVG when the layout carries meaning" — and
+this *is* a graph, so by that rule Mermaid should have won. The missing half:
+**alignment is meaning too.** When boxes are siblings, showing them as siblings
+matters more than the convenience of generating the layout. Mermaid still owns
+the subagent fan-out and the pre-AI pipeline, where nothing needs to line up.
+
+`diagrams/arbol-claude.mmd` and its SVG were deleted rather than left orphaned.
+
 ### Known open items
 
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file

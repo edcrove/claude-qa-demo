@@ -34,10 +34,6 @@ style: |
       radial-gradient(800px 520px at 100% 108%, rgba(46,196,182,.14) 0%, transparent 62%),
       radial-gradient(560px 400px at -8% -10%, rgba(255,159,28,.055) 0%, transparent 60%) !important;
   }
-  /* Slides cortas por diseño (preguntas, notas al pasar, backup de Q&A):
-     centradas en vertical. Dos líneas pegadas arriba con 400px de vacío
-     abajo se leen como un error; centradas se leen como una pausa. */
-  section.mid { display:flex; flex-direction:column; justify-content:center; }
   /* Marca de agua: el repo que la charla invita a clonar cuatro veces.
      Relleno con función, en el aire que dejan las slides cortas. */
   section::before {
@@ -47,9 +43,13 @@ style: |
     color:var(--muted); opacity:.34;
   }
   section.lead::before { display:none; }
+  /* Tamaño en px, no em, a proposito: `dense` baja el font-size de la seccion
+     y con em el titulo se achicaba junto con el cuerpo. Los titulos tienen que
+     caer siempre en el mismo lugar y con el mismo peso — si saltan de slide a
+     slide, el deck se lee inestable al pasarlo. */
   section h1 {
-    color:var(--ink); font-size:1.36em; font-weight:650;
-    margin:0 0 .5em; letter-spacing:-.014em; line-height:1.15;
+    color:var(--ink); font-size:33px; font-weight:650;
+    margin:0 0 16px; letter-spacing:-.014em; line-height:1.15;
   }
   section h1::before {
     content:''; display:inline-block; width:14px; height:14px; border-radius:3px;
@@ -165,7 +165,7 @@ style: |
   .rojo  { color: var(--hot);     font-weight:600; }
   .verde { color: var(--accent2); font-weight:600; }
   section.dense { font-size:21px; line-height:1.34; }
-  section.dense h1 { font-size:1.3em; margin-bottom:.35em; }
+  section.dense h1 { margin-bottom:11px; }
   section.dense pre code { font-size:.55em; }
 ---
 
@@ -220,8 +220,6 @@ Java + TypeScript · tests automatizados · CI/CD · pipelines
 `linkedin.com/in/edgardocrovetto`
 
 ---
-
-<!-- _class: mid -->
 
 # La pregunta de hoy
 
@@ -291,7 +289,34 @@ No hubo plan. Aparecieron patrones.
 
 # Cómo Claude conoce mi proyecto
 
-![w:940 center](diagrams/arbol-claude.svg)
+<div>
+<svg class="dg" viewBox="0 0 1180 274" role="img" aria-label="Jerarquía: CLAUDE.md global, CLAUDE.md del repo y las cuatro piezas del repo">
+  <rect class="dg-box" x="0" y="105" width="320" height="64" rx="6"/>
+  <text class="dg-ev"   x="18" y="131">~/.claude/CLAUDE.md</text>
+  <text class="dg-note" x="18" y="152">preferencias globales · tu identidad</text>
+  <rect class="dg-on"  x="370" y="105" width="280" height="64" rx="6"/>
+  <text class="dg-ev"   x="388" y="131">proyecto/CLAUDE.md</text>
+  <text class="dg-note" x="388" y="152">convenciones del repo</text>
+  <path class="dg-wire" d="M320 137 H370"/>
+  <path class="dg-wire" d="M650 137 H675 M675 29 V245"/>
+  <path class="dg-wire" d="M675 29 H700"/>
+  <path class="dg-wire" d="M675 101 H700"/>
+  <path class="dg-wire" d="M675 173 H700"/>
+  <path class="dg-wire" d="M675 245 H700"/>
+  <rect class="dg-on" x="700" y="0" width="470" height="58" rx="6"/>
+  <text class="dg-ev"   x="718" y="24">memory/</text>
+  <text class="dg-note" x="718" y="44">hechos entre sesiones</text>
+  <rect class="dg-on" x="700" y="72" width="470" height="58" rx="6"/>
+  <text class="dg-ev"   x="718" y="96">.claude/skills/</text>
+  <text class="dg-note" x="718" y="116">workflows invocables</text>
+  <rect class="dg-on" x="700" y="144" width="470" height="58" rx="6"/>
+  <text class="dg-ev"   x="718" y="168">.claude/rules/</text>
+  <text class="dg-note" x="718" y="188">guardrails siempre cargados</text>
+  <rect class="dg-on" x="700" y="216" width="470" height="58" rx="6"/>
+  <text class="dg-ev"   x="718" y="240">.claude/settings.json</text>
+  <text class="dg-note" x="718" y="260">hooks automáticos</text>
+</svg>
+</div>
 
 Todo es **texto plano en disco**. Versionado. Reviewable.
 
@@ -559,8 +584,6 @@ el PR, la respuesta soy yo — "no sé, lo hizo la IA" no es una respuesta.**
 
 ---
 
-<!-- _class: mid -->
-
 # ¿Y esto no lo hacía ya un linter?
 
 Buena parte sí — y **el linter no se saca**: es más barato y no se cansa.
@@ -594,8 +617,6 @@ mensaje, stack y los commits. Y es **la misma branch de hoy**:
 **La categoría se deduce de la evidencia — no viene dada en el JSON.**
 
 ---
-
-<!-- _class: mid -->
 
 # El triage no termina en la categoría
 
@@ -631,8 +652,6 @@ ni el plan, ni las convenciones.**
 **Este es el patrón completo en acción.**
 
 ---
-
-<!-- _class: mid -->
 
 # Y no siempre tenés que contar vos
 
@@ -1013,8 +1032,6 @@ el memory y el skill**. El hook fue el final del camino.
 
 ---
 
-<!-- _class: mid -->
-
 # ¿Y los costos en tokens?
 
 - El día a día corre en un modelo mid-tier; el multi-agent review es el único paso caro
@@ -1025,8 +1042,6 @@ el memory y el skill**. El hook fue el final del camino.
 
 ---
 
-<!-- _class: mid -->
-
 # ¿Qué pasa cuando cambia el modelo?
 
 - Los **prompts** afinados a un modelo a veces mueren con él
@@ -1036,8 +1051,6 @@ el memory y el skill**. El hook fue el final del camino.
 
 ---
 
-<!-- _class: mid -->
-
 # ¿Funciona offline? ¿Sirve en mi stack?
 
 - Este demo corre **100% offline**: mocks JSON en disco, cero credenciales
@@ -1046,8 +1059,6 @@ el memory y el skill**. El hook fue el final del camino.
 - Todo es texto plano: clonalo y reemplazá los mocks por tus sistemas
 
 ---
-
-<!-- _class: mid -->
 
 # ¿Quién audita al clasificador de CI?
 

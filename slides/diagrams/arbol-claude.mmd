@@ -1,9 +1,0 @@
-%% Dónde vive cada pieza en disco (slide "Cómo Claude conoce mi proyecto").
-%% Reemplaza al árbol ASCII: la jerarquía global → repo → piezas es un grafo.
-%% Editá acá, no el .svg — se regenera con scripts/build-diagrams.sh.
-flowchart LR
-  G["~/.claude/CLAUDE.md<br/>preferencias globales · tu identidad"] --> P["proyecto/CLAUDE.md<br/>convenciones del repo"]
-  P --> M["memory/<br/>hechos entre sesiones"]
-  P --> S[".claude/skills/<br/>workflows invocables"]
-  P --> R[".claude/rules/<br/>guardrails siempre cargados"]
-  P --> H[".claude/settings.json<br/>hooks automáticos"]
