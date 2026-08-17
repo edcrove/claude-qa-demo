@@ -98,3 +98,9 @@ build qa-light "16:10" "light-16x10"
 echo
 echo "✅ built:"
 ls -1 "$OUT"/slides-dark-* "$OUT"/slides-light-* 2>/dev/null || true
+
+if [[ "$ONLY" != "html" ]] && ! git diff --quiet -- "$OUT"/*.pdf 2>/dev/null; then
+  echo
+  echo "📌 Los PDF están versionados y cambiaron. Commitealos para que el repo"
+  echo "   quede con el último render:  git add slides/*.pdf && git commit"
+fi

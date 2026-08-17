@@ -1,6 +1,6 @@
 # STATUS — start here to resume work
 
-**Last updated:** 2026-08-16
+**Last updated:** 2026-08-17
 
 This is the continuation anchor. A session with zero prior context should read,
 in this order: this file → [`talk-design.md`](talk-design.md) (what the talk is)
@@ -97,6 +97,11 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
   the environment's network policy — so they were pushed from the author's
   machine. If more images are needed, that is the route: commit them locally, or
   upload through the GitHub web UI.
+- **The rendered PDFs are versioned (2026-08-17):** `slides/slides-*.pdf` are
+  committed on purpose — the talk invites cloning, and a reader should not need
+  Marp to see the deck. They do not delta-compress, so each rebuild adds ~6.6 MB
+  to history; if that becomes a problem, publish them as GitHub Release assets
+  instead. `build-deck.sh` reminds you to commit them when they change.
 - **Careful with inline SVG:** a blank line inside an `<svg>` ends the markdown
   HTML block, Marp closes the tag there, and the rest of the diagram renders as
   loose text with no error raised. Keep inline SVG free of blank lines.

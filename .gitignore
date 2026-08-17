@@ -7,8 +7,14 @@ dist/
 .idea/
 coverage/
 slides/*.html
-slides/*.pdf
 slides/*.pptx
+
+# Los PDF SÍ se versionan: son el entregable que alguien que clona el repo
+# quiere leer sin instalar Marp, y la charla invita a clonarlo varias veces.
+# Pesan ~1.65 MB cada uno y no delta-comprimen, así que cada rebuild agrega
+# ~6.6 MB al historial — si eso empieza a molestar, la alternativa es
+# publicarlos como assets de un GitHub Release en vez de en el árbol.
+!slides/*.pdf
 # copia temporal que crea scripts/build-deck.sh para el build 16:10
 slides/.build-*.md
 .demo-profile/
