@@ -99,7 +99,10 @@ style: |
   section.lead h1::before { display:none; }
   section.lead h2 { color:var(--ink); font-weight:300; font-size:1.25em; }
   /* ── diagramas SVG ────────────────────────────────────────── */
-  svg.dg { width:100%; height:auto; display:block; margin:.3em 0; }
+  /* El margen inferior es mayor que el superior a propósito: varios diagramas
+     terminan justo en el borde de su viewBox (la última caja, la línea de
+     vuelta), así que con un margen simétrico el texto de abajo parecía pegado. */
+  svg.dg { width:100%; height:auto; display:block; margin:.3em 0 1.1em; }
   .dg-box   { fill:var(--surface); stroke:var(--line); stroke-width:1.5; }
   .dg-on    { fill:var(--box-fill); stroke:var(--accent); stroke-width:2; }
   .dg-skip  { fill:none; stroke:var(--muted); stroke-width:1.5; stroke-dasharray:5 4; }
