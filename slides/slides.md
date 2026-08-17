@@ -131,6 +131,15 @@ style: |
   .dg-d-h   { fill:var(--ink);     }
   .dg-d-m   { fill:var(--muted);   }
   .dg-ev    { fill:var(--ink); font:15px Inter,sans-serif; }
+  /* variantes grandes, para el árbol de la slide 10 */
+  .dg-ev2   { fill:var(--ink); font:600 18px Inter,sans-serif; }
+  .dg-note2 { fill:var(--muted); font:15px Inter,sans-serif; }
+  /* variantes grandes, para el flujo end-to-end de la slide 14 */
+  .dg-sm2    { fill:var(--ink); font:16px Inter,sans-serif; }
+  .dg-stage2 { fill:var(--accent2); font:600 14px Inter,sans-serif; letter-spacing:.12em; }
+  .dg-pc2    { fill:var(--accent2); font:600 15px Inter,sans-serif; letter-spacing:.06em; }
+  .dg-pn2    { fill:var(--muted); font:14px Inter,sans-serif; }
+  .dg-arrow  { fill:none; stroke:var(--accent2); stroke-width:1.8; }
   .dg-ev .w { fill:var(--muted); }
   /* el comentario agregado, con la forma que realmente tiene en GitHub */
   .gh { border:1px solid var(--line); border-radius:8px; overflow:hidden; margin:.5em 0; }
@@ -162,6 +171,21 @@ style: |
     height:1.62em; width:1.62em; box-sizing:border-box;
     background:var(--chip); border-radius:6px; padding:3px;
     vertical-align:-.42em; margin-right:.5em;
+  }
+  /* Imagen de apoyo. Viene con fondo claro, así que en el deck claro se funde
+     sola; en el oscuro se lee como una tarjeta — de ahí el radio y el halo
+     que le agrega qa-deck.css, para que no parezca un agujero en la slide. */
+  img.hero {
+    display:block; margin:.45em auto 0;
+    max-width:100%; max-height:352px; height:auto;
+    border-radius:14px;
+  }
+  /* Logo grande, decorativo: se apoya abajo a la derecha del aire que deja la
+     slide, sin empujar el texto. Va tenue a propósito — acompaña, no compite
+     con el contenido. */
+  img.brand {
+    position:absolute; right:78px; bottom:88px;
+    width:190px; height:auto; opacity:.9;
   }
   /* ── estado de CI: rojo/verde con los colores de la paleta ── */
   .rojo  { color: var(--hot);     font-weight:600; }
@@ -229,6 +253,8 @@ Java + TypeScript · tests automatizados · CI/CD · pipelines
 
 Spoiler: sí — **sobre las bases que ya tenés.**
 
+<img class="hero" src="img/qa-hero.png" alt="Un agente asistiendo el flujo de QA: análisis, código, bug, revisión">
+
 ---
 
 # Mi setup antes de IA
@@ -239,7 +265,41 @@ Plataforma de streaming · servicio backend REST
 
 **Pipeline diario:**
 
-![w:1060 center](diagrams/pipeline-antes.svg)
+<div>
+<svg class="dg" viewBox="0 0 1180 318" role="img" aria-label="El pipeline diario antes de IA, como ciclo de dos filas">
+  <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0 0 L10 5 L0 10 z" fill="var(--accent2)"/></marker></defs>
+  <rect class="dg-on" x="40" y="8" width="250" height="84" rx="7"/>
+  <text class="dg-ev2"   x="165" y="43" text-anchor="middle">Jira</text>
+  <text class="dg-note2" x="165" y="68" text-anchor="middle">ticket + AC</text>
+  <rect class="dg-on" x="334" y="8" width="250" height="84" rx="7"/>
+  <text class="dg-ev2"   x="459" y="43" text-anchor="middle">Análisis</text>
+  <text class="dg-note2" x="459" y="68" text-anchor="middle">del cambio</text>
+  <rect class="dg-on" x="628" y="8" width="250" height="84" rx="7"/>
+  <text class="dg-ev2"   x="753" y="43" text-anchor="middle">Tests /</text>
+  <text class="dg-note2" x="753" y="68" text-anchor="middle">automation</text>
+  <rect class="dg-on" x="922" y="8" width="250" height="84" rx="7"/>
+  <text class="dg-ev2"   x="1047" y="43" text-anchor="middle">TestRail</text>
+  <text class="dg-note2" x="1047" y="68" text-anchor="middle">casos ↔ coverage</text>
+  <rect class="dg-on" x="40" y="196" width="250" height="84" rx="7"/>
+  <text class="dg-ev2"   x="165" y="231" text-anchor="middle">Jenkins</text>
+  <text class="dg-note2" x="165" y="256" text-anchor="middle">build + regression</text>
+  <rect class="dg-on" x="334" y="196" width="250" height="84" rx="7"/>
+  <text class="dg-ev2"   x="459" y="231" text-anchor="middle">PR</text>
+  <text class="dg-note2" x="459" y="256" text-anchor="middle">2 peers + checkstyle</text>
+  <rect class="dg-on" x="628" y="196" width="250" height="84" rx="7"/>
+  <text class="dg-ev2"   x="753" y="231" text-anchor="middle">Bugs</text>
+  <text class="dg-note2" x="753" y="256" text-anchor="middle">a Jira</text>
+  <path class="dg-arrow" d="M290 50 H326" marker-end="url(#ar)"/>
+  <path class="dg-arrow" d="M584 50 H620" marker-end="url(#ar)"/>
+  <path class="dg-arrow" d="M878 50 H914" marker-end="url(#ar)"/>
+  <path class="dg-arrow" d="M1047 92 V144 H165 V188" marker-end="url(#ar)"/>
+  <path class="dg-arrow" d="M290 238 H326" marker-end="url(#ar)"/>
+  <path class="dg-arrow" d="M584 238 H620" marker-end="url(#ar)"/>
+  <path class="dg-base" d="M753 280 V300 H16 V50 H32"/>
+  <text class="dg-note" x="48" y="294">el ciclo vuelve a empezar</text>
+</svg>
+</div>
 
 > Funcionaba. Pero todo el conocimiento de cada ticket vivía **en mi cabeza**.
 
@@ -282,41 +342,43 @@ Plataforma de streaming · servicio backend REST
 - Lo demás vino con el tiempo
 
 **2. Agregar MCPs, uno a uno**
-Jira, TestRail, Jenkins, Confluence — el detalle, en la próxima slide.
+Jira, TestRail, Jenkins, GitHub, Confluence — el detalle, en la próxima slide.
 
 A partir de ahí: **prompts del día a día**.
 No hubo plan. Aparecieron patrones.
+
+<img class="brand" src="img/logos/claude.svg" alt="Claude">
 
 ---
 
 # Cómo Claude conoce mi proyecto
 
 <div>
-<svg class="dg" viewBox="0 0 1180 274" role="img" aria-label="Jerarquía: CLAUDE.md global, CLAUDE.md del repo y las cuatro piezas del repo">
-  <rect class="dg-box" x="0" y="105" width="320" height="64" rx="6"/>
-  <text class="dg-ev"   x="18" y="131">~/.claude/CLAUDE.md</text>
-  <text class="dg-note" x="18" y="152">preferencias globales · tu identidad</text>
-  <rect class="dg-on"  x="370" y="105" width="280" height="64" rx="6"/>
-  <text class="dg-ev"   x="388" y="131">proyecto/CLAUDE.md</text>
-  <text class="dg-note" x="388" y="152">convenciones del repo</text>
-  <path class="dg-wire" d="M320 137 H370"/>
-  <path class="dg-wire" d="M650 137 H675 M675 29 V245"/>
-  <path class="dg-wire" d="M675 29 H700"/>
-  <path class="dg-wire" d="M675 101 H700"/>
-  <path class="dg-wire" d="M675 173 H700"/>
-  <path class="dg-wire" d="M675 245 H700"/>
-  <rect class="dg-on" x="700" y="0" width="470" height="58" rx="6"/>
-  <text class="dg-ev"   x="718" y="24">memory/</text>
-  <text class="dg-note" x="718" y="44">hechos entre sesiones</text>
-  <rect class="dg-on" x="700" y="72" width="470" height="58" rx="6"/>
-  <text class="dg-ev"   x="718" y="96">.claude/skills/</text>
-  <text class="dg-note" x="718" y="116">workflows invocables</text>
-  <rect class="dg-on" x="700" y="144" width="470" height="58" rx="6"/>
-  <text class="dg-ev"   x="718" y="168">.claude/rules/</text>
-  <text class="dg-note" x="718" y="188">guardrails siempre cargados</text>
-  <rect class="dg-on" x="700" y="216" width="470" height="58" rx="6"/>
-  <text class="dg-ev"   x="718" y="240">.claude/settings.json</text>
-  <text class="dg-note" x="718" y="260">hooks automáticos</text>
+<svg class="dg" viewBox="0 0 1180 350" role="img" aria-label="Jerarquía: CLAUDE.md global, CLAUDE.md del repo y las cuatro piezas del repo">
+  <rect class="dg-box" x="0" y="133" width="330" height="84" rx="7"/>
+  <text class="dg-ev2"  x="20" y="167">~/.claude/CLAUDE.md</text>
+  <text class="dg-note2" x="20" y="191">preferencias globales · tu identidad</text>
+  <rect class="dg-on"  x="380" y="133" width="290" height="84" rx="7"/>
+  <text class="dg-ev2"  x="400" y="167">proyecto/CLAUDE.md</text>
+  <text class="dg-note2" x="400" y="191">convenciones del repo</text>
+  <path class="dg-wire" d="M330 175 H380"/>
+  <path class="dg-wire" d="M670 175 H668 M668 37 V313"/>
+  <path class="dg-wire" d="M668 37 H690"/>
+  <path class="dg-wire" d="M668 129 H690"/>
+  <path class="dg-wire" d="M668 221 H690"/>
+  <path class="dg-wire" d="M668 313 H690"/>
+  <rect class="dg-on" x="690" y="0" width="480" height="74" rx="7"/>
+  <text class="dg-ev2"   x="710" y="31">memory/</text>
+  <text class="dg-note2" x="710" y="55">hechos entre sesiones</text>
+  <rect class="dg-on" x="690" y="92" width="480" height="74" rx="7"/>
+  <text class="dg-ev2"   x="710" y="123">.claude/skills/</text>
+  <text class="dg-note2" x="710" y="147">workflows invocables</text>
+  <rect class="dg-on" x="690" y="184" width="480" height="74" rx="7"/>
+  <text class="dg-ev2"   x="710" y="215">.claude/rules/</text>
+  <text class="dg-note2" x="710" y="239">guardrails siempre cargados</text>
+  <rect class="dg-on" x="690" y="276" width="480" height="74" rx="7"/>
+  <text class="dg-ev2"   x="710" y="307">.claude/settings.json</text>
+  <text class="dg-note2" x="710" y="331">hooks automáticos</text>
 </svg>
 </div>
 
@@ -400,46 +462,46 @@ de tipos no puede ver: arquitectura. *(Mis compañeros aplaudieron esto.)*
 # El flujo end-to-end
 
 <div>
-<svg class="dg" viewBox="0 0 1180 250" role="img" aria-label="Flujo end-to-end: etapa, skill y pieza que se activa">
+<svg class="dg" viewBox="0 0 1180 296" role="img" aria-label="Flujo end-to-end: etapa, skill y pieza que se activa">
   <g class="dg-col">
-    <text class="dg-stage" x="102"  y="16" text-anchor="middle">PLAN</text>
-    <text class="dg-stage" x="345"  y="16" text-anchor="middle">IMPLEMENT</text>
-    <text class="dg-stage" x="588"  y="16" text-anchor="middle">PUSH</text>
-    <text class="dg-stage" x="831"  y="16" text-anchor="middle">REVIEW</text>
-    <text class="dg-stage" x="1074" y="16" text-anchor="middle">TRIAGE</text>
+    <text class="dg-stage2" x="110" y="18" text-anchor="middle">PLAN</text>
+    <text class="dg-stage2" x="350" y="18" text-anchor="middle">IMPLEMENT</text>
+    <text class="dg-stage2" x="590" y="18" text-anchor="middle">PUSH</text>
+    <text class="dg-stage2" x="830" y="18" text-anchor="middle">REVIEW</text>
+    <text class="dg-stage2" x="1070" y="18" text-anchor="middle">TRIAGE</text>
   </g>
-  <rect class="dg-on" x="0"   y="28" width="205" height="58" rx="6"/>
-  <text class="dg-sm" x="102" y="52"  text-anchor="middle">ticket-coverage-</text>
-  <text class="dg-sm" x="102" y="70"  text-anchor="middle">gap-analysis</text>
-  <rect class="dg-on" x="243" y="28" width="205" height="58" rx="6"/>
-  <text class="dg-sm" x="345" y="52"  text-anchor="middle">superpowers:</text>
-  <text class="dg-sm" x="345" y="70"  text-anchor="middle">TDD</text>
-  <rect class="dg-on" x="486" y="28" width="205" height="58" rx="6"/>
-  <text class="dg-sm" x="588" y="62"  text-anchor="middle">local-build-gate</text>
-  <rect class="dg-on" x="729" y="28" width="205" height="58" rx="6"/>
-  <text class="dg-sm" x="831" y="52"  text-anchor="middle">multi-agent-</text>
-  <text class="dg-sm" x="831" y="70"  text-anchor="middle">pr-review</text>
-  <rect class="dg-on" x="972" y="28" width="205" height="58" rx="6"/>
-  <text class="dg-sm" x="1074" y="62" text-anchor="middle">ci-failure-triage</text>
-  <path class="dg-wire" d="M102 86 V112 M345 86 V112 M588 86 V112 M831 86 V112 M1074 86 V112"/>
-  <rect class="dg-pill" x="0"   y="112" width="205" height="52" rx="26"/>
-  <text class="dg-pc" x="102" y="134" text-anchor="middle">SKILL</text>
-  <text class="dg-pn" x="102" y="152" text-anchor="middle">se queda acá</text>
-  <rect class="dg-pill" x="243" y="112" width="205" height="52" rx="26"/>
-  <text class="dg-pc" x="345" y="134" text-anchor="middle">HOOK</text>
-  <text class="dg-pn" x="345" y="152" text-anchor="middle">typecheck on edit</text>
-  <rect class="dg-pill" x="486" y="112" width="205" height="52" rx="26"/>
-  <text class="dg-pc" x="588" y="134" text-anchor="middle">RULE</text>
-  <text class="dg-pn" x="588" y="152" text-anchor="middle">no-parallel-ci</text>
-  <rect class="dg-pill" x="729" y="112" width="205" height="52" rx="26"/>
-  <text class="dg-pc" x="831" y="134" text-anchor="middle">5 SUBAGENTES</text>
-  <text class="dg-pn" x="831" y="152" text-anchor="middle">en paralelo</text>
-  <rect class="dg-pill" x="972" y="112" width="205" height="52" rx="26"/>
-  <text class="dg-pc" x="1074" y="134" text-anchor="middle">MEMORY</text>
-  <text class="dg-pn" x="1074" y="152" text-anchor="middle">known-issues</text>
-  <path class="dg-base" d="M0 190 H1177"/>
-  <text class="dg-note" x="0" y="184">memory + rules cargadas todo el tiempo</text>
-  <text class="dg-tick" x="0" y="222">⟳ corrección repetida 3× ──▶ writing-skills ──▶ skill nueva</text>
+  <rect class="dg-on" x="0" y="36" width="220" height="76" rx="7"/>
+  <text class="dg-sm2" x="110" y="70" text-anchor="middle">ticket-coverage-</text>
+  <text class="dg-sm2" x="110" y="94" text-anchor="middle">gap-analysis</text>
+  <rect class="dg-on" x="240" y="36" width="220" height="76" rx="7"/>
+  <text class="dg-sm2" x="350" y="70" text-anchor="middle">superpowers:</text>
+  <text class="dg-sm2" x="350" y="94" text-anchor="middle">TDD</text>
+  <rect class="dg-on" x="480" y="36" width="220" height="76" rx="7"/>
+  <text class="dg-sm2" x="590" y="82" text-anchor="middle">local-build-gate</text>
+  <rect class="dg-on" x="720" y="36" width="220" height="76" rx="7"/>
+  <text class="dg-sm2" x="830" y="70" text-anchor="middle">multi-agent-</text>
+  <text class="dg-sm2" x="830" y="94" text-anchor="middle">pr-review</text>
+  <rect class="dg-on" x="960" y="36" width="220" height="76" rx="7"/>
+  <text class="dg-sm2" x="1070" y="82" text-anchor="middle">ci-failure-triage</text>
+  <path class="dg-wire" d="M110 112 V146 M350 112 V146 M590 112 V146 M830 112 V146 M1070 112 V146"/>
+  <rect class="dg-pill" x="0" y="146" width="220" height="66" rx="33"/>
+  <text class="dg-pc2" x="110" y="174" text-anchor="middle">SKILL</text>
+  <text class="dg-pn2" x="110" y="196" text-anchor="middle">se queda acá</text>
+  <rect class="dg-pill" x="240" y="146" width="220" height="66" rx="33"/>
+  <text class="dg-pc2" x="350" y="174" text-anchor="middle">HOOK</text>
+  <text class="dg-pn2" x="350" y="196" text-anchor="middle">typecheck on edit</text>
+  <rect class="dg-pill" x="480" y="146" width="220" height="66" rx="33"/>
+  <text class="dg-pc2" x="590" y="174" text-anchor="middle">RULE</text>
+  <text class="dg-pn2" x="590" y="196" text-anchor="middle">no-parallel-ci</text>
+  <rect class="dg-pill" x="720" y="146" width="220" height="66" rx="33"/>
+  <text class="dg-pc2" x="830" y="174" text-anchor="middle">5 SUBAGENTES</text>
+  <text class="dg-pn2" x="830" y="196" text-anchor="middle">en paralelo</text>
+  <rect class="dg-pill" x="960" y="146" width="220" height="66" rx="33"/>
+  <text class="dg-pc2" x="1070" y="174" text-anchor="middle">MEMORY</text>
+  <text class="dg-pn2" x="1070" y="196" text-anchor="middle">known-issues</text>
+  <path class="dg-base" d="M0 246 H1178"/>
+  <text class="dg-note" x="0" y="240">memory + rules cargadas todo el tiempo</text>
+  <text class="dg-tick" x="0" y="284">⟳ corrección repetida 3× ──▶ writing-skills ──▶ skill nueva</text>
 </svg>
 </div>
 
@@ -625,6 +687,8 @@ mensaje, stack y los commits. Y es **la misma branch de hoy**:
 Son 5 fallas para que entren en pantalla. En un build de cientos, el mismo
 skill lee los **logs completos**, agrupa las fallas relacionadas entre sí y
 te dice **por dónde empezar a mirar** — no solo "esto es un flaky test".
+
+<img class="hero" src="img/logs-triage.png" alt="De logs completos a fallas agrupadas por servicio, priorizadas por impacto, con una sugerencia de por dónde empezar">
 
 *Triage hecho. Pero hoy, tres veces, me corregiste lo mismo... →*
 

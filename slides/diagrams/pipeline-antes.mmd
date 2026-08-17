@@ -1,5 +1,17 @@
+---
+config:
+  themeVariables:
+    fontSize: 19px
+  flowchart:
+    padding: 16
+    nodeSpacing: 30
+    rankSpacing: 46
+---
 %% El pipeline diario pre-IA (slide "Mi setup antes de IA").
 %% El punto de la flecha punteada es que esto es un ciclo, no una lista.
+%% El bloque config de arriba pisa a mermaid.*.json sólo para este diagrama:
+%% es una fila de 7 nodos, muy ancha y muy baja, y al escalarla al ancho de la
+%% slide quedaba diminuta. Nodos más grandes = más alto = más legible.
 %% Editá acá, no el .svg — se regenera con scripts/build-diagrams.sh.
 flowchart LR
   T["Jira<br/>ticket + AC"] --> A["Análisis<br/>del cambio"]

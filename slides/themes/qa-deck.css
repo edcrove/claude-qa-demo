@@ -41,3 +41,9 @@
   --wash-1:    rgba(46,196,182,.14);
   --wash-2:    rgba(255,159,28,.055);
 }
+
+/* La imagen de apoyo tiene fondo claro. Sobre Ink Black necesita leerse como
+   una tarjeta apoyada en la slide, no como un recorte. */
+section img.hero {
+  box-shadow: 0 0 0 1px var(--line), 0 12px 34px rgba(0,0,0,.38);
+}

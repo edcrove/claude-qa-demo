@@ -1,7 +1,7 @@
 # slides/img/logos/
 
-Logos de las herramientas que los MCPs conectan (slide 11 del deck):
-Jira, TestRail, Jenkins, GitHub y Confluence.
+Jira, TestRail, Jenkins, GitHub y Confluence para la tabla de MCPs (slide 11),
+y Claude para el logo grande de "Mis primeros pasos con Claude" (slide 9).
 
 ## Procedencia
 
@@ -36,7 +36,8 @@ Si algún día cambia el fondo del deck, el chip es lo único a revisar.
 ## Marcas registradas
 
 Jira y Confluence son marcas de Atlassian; Jenkins, de la Continuous Delivery
-Foundation; TestRail, de Gurock/Idera; GitHub, de GitHub, Inc. Se usan acá solo
+Foundation; TestRail, de Gurock/Idera; GitHub, de GitHub, Inc.; Claude, de
+Anthropic. Se usan acá solo
 para **identificar** las herramientas de las que habla la charla — uso
 nominativo. Ni el repo ni la charla están afiliados ni auspiciados por ninguna
 de ellas.

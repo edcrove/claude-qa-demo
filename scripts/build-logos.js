@@ -29,7 +29,12 @@ try {
 }
 
 // simple-icons slugs, in the order the MCP table lists them.
-const LOGOS = ['jira', 'testrail', 'jenkins', 'github', 'confluence'];
+const LOGOS = [
+  // la tabla de MCPs, en el orden en que la slide 11 los lista
+  'jira', 'testrail', 'jenkins', 'github', 'confluence',
+  // el logo grande de la slide "Mis primeros pasos con Claude"
+  'claude',
+];
 
 const outDir = path.join(__dirname, '..', 'slides', 'img', 'logos');
 fs.mkdirSync(outDir, { recursive: true });

@@ -707,6 +707,40 @@ not the CSS file, because Marp inlines the theme. The first attempt used
 
 All four builds verified at 0 of 45 slides overflowing.
 
+## 2026-08-16 — Más aire para los diagramas, y dos imágenes de apoyo
+
+Pedidos del autor sobre el espacio en blanco que quedaba bajo los diagramas.
+
+- **Slide 10 (árbol) y 14 (flujo end-to-end)** se agrandaron: cajas más altas,
+  tipografía de 12–15 px a 14–18 px. Eran legibles en pantalla y flojas
+  proyectadas.
+- **Slide 5 (pipeline pre-IA) salió de Mermaid.** Agrandar la fuente no
+  alcanzaba: en un `flowchart LR` el alto lo fija la altura de un nodo, y el
+  ancho crece con el texto, así que la relación de aspecto casi no cambia —
+  pasó de 9.3:1 a 8.3:1 y siguió siendo una tira baja. Reescrito a mano en dos
+  filas, que además muestra lo que la fila única no mostraba: **que es un
+  ciclo**. La vuelta va por un carril a la izquierda de las cajas; la primera
+  versión la cruzaba por adentro de Jenkins.
+
+  Otro caso de la regla ya conocida: Mermaid cuando es un grafo, SVG a mano
+  cuando el layout carga significado. Acá el significado era el ciclo.
+
+- **Dos imágenes de apoyo** en las slides 4 y 23, con clase `hero` (centrada,
+  máximo 352 px de alto, esquinas redondeadas; en el tema oscuro `qa-deck.css`
+  les agrega borde y sombra para que se lean como tarjeta y no como agujero).
+- **Logo de Claude** en el aire de la slide 9, generado por `build-logos.js`
+  igual que los demás.
+
+**Las dos imágenes están con un stand-in.** Se armaron fuera del repo y llegan
+por chat, que no es un canal del que se pueda escribir a disco. El deck compila
+—hay un PNG gris en su lugar— y `build-deck.sh` compara el hash y avisa en cada
+corrida hasta que se reemplacen. Detalle y medidas en `slides/img/README.md`.
+
+Nota de sintaxis que costó un render: `![w:640 hero](…)` **no** genera
+`class="hero"`. Marp sólo interpreta sus propias palabras clave en el alt; el
+resto queda como texto alternativo. Para que aplique una clase hay que escribir
+el `<img class="…">` a mano.
+
 ### Known open items
 
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file
