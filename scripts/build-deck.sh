@@ -99,8 +99,20 @@ echo
 echo "✅ built:"
 ls -1 "$OUT"/slides-dark-* "$OUT"/slides-light-* 2>/dev/null || true
 
+# Los PDF están versionados, así que conviene avisar cuando el repo quedó con
+# un render viejo. Pero Marp NO produce PDF reproducibles: con la misma fuente,
+# ~2.5% de los bytes cambia (metadata dentro de streams comprimidos). Así que un
+# rebuild solo, sin tocar nada, igual ensucia el árbol con 6.6 MB de ruido.
+# Por eso el aviso mira la FUENTE, no los PDF.
 if [[ "$ONLY" != "html" ]] && ! git diff --quiet -- "$OUT"/*.pdf 2>/dev/null; then
+  SOURCES=(slides/slides.md slides/themes slides/diagrams slides/img marp.config.js)
   echo
-  echo "📌 Los PDF están versionados y cambiaron. Commitealos para que el repo"
-  echo "   quede con el último render:  git add slides/*.pdf && git commit"
+  if git diff --quiet HEAD -- "${SOURCES[@]}" 2>/dev/null; then
+    echo "ℹ️  Los PDF cambiaron pero la fuente no: es sólo metadata de Marp."
+    echo "   Descartalos para no sumar 6.6 MB de ruido al historial:"
+    echo "     git checkout -- slides/*.pdf"
+  else
+    echo "📌 Cambió la fuente: commiteá los PDF para que el repo quede con el"
+    echo "   último render:  git add slides/*.pdf && git commit"
+  fi
 fi

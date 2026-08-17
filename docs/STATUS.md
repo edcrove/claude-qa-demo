@@ -99,9 +99,13 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
   upload through the GitHub web UI.
 - **The rendered PDFs are versioned (2026-08-17):** `slides/slides-*.pdf` are
   committed on purpose — the talk invites cloning, and a reader should not need
-  Marp to see the deck. They do not delta-compress, so each rebuild adds ~6.6 MB
-  to history; if that becomes a problem, publish them as GitHub Release assets
-  instead. `build-deck.sh` reminds you to commit them when they change.
+  Marp to see the deck. Two things to know: they do not delta-compress, so each
+  commit of them adds ~6.6 MB to history (if that bites, publish them as GitHub
+  Release assets instead); and **Marp's PDF output is not reproducible** — the
+  same source re-renders with ~2.5% of bytes different, so a rebuild alone
+  dirties the tree with pure noise. `build-deck.sh` checks the **source** rather
+  than the PDFs and tells you which case you are in: commit, or
+  `git checkout -- slides/*.pdf`.
 - **Careful with inline SVG:** a blank line inside an `<svg>` ends the markdown
   HTML block, Marp closes the tag there, and the rest of the diagram renders as
   loose text with no error raised. Keep inline SVG free of blank lines.
