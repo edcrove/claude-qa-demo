@@ -172,12 +172,17 @@ style: |
     background:var(--chip); border-radius:6px; padding:3px;
     vertical-align:-.42em; margin-right:.5em;
   }
-  /* Imagen de apoyo. Viene con fondo claro, así que en el deck claro se funde
-     sola; en el oscuro se lee como una tarjeta — de ahí el radio y el halo
-     que le agrega qa-deck.css, para que no parezca un agujero en la slide. */
+  /* Imagen de apoyo, alineada a la derecha (decisión del autor tras comparar
+     izquierda / centrada / derecha). Comparte el borde derecho con el ancho de
+     texto, así que sigue colgando de la grilla; el texto de esas dos slides es
+     corto y queda a la izquierda, formando dos columnas en vez de un bloque
+     centrado que abriría un tercer eje.
+     Viene con fondo claro, así que en el deck claro se funde sola; en el
+     oscuro se lee como una tarjeta — de ahí el radio y el halo que le agrega
+     qa-deck.css, para que no parezca un agujero en la slide. */
   img.hero {
-    display:block; margin:.45em auto 0;
-    max-width:100%; max-height:352px; height:auto;
+    display:block; margin:.45em 0 0 auto;
+    max-width:100%; max-height:390px; height:auto;
     border-radius:14px;
   }
   /* Logo grande, decorativo: se apoya abajo a la derecha del aire que deja la

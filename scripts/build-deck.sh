@@ -90,19 +90,6 @@ while read -r svg; do
 done < <(grep -o 'url("[^"]*-light\.svg")' slides/themes/qa-light.css | sed 's/url("//;s/")//')
 [[ "$missing" -eq 0 ]] || exit 1
 
-# Dos imágenes de la charla se armaron fuera del repo y todavía están con un
-# stand-in gris. El deck compila igual, pero conviene enterarse antes de la
-# sala, no en la sala. Cuando se reemplacen, el hash cambia y el aviso se va.
-while IFS='  ' read -r hash file; do
-  [[ -f "$file" ]] || continue
-  if [[ "$(sha256sum "$file" | cut -c1-16)" == "$hash" ]]; then
-    echo "⚠️  $file sigue siendo el stand-in — reemplazalo por la imagen real" >&2
-  fi
-done <<'PENDING'
-2c762b222f3b30bb  slides/img/qa-hero.png
-fc47c35f9f1d9d26  slides/img/logs-triage.png
-PENDING
-
 build qa-deck  "16:9"  "dark-16x9"
 build qa-deck  "16:10" "dark-16x10"
 build qa-light "16:9"  "light-16x9"

@@ -5,23 +5,22 @@ los diagramas de `slides/diagrams/`. Por eso el deck se exporta **dentro de
 `slides/`** — si lo exportás a `/tmp`, las rutas no resuelven y las imágenes
 salen vacías. `scripts/check-slide-overflow.js` falla si eso pasa.
 
-## ⚠️ Dos imágenes están con un stand-in
+## Las imágenes de apoyo
 
-Las armó el autor fuera del repo y todavía no están acá. El deck compila igual
-—hay un PNG gris en su lugar— y `scripts/build-deck.sh` avisa en cada corrida
-mientras sigan sin reemplazar. Guardá el archivo real con el mismo nombre y el
-aviso desaparece solo (compara el hash).
-
-| Archivo | Slide | Qué va |
+| Archivo | Slide | Qué muestra |
 |---|---|---|
 | `qa-hero.png` | 4 · "La pregunta de hoy" | El agente asistiendo el flujo de QA |
 | `logs-triage.png` | 23 · "El triage no termina en la categoría" | De logs completos a fallas agrupadas y priorizadas |
 
-Las dos entran por la clase `hero`: se centran solas y se limitan a 352 px de
-alto, así que no hace falta redimensionarlas. Conviene que sean **~3:2** —
-las actuales son 1536×1024 — y que tengan **fondo claro o transparente**: sobre
-la variante clara se funden, y sobre la oscura `qa-deck.css` les pone un borde
-y una sombra suave para que se lean como una tarjeta y no como un agujero.
+Las dos entran por la clase `hero`: **alineadas a la izquierda** —como todo el
+resto del deck— y limitadas a 390 px de alto, así que no hace falta
+redimensionarlas al reemplazarlas. Conviene que sean **~3:2** (las actuales son
+1100×733) y con **fondo claro o transparente**: sobre la variante clara se
+funden, y sobre la oscura `qa-deck.css` les pone borde y sombra suave para que
+se lean como una tarjeta y no como un agujero.
+
+Vinieron a 1536×1024 y ~1.8 MB; se bajaron a 1100 px de ancho porque el deck
+las muestra a ~585×390 y el peso se multiplica por 4 builds × 2 PDFs.
 
 ## Qué más hay acá
 

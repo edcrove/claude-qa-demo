@@ -90,11 +90,13 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
   `slides.md` breaks the light variant silently** — it will simply stay dark.
   The light theme also overrides highlight.js (Marp ships one dark syntax theme
   for both) and swaps the Mermaid SVGs for `-light` variants.
-- **⚠️ Two images are still stand-ins (2026-08-16):** `slides/img/qa-hero.png`
-  (slide 4) and `slides/img/logs-triage.png` (slide 23) are grey placeholders —
-  the real ones were made outside the repo and arrived by chat, which cannot be
-  written to disk. The deck builds, and `build-deck.sh` warns on every run until
-  they are replaced. Just save the files over them; see `slides/img/README.md`.
+- **Support images in place (2026-08-16):** slides 4 and 23 carry real images
+  (`slides/img/qa-hero.png`, `logs-triage.png`), **left-aligned** like the rest
+  of the deck and capped at 390 px. They could not be written from this session
+  — images arrive in chat as pixels, not files, and the Drive host is blocked by
+  the environment's network policy — so they were pushed from the author's
+  machine. If more images are needed, that is the route: commit them locally, or
+  upload through the GitHub web UI.
 - **Careful with inline SVG:** a blank line inside an `<svg>` ends the markdown
   HTML block, Marp closes the tag there, and the rest of the diagram renders as
   loose text with no error raised. Keep inline SVG free of blank lines.
