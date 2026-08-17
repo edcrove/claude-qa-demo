@@ -362,7 +362,7 @@ No hubo plan. Aparecieron patrones.
 # Cómo Claude conoce mi proyecto
 
 <div>
-<svg class="dg" viewBox="0 0 1180 350" role="img" aria-label="Jerarquía: CLAUDE.md global, CLAUDE.md del repo y las cuatro piezas del repo">
+<svg class="dg" viewBox="0 0 1180 368" role="img" aria-label="Jerarquía: CLAUDE.md global, CLAUDE.md del repo y las cuatro piezas del repo">
   <rect class="dg-box" x="0" y="133" width="330" height="84" rx="7"/>
   <text class="dg-ev2"  x="20" y="167">~/.claude/CLAUDE.md</text>
   <text class="dg-note2" x="20" y="191">preferencias globales · tu identidad</text>
