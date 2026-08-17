@@ -5,34 +5,24 @@ size: 16:9
 class: invert
 paginate: true
 html: true
-backgroundColor: "#011627"
-color: "#FDFFFC"
 style: |
-  /* ── paleta ───────────────────────────────────────────────── */
-  :root {
-    --bg:      #011627;   /* Ink Black — base */
-    --surface: #04202F;   /* derivado, paneles de codigo (apenas mas claro) */
-    --ink:     #FDFFFC;   /* Porcelain */
-    --muted:   #7E9AA8;   /* derivado, gris azulado */
-    --accent:  #FF9F1C;   /* Amber Glow — acento primario */
-    --accent2: #2EC4B6;   /* Light Sea Green — acento secundario */
-    --hot:     #E71D36;   /* Strawberry Red — solo para las cicatrices */
-    --line:    #14384A;
-  }
+  /* La paleta NO vive acá: está en slides/themes/*.css, una por variante
+     (qa-deck = oscuro, qa-light = claro). Este bloque es sólo estructura, y
+     todo color sale de una variable — por eso cambiar de tema no toca nada
+     de lo de abajo. Si agregás un color literal acá, rompés esa propiedad. */
   section {
     font-family:'Inter','Helvetica Neue',sans-serif; font-size:24px; line-height:1.42;
-    padding:44px 60px; color:var(--ink);
+    padding:44px 60px; color:var(--ink); background-color:var(--bg);
   }
   /* Capa ambiental: dos halos muy tenues que llenan el aire de las slides
      cortas sin competir con el texto. Es el mismo recurso que ya usaban las
      slides lead, extendido al resto para que el deck se lea como uno solo.
-     Va como background-image y con !important a propósito: la directiva
-     backgroundColor del frontmatter emite un `background` shorthand que si no
-     borra los gradientes (background-image queda en none). */
+     Va separado como background-image porque gaia define `background` como
+     shorthand y el shorthand borraría los gradientes. */
   section {
     background-image:
-      radial-gradient(800px 520px at 100% 108%, rgba(46,196,182,.14) 0%, transparent 62%),
-      radial-gradient(560px 400px at -8% -10%, rgba(255,159,28,.055) 0%, transparent 60%) !important;
+      radial-gradient(800px 520px at 100% 108%, var(--wash-1) 0%, transparent 62%),
+      radial-gradient(560px 400px at -8% -10%, var(--wash-2) 0%, transparent 60%) !important;
   }
   /* Marca de agua: el repo que la charla invita a clonar cuatro veces.
      Relleno con función, en el aire que dejan las slides cortas. */
@@ -43,6 +33,9 @@ style: |
     color:var(--muted); opacity:.34;
   }
   section.lead::before { display:none; }
+  /* La paginacion es un ::after que dibuja gaia y colorea segun su propio
+     esquema. Fijarlo acá la desacopla del tema. */
+  section::after { color:var(--muted); }
   /* Tamaño en px, no em, a proposito: `dense` baja el font-size de la seccion
      y con em el titulo se achicaba junto con el cuerpo. Los titulos tienen que
      caer siempre en el mismo lugar y con el mismo peso — si saltan de slide a
@@ -62,13 +55,13 @@ style: |
   section li::marker { color:var(--accent); }
   strong { color:var(--ink); font-weight:650; }
   em { color:var(--muted); }
-  code { background:#0A2A3D; color:var(--accent); padding:1px 6px; border-radius:4px; font-size:.84em; }
+  code { background:var(--code-bg); color:var(--code-fg); padding:1px 6px; border-radius:4px; font-size:.84em; }
   pre {
     background:var(--surface); border:1px solid var(--line);
     border-left:3px solid var(--accent); border-radius:6px;
     padding:10px 14px; margin:.5em 0;
   }
-  pre code { background:transparent; color:#CFE0E8; font-size:.58em; line-height:1.3; padding:0; }
+  pre code { background:transparent; color:var(--pre-fg); font-size:.58em; line-height:1.3; padding:0; }
   table { border-collapse:collapse; width:100%; margin:.4em 0; font-size:.93em; }
   section table, section table thead, section table tbody,
   section table tr, section table th, section table td {
@@ -91,9 +84,16 @@ style: |
   }
   blockquote strong { color:var(--ink); }
   a { color:var(--accent); }
+  /* Sólo background-image, nunca el shorthand `background`: el shorthand
+     resetea background-color a transparent, y como la capa ambiental de arriba
+     va con !important, la slide se quedaba sin ningún fondo propio. En oscuro
+     no se veía — el contenedor detrás también es oscuro — pero en claro las
+     lead salían negras. Va con !important para ganarle a esa capa, y su mayor
+     especificidad la hace ganar entre las dos. */
   section.lead {
     padding:60px 90px;
-    background:radial-gradient(ellipse at 30% 0%, #062B3E 0%, var(--bg) 70%);
+    background-image:
+      radial-gradient(ellipse at 30% 0%, var(--lead-glow) 0%, var(--bg) 70%) !important;
   }
   section.lead h1 { color:var(--accent); font-size:1.85em; letter-spacing:-.02em; }
   section.lead h1::before { display:none; }
@@ -101,7 +101,7 @@ style: |
   /* ── diagramas SVG ────────────────────────────────────────── */
   svg.dg { width:100%; height:auto; display:block; margin:.3em 0; }
   .dg-box   { fill:var(--surface); stroke:var(--line); stroke-width:1.5; }
-  .dg-on    { fill:#0E2C3D; stroke:var(--accent); stroke-width:2; }
+  .dg-on    { fill:var(--box-fill); stroke:var(--accent); stroke-width:2; }
   .dg-skip  { fill:none; stroke:var(--muted); stroke-width:1.5; stroke-dasharray:5 4; }
   .dg-lvl   { fill:var(--ink); font:600 15px Inter,sans-serif; letter-spacing:.06em; }
   .dg-lvl-d { fill:var(--muted); font:600 15px Inter,sans-serif; letter-spacing:.06em; }
@@ -116,7 +116,7 @@ style: |
   .dg-pc    { fill:var(--accent2); font:600 12.5px Inter,sans-serif; letter-spacing:.06em; }
   .dg-pn    { fill:var(--muted); font:12px Inter,sans-serif; }
   /* cold open: dos builds en rojo contra el mismo ambiente */
-  .dg-fail  { fill:#1C1016; stroke:var(--hot); stroke-width:1.5; }
+  .dg-fail  { fill:var(--fail-fill); stroke:var(--hot); stroke-width:1.5; }
   .dg-red   { fill:var(--hot); font:600 15px Inter,sans-serif; letter-spacing:.04em; }
   /* linea de tiempo: el color del punto codifica el nivel de la piramide */
   .dg-wk    { fill:var(--muted); font:13.5px Inter,sans-serif; }
@@ -135,7 +135,7 @@ style: |
   /* el comentario agregado, con la forma que realmente tiene en GitHub */
   .gh { border:1px solid var(--line); border-radius:8px; overflow:hidden; margin:.5em 0; }
   .gh-bar {
-    background:#0A2A3D; color:var(--muted); font-size:.66em;
+    background:var(--code-bg); color:var(--muted); font-size:.66em;
     padding:7px 14px; border-bottom:1px solid var(--line);
   }
   .gh-bar b { color:var(--ink); font-weight:600; }
@@ -153,17 +153,19 @@ style: |
     margin-top:.6em; padding-top:.5em; border-top:1px solid var(--line);
     color:var(--accent2); font-size:.72em;
   }
-  /* Logos de terceros. Van sobre un chip claro en vez de tenidos: sobre el
-     fondo #011627 el azul de Atlassian desaparece y el line art de Jenkins se
-     emborrona. Con el chip cada marca conserva su color real y se lee. */
+  /* Logos de terceros: siempre con su color de marca real, nunca teñidos.
+     Sobre fondo oscuro necesitan un chip claro detrás (el azul de Atlassian
+     desaparece y el line art de Jenkins se emborrona); sobre fondo claro el
+     chip sobra. Por eso --chip es una variable: el tema claro la vuelve
+     transparente y anula el padding. */
   img.logo {
     height:1.62em; width:1.62em; box-sizing:border-box;
-    background:#FDFFFC; border-radius:6px; padding:3px;
+    background:var(--chip); border-radius:6px; padding:3px;
     vertical-align:-.42em; margin-right:.5em;
   }
   /* ── estado de CI: rojo/verde con los colores de la paleta ── */
   .rojo  { color: var(--hot);     font-weight:600; }
-  .verde { color: var(--accent2); font-weight:600; }
+  .verde { color: var(--ok);      font-weight:600; }
   section.dense { font-size:21px; line-height:1.34; }
   section.dense h1 { margin-bottom:11px; }
   section.dense pre code { font-size:.55em; }

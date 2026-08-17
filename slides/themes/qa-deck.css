@@ -1,19 +1,43 @@
 /* @theme qa-deck */
 
 /*
- * gaia, más una declaración de tamaños.
+ * Variante OSCURA — la original. Paleta Ink Black.
  *
- * Todo el diseño del deck vive en el bloque `style:` de slides.md a propósito
- * — la charla dice que todo es texto plano y legible, así que las reglas están
- * donde uno las busca. Este archivo existe sólo por una limitación de Marp:
- * la directiva `size:` únicamente acepta tamaños que el tema haya declarado, y
- * gaia declara 16:9 y 4:3, pero no 16:10.
+ * Un tema de Marp acá cumple dos funciones:
  *
- * Con esto, `size: 16:9` o `size: 16:10` en el frontmatter cambian el lienzo
- * sin tocar ni una regla de estilo. scripts/build-deck.sh genera las dos.
+ *  1. Declarar los tamaños de lienzo. La directiva `size:` sólo acepta lo que
+ *     el tema declare, y gaia trae 16:9 y 4:3 pero no 16:10.
+ *  2. Definir la paleta. Toda la estructura vive en el bloque `style:` de
+ *     slides.md y consume variables; cambiar de tema no toca ni una regla de
+ *     layout. El par claro está en qa-light.css.
+ *
+ * scripts/build-deck.sh genera las cuatro combinaciones (2 temas × 2 lienzos).
  */
 
 @import 'gaia';
 
 /* @size 16:9 1280px 720px */
 /* @size 16:10 1280px 800px */
+
+:root {
+  --bg:        #011627;   /* Ink Black — base */
+  --surface:   #04202F;   /* derivado, paneles de codigo (apenas mas claro) */
+  --ink:       #FDFFFC;   /* Porcelain */
+  --muted:     #7E9AA8;   /* derivado, gris azulado */
+  --accent:    #FF9F1C;   /* Amber Glow — acento primario */
+  --accent2:   #2EC4B6;   /* Light Sea Green — acento secundario */
+  --hot:       #E71D36;   /* Strawberry Red — solo para las cicatrices */
+  --ok:        #2EC4B6;   /* el verde de CI; en oscuro coincide con --accent2 */
+  --line:      #14384A;
+
+  /* derivados de los anteriores */
+  --code-bg:   #0A2A3D;
+  --code-fg:   var(--accent);
+  --pre-fg:    #CFE0E8;
+  --box-fill:  #0E2C3D;
+  --fail-fill: #1C1016;
+  --chip:      #FDFFFC;   /* los logos necesitan campo claro detrás */
+  --lead-glow: #062B3E;
+  --wash-1:    rgba(46,196,182,.14);
+  --wash-2:    rgba(255,159,28,.055);
+}

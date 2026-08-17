@@ -1,30 +1,33 @@
 #!/usr/bin/env bash
-# Build the deck in both aspect ratios, from one source.
+# Build the deck in both themes and both aspect ratios, from one source.
 #
-# slides/slides.md is the single source of truth; its frontmatter says
-# `size: 16:9`. Marp CLI has no flag to override a global directive, so for the
-# 16:10 build this rewrites that one line into a temporary copy placed *inside
-# slides/* — the copy has to live there or the relative diagrams/*.svg and
-# img/*.svg paths stop resolving and the images silently vanish.
+# slides/slides.md is the single source of truth. Its frontmatter pins one
+# combination (dark, 16:9); the other three are produced by rewriting two lines
+# into a temporary copy, because Marp CLI has no flag to override a global
+# directive.
 #
-# Output goes next to slides.md, in slides/ (gitignored):
-#   slides-16x9.html   slides-16x9.pdf
-#   slides-16x10.html  slides-16x10.pdf
+#   slides-dark-16x9    slides-dark-16x10
+#   slides-light-16x9   slides-light-16x10
 #
-# Not into a dist/ subdirectory, deliberately: the deck points at
-# diagrams/*.svg and img/*.svg with relative paths, and one level down they
-# stop resolving. The PDFs would survive it (Chromium resolves them at build
-# time) but the HTML would ship 8 broken images, silently.
+# Each as .html and .pdf, written next to slides.md in slides/ (gitignored).
+# NOT into a dist/ subdirectory: the deck points at diagrams/*.svg and
+# img/*.svg with relative paths, and one level down they stop resolving. The
+# PDFs would survive it — Chromium resolves them at build time — but the HTML
+# would ship broken images, silently. The temp copy lives in slides/ for the
+# same reason.
 #
 # Which one to present with:
-#   16:9  → most projectors and modern laptops (1920x1080, 1366x768)
-#   16:10 → many conference beamers and MacBooks (1920x1200, 1280x800)
-# If unsure, ask the venue; showing 16:9 on a 16:10 screen letterboxes the
-# deck, which is what prompted having both.
+#   dark   → the original. Best in a dark room.
+#   light  → White Smoke background, and the code panes are light too, so
+#            switching to the terminal mid-demo is not a slap in the face.
+#            Also the safer bet on a washed-out projector.
+#   16:9   → most projectors and modern laptops (1920x1080, 1366x768)
+#   16:10  → many conference beamers and MacBooks (1920x1200, 1280x800)
+# Ask the venue about the ratio; the wrong one letterboxes.
 #
 # Usage:
-#   ./scripts/build-deck.sh            # both ratios, html + pdf
-#   ./scripts/build-deck.sh html       # skip the (slower) PDF export
+#   ./scripts/build-deck.sh              # all four, html + pdf
+#   ./scripts/build-deck.sh html         # skip the slower PDF export
 #
 # Needs @marp-team/marp-cli. Uses the local binary if present, else npx.
 # On a machine where the browser is not auto-detected:
@@ -51,32 +54,47 @@ else
 fi
 
 SRC="slides/slides.md"
-DIST="slides"
+OUT="slides"
+TMP="slides/.build-variant.md"
+trap 'rm -f "$TMP"' EXIT
 
-TMP=""
-cleanup() { [[ -n "$TMP" && -f "$TMP" ]] && rm -f "$TMP"; }
-trap cleanup EXIT
+# Sanity check: the rewrites below are line-exact, so fail loudly rather than
+# silently shipping four copies of the same variant.
+for line in '^theme: qa-deck$' '^size: 16:9$' '^class: invert$'; do
+  grep -qE "$line" "$SRC" || { echo "❌ '$line' no está en el frontmatter de $SRC" >&2; exit 1; }
+done
 
 build() {
-  local ratio="$1" label="$2" input="$3"
-  echo "── $ratio ──────────────────────────────"
-  "${MARP[@]}" "$input" -o "$DIST/slides-$label.html"
-  if [[ "$ONLY" != "html" ]]; then
-    "${MARP[@]}" "$input" --pdf -o "$DIST/slides-$label.pdf"
+  local theme="$1" ratio="$2" label="$3"
+  echo "── $label ──────────────────────────────"
+
+  # gaia's `invert` class is what makes it dark; the light variant drops it.
+  if [[ "$theme" == "qa-light" ]]; then
+    sed -e 's/^theme: qa-deck$/theme: qa-light/' -e '/^class: invert$/d' "$SRC" > "$TMP"
+  else
+    cp "$SRC" "$TMP"
   fi
+  [[ "$ratio" == "16:10" ]] && sed -i.bak 's/^size: 16:9$/size: 16:10/' "$TMP" && rm -f "$TMP.bak"
+
+  "${MARP[@]}" "$TMP" -o "$OUT/slides-$label.html"
+  [[ "$ONLY" != "html" ]] && "${MARP[@]}" "$TMP" --pdf -o "$OUT/slides-$label.pdf"
+  return 0
 }
 
-build "16:9" "16x9" "$SRC"
+# El tema claro intercambia los SVG de Mermaid por variantes -light via
+# `content: url(...)`. Si ese archivo no existe, el navegador no tira error:
+# muestra el alt y sigue. Chequearlo acá es la única forma de enterarse.
+missing=0
+while read -r svg; do
+  [[ -f "slides/$svg" ]] || { echo "❌ falta slides/$svg — corré ./scripts/build-diagrams.sh" >&2; missing=1; }
+done < <(grep -o 'url("[^"]*-light\.svg")' slides/themes/qa-light.css | sed 's/url("//;s/")//')
+[[ "$missing" -eq 0 ]] || exit 1
 
-# The 16:10 copy sits next to the original so relative asset paths still work.
-TMP="slides/.build-16x10.md"
-sed 's/^size: 16:9$/size: 16:10/' "$SRC" > "$TMP"
-if ! grep -q '^size: 16:10$' "$TMP"; then
-  echo "❌ could not switch the size directive — is 'size: 16:9' still in the frontmatter?" >&2
-  exit 1
-fi
-build "16:10" "16x10" "$TMP"
+build qa-deck  "16:9"  "dark-16x9"
+build qa-deck  "16:10" "dark-16x10"
+build qa-light "16:9"  "light-16x9"
+build qa-light "16:10" "light-16x10"
 
 echo
 echo "✅ built:"
-ls -1 "$DIST"/slides-16x*.html "$DIST"/slides-16x*.pdf 2>/dev/null || true
+ls -1 "$OUT"/slides-dark-* "$OUT"/slides-light-* 2>/dev/null || true

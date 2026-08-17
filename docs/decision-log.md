@@ -657,6 +657,56 @@ the subagent fan-out and the pre-AI pipeline, where nothing needs to line up.
 
 `diagrams/arbol-claude.mmd` and its SVG were deleted rather than left orphaned.
 
+## 2026-08-16 — A light variant, and the refactor it forced
+
+The author asked for a second deck on a White Smoke background, so the demos —
+which run in a light editor theme — stop being a slap in the face every time
+the talk cuts to the terminal. Both variants are kept; `build-deck.sh` now
+produces four builds (2 themes × 2 ratios).
+
+**The refactor.** Two palettes cannot live in one `style:` block, so the block
+was split: `slides.md` keeps every structural rule and consumes only
+variables, and `slides/themes/qa-deck.css` (dark) and `qa-light.css` (light)
+carry the palettes. Thirteen literal colours in the CSS became variables to
+make that possible. The frontmatter's `backgroundColor`/`color` directives were
+dropped — the theme sets them now, which also removed the reason the ambient
+washes needed `!important` in the first place.
+
+**Roles are not a straight swap.** Measured against `#f5f5f5`, the vivid
+members of this palette land at 3.2–3.4:1 — fine for graphics and large text,
+not for small text. So the vivid colours go to markers, borders and headlines,
+and small text uses the palette's dark members. Every substitution is written
+down in `qa-light.css` next to the rule it applies to. Burnt Tangerine is
+deliberately unused: it is nearly indistinguishable from Blazing Flame, and two
+oranges meaning different things get confused on a projector.
+
+**Three things broke, none of them obvious:**
+
+- **The syntax highlighting was still a dark theme.** Marp injects one
+  highlight.js theme regardless of variant. On the white code pane its tokens
+  measured **1.95:1 to 2.68:1** — illegible, and precisely the problem the
+  light deck exists to avoid. Overridden with the palette's dark members; the
+  worst token went from 1.95:1 to 3.66:1 (Verdigris strings, kept because it is
+  the only green and a string that does not read as a string costs more).
+- **The lead slides rendered black.** `section.lead` used the `background`
+  shorthand, which resets `background-color`, while the ambient layer set
+  `background-image` with `!important` — so the slide kept the washes and lost
+  its colour entirely. Invisible on the dark deck because the container behind
+  is also dark. Both now set `background-image` only.
+- **The two Mermaid diagrams stayed dark.** A pre-rendered SVG carries its
+  colours baked in and cannot read the deck's variables the way the
+  hand-written inline diagrams do — the exact tradeoff the earlier "Mermaid vs
+  hand-written" entry did not anticipate. `build-diagrams.sh` now emits a
+  `-light.svg` beside each one and the light theme swaps the `<img>` via
+  `content: url(...)`. Note that a missing swap target fails **silently** — the
+  browser just shows the alt text — so `build-deck.sh` asserts the files exist.
+
+Also worth knowing: `content: url()` paths resolve against the **output HTML**,
+not the CSS file, because Marp inlines the theme. The first attempt used
+`../diagrams/…` and quietly showed alt text.
+
+All four builds verified at 0 of 45 slides overflowing.
+
 ### Known open items
 
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file

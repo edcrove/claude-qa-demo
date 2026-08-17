@@ -201,10 +201,11 @@ CLAUDE.md, MCP server names, tokens in autocomplete) — that is what
 - [ ] launch through `./scripts/demo-profile.sh`, run `/context`, confirm only
       the repo's `CLAUDE.md` is loaded
 - [ ] terminal font ≥ 16pt, notifications off
-- [ ] `./scripts/build-deck.sh` → builds **both aspect ratios** into `slides/`
-      (16:9 and 16:10, HTML + PDF). **Ask the venue which one the projector
-      is**; the wrong one letterboxes. Everything renders locally — no Wi-Fi
-      needed, including the emoji
+- [ ] `./scripts/build-deck.sh` → builds **4 variants** into `slides/`
+      (dark/light × 16:9/16:10, HTML + PDF). **Ask the venue which ratio the
+      projector is**; the wrong one letterboxes. Pick **light** if the room is
+      bright or the projector washes out, and because the demos run in a light
+      editor theme. Everything renders locally — no Wi-Fi needed
 - [ ] `node scripts/check-slide-overflow.js slides/slides-16x9.html` (and the
       16x10 one) → "every slide fits" and no ❌ broken-image line (Marp
       silently clips content that runs past the bottom edge; this caught 13

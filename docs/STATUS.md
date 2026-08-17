@@ -67,19 +67,29 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
   replaced an earlier and worse fix that tinted the marks themselves.
   Trademark notes in `slides/img/logos/README.md`.
 - **Ambient layer instead of decorative images (2026-08-16):** two very faint
-  radial washes plus a monospace repo-URL watermark. Gotcha: the frontmatter
-  `backgroundColor` directive wipes `background-image` unless it is set
-  separately with `!important`.
+  radial washes plus a monospace repo-URL watermark. Gotcha: never use the
+  `background` shorthand on a section — it resets `background-color` and the
+  slide loses its colour (this made every lead slide render black in the light
+  variant). Set `background-image` on its own.
 - **Headings are pinned (2026-08-16):** all 36 content headings sit at 44 px,
   one size (33 px, set in **px** so `dense` cannot shrink them). A `mid` class
   that vertically centred the short slides was tried and **removed** — it
   filled the void but made the heading jump while flipping through. Consistent
   heading position beats filled space; do not reintroduce it.
-- **Two aspect ratios (2026-08-16):** `./scripts/build-deck.sh` builds 16:9 and
-  16:10 (HTML + PDF) from the same `slides.md` into `slides/`. **Ask the venue
-  which the projector is** — the wrong one letterboxes, which is what prompted
-  this. Both verified at 0/45 overflowing. Build output must stay next to
-  `slides.md`; a `dist/` subdir silently breaks every relative image in the HTML.
+- **Four builds (2026-08-16):** `./scripts/build-deck.sh` produces 2 themes ×
+  2 ratios (HTML + PDF) from the same `slides.md`, into `slides/`.
+  **dark** = the original Ink Black. **light** = White Smoke background with
+  light code panes, so cutting to the terminal mid-demo is not a slap in the
+  face; also the safer bet on a washed-out projector. **Ask the venue about the
+  ratio** — the wrong one letterboxes. All four verified at 0/45 overflowing.
+  Build output must stay next to `slides.md`; a `dist/` subdir silently breaks
+  every relative image in the HTML.
+- **Where the palette lives (2026-08-16):** NOT in `slides.md`. That block is
+  structure only and consumes variables; the palettes are in
+  `slides/themes/qa-deck.css` and `qa-light.css`. **Adding a literal colour to
+  `slides.md` breaks the light variant silently** — it will simply stay dark.
+  The light theme also overrides highlight.js (Marp ships one dark syntax theme
+  for both) and swaps the Mermaid SVGs for `-light` variants.
 - **Careful with inline SVG:** a blank line inside an `<svg>` ends the markdown
   HTML block, Marp closes the tag there, and the rest of the diagram renders as
   loose text with no error raised. Keep inline SVG free of blank lines.
