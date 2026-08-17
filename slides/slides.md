@@ -733,6 +733,8 @@ Hoy lo repetí 3 veces y lo noté. Cuando no lo notás, se lo preguntás:
 
 > *"Revisá las últimas conversaciones y decime qué skills hay que crear o actualizar."*
 
+<img class="hero" src="img/skill-suggest.png" alt="Repetí, noté, anoté: el mismo workflow tres veces, y el agente devuelve una lista de skills sugeridas a partir del patrón detectado">
+
 El patrón es el mismo — cambia quién lo detecta.
 
 ---
