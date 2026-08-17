@@ -25,7 +25,7 @@ All under `.claude/skills/`. Adapt freely:
 
 ## Rules authored for this demo
 
-All under `.claude/rules/`. These are also readable by Cursor (which scans `.mdc` files):
+All under `.claude/rules/`, and loaded because `CLAUDE.md` imports them with `@`:
 
 - `english-only.mdc`
 - `no-parallel-ci.mdc`

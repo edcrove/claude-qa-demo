@@ -49,15 +49,17 @@ Wrote a thin wrapper skill to dispatch them in parallel.
 ## Week 11 — Hook: typecheck-after-edit
 
 Trigger: kept forgetting to run typecheck after Claude edited a TS file.
-Promoted from feedback memory → rule → hook. Now it's automatic.
+Promoted from feedback memory → skill → hook. Now it's automatic. Note there is
+no typecheck *rule*: this pain skipped that level, which is the point the deck's
+pyramid makes.
 
 ## Week 13 — Skill: `ticket-coverage-gap-analysis`
 
 Trigger: ran the same coverage-mapping conversation 4 weeks in a row during
 sprint planning. Time to write it down.
 
-## Week 16 — Memory: stage flakes heuristic
+## Week 16 — Memory: `known-issues` registry
 
-Trigger: noticed that 80% of stage failures last quarter were flakes, not
-regressions. Saved as a memory so Claude pre-classifies failures with this
-prior.
+Trigger: the flake registry kept growing with every confirmed flaky test.
+Deliberately **not** imported from `CLAUDE.md` — `ci-failure-triage` reads it
+when a build fails, instead of carrying it in every session.

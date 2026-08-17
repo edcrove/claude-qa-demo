@@ -64,6 +64,22 @@ check "Demo 5 — build mock has no category hints" "$r"
 command -v jq >/dev/null 2>&1 && r=0 || r=1
 check "Hook — jq available on PATH" "$r"
 
+# Demos 2, 4 and 6 each invoke a skill that ships in a plugin, not in this repo.
+# If the plugin is not enabled in the demo profile the skill simply does not
+# exist and Claude improvises — a silent failure, which is the worst kind on
+# stage. These asserts only prove the profile *declares* them; whether they
+# resolve is something only a real launch shows, so rehearse at least once
+# through ./scripts/demo-profile.sh and run /plugin to confirm.
+PROFILE_SETTINGS=".demo-profile/settings.json"
+if [[ -f "$PROFILE_SETTINGS" ]]; then
+  for plugin in superpowers pr-review-toolkit; do
+    grep -q "\"$plugin@" "$PROFILE_SETTINGS" && r=0 || r=1
+    check "Demos 2/4/6 — $plugin enabled in the demo profile" "$r"
+  done
+else
+  echo "   ℹ️  $PROFILE_SETTINGS not built yet — run ./scripts/demo-profile.sh once"
+fi
+
 if [[ "$fail" -ne 0 ]]; then
   echo "⚠️  Demo state is not rehearsal-ready — fix the ❌ above."
   exit 1

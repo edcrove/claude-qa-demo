@@ -21,7 +21,7 @@ Everything here is plain text on disk. Clone it, read it, copy what works.
 | `evolution-timeline.md` | How this repo grew week by week (the demo fiction) |
 | `SOURCES.md` | Where to download the pre-existing pieces |
 | `scripts/` | `check-leaks.sh`, `prep-demo.sh`, `demo-profile.sh` |
-| `slides/` | Marp deck (32-slide main flow + anatomy appendix + Q&A backup) |
+| `slides/` | Marp deck (31-slide main flow + anatomy appendix + Q&A backup) |
 
 ## Running the demo app
 

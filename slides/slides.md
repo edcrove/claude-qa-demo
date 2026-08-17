@@ -508,7 +508,7 @@ de tipos no puede ver: arquitectura. *(Mis compañeros aplaudieron esto.)*
   <text class="dg-pc2" x="1070" y="174" text-anchor="middle">MEMORY</text>
   <text class="dg-pn2" x="1070" y="196" text-anchor="middle">known-issues</text>
   <path class="dg-base" d="M0 246 H1178"/>
-  <text class="dg-note" x="0" y="240">memory + rules cargadas todo el tiempo</text>
+  <text class="dg-note" x="0" y="240">rules y memory importadas: siempre cargadas · el registry se lee cuando hace falta</text>
   <text class="dg-tick" x="0" y="284">⟳ corrección repetida 3× ──▶ writing-skills ──▶ skill nueva</text>
 </svg>
 </div>
@@ -742,54 +742,58 @@ El patrón es el mismo — cambia quién lo detecta.
 # Mi línea de tiempo real
 
 <div>
-<svg class="dg" viewBox="0 0 1180 414" role="img" aria-label="Línea de tiempo: qué pieza apareció en qué semana y qué dolor la causó">
-  <path class="dg-wire" d="M108 12 V404"/>
-  <circle class="dg-d-m" cx="108" cy="26" r="5"/>
-  <text class="dg-wk" x="96" y="31" text-anchor="end">semana 1</text>
-  <text class="dg-tier dg-t-m" x="126" y="31">BASE</text>
-  <text class="dg-ev" x="200" y="31">CLAUDE.md inicial: 5 líneas <tspan class="w">— nombre, comando de test, convención de commits</tspan></text>
-  <circle class="dg-d-s" cx="108" cy="60" r="5"/>
-  <text class="dg-wk" x="96" y="65" text-anchor="end">semana 1</text>
-  <text class="dg-tier dg-t-s" x="126" y="65">SKILL</text>
-  <text class="dg-ev" x="200" y="65">local-build-gate <tspan class="w">— CI roto 2 veces por un typo que typecheck cazaba en 2 seg</tspan></text>
-  <circle class="dg-d-r" cx="108" cy="94" r="5"/>
-  <text class="dg-wk" x="96" y="99" text-anchor="end">semana 3</text>
-  <text class="dg-tier dg-t-r" x="126" y="99">RULE</text>
-  <text class="dg-ev" x="200" y="99">no-parallel-ci <tspan class="w">— los 90 minutos cazando flaky tests fantasma en stage</tspan></text>
-  <circle class="dg-d-r" cx="108" cy="128" r="5"/>
-  <text class="dg-wk" x="96" y="133" text-anchor="end">semana 3</text>
-  <text class="dg-tier dg-t-r" x="126" y="133">RULE</text>
-  <text class="dg-ev" x="200" y="133">english-only <tspan class="w">— un compañero no podía revisar un commit en español</tspan></text>
-  <circle class="dg-d-s" cx="108" cy="162" r="5"/>
-  <text class="dg-wk" x="96" y="167" text-anchor="end">semana 6</text>
-  <text class="dg-tier dg-t-s" x="126" y="167">SKILL</text>
-  <text class="dg-ev" x="200" y="167">ci-failure-triage <tspan class="w">— las mismas 3 preguntas cada lunes</tspan></text>
-  <circle class="dg-d-s" cx="108" cy="196" r="5"/>
-  <text class="dg-wk" x="96" y="201" text-anchor="end">semana 6</text>
-  <text class="dg-tier dg-t-s" x="126" y="201">SKILL</text>
-  <text class="dg-ev" x="200" y="201">known-issues-registry-update <tspan class="w">— perdía el registro de qué flaky test ya vi</tspan></text>
-  <circle class="dg-d-s" cx="108" cy="230" r="5"/>
-  <text class="dg-wk" x="96" y="235" text-anchor="end">semana 9</text>
-  <text class="dg-tier dg-t-s" x="126" y="235">SKILL</text>
-  <text class="dg-ev" x="200" y="235">multi-agent-pr-review <tspan class="w">+ plugin pr-review-toolkit — de secuencial a paralelo</tspan></text>
-  <circle class="dg-d-h" cx="108" cy="264" r="5"/>
-  <text class="dg-wk" x="96" y="269" text-anchor="end">semana 11</text>
-  <text class="dg-tier dg-t-h" x="126" y="269">HOOK</text>
-  <text class="dg-ev" x="200" y="269">typecheck-after-edit <tspan class="w">— memory + rule no alcanzaban</tspan></text>
-  <circle class="dg-d-s" cx="108" cy="298" r="5"/>
-  <text class="dg-wk" x="96" y="303" text-anchor="end">semana 13</text>
-  <text class="dg-tier dg-t-s" x="126" y="303">SKILL</text>
-  <text class="dg-ev" x="200" y="303">ticket-coverage-gap-analysis <tspan class="w">— la misma conversación 4 sprints seguidos</tspan></text>
-  <circle class="dg-d-m" cx="108" cy="332" r="5"/>
-  <text class="dg-wk" x="96" y="337" text-anchor="end">semana 16</text>
-  <text class="dg-tier dg-t-m" x="126" y="337">MEMORY</text>
-  <text class="dg-ev" x="200" y="337">heurística de flaky tests en stage <tspan class="w">— 80% de los rojos no eran regresiones</tspan></text>
-  <circle class="dg-d-h" cx="108" cy="366" r="5"/>
-  <text class="dg-wk" x="96" y="371" text-anchor="end">ahora</text>
-  <text class="dg-ev" x="126" y="371">El setup quedó versionado en el repo <tspan class="w">— los compañeros lo mejoran con sus propias PRs</tspan></text>
-  <circle class="dg-future" cx="108" cy="400" r="5"/>
-  <text class="dg-wk" x="96" y="405" text-anchor="end">futuro</text>
-  <text class="dg-ev" x="126" y="405"><tspan class="w">Nuevas ideas, nuevas necesidades — seguimos buscando patrones</tspan></text>
+<svg class="dg" viewBox="0 0 1180 422" role="img" aria-label="Línea de tiempo: qué pieza apareció en qué semana y qué dolor la causó">
+  <path class="dg-wire" d="M108 10 V412"/>
+  <circle class="dg-d-m" cx="108" cy="24" r="5"/>
+  <text class="dg-wk" x="96" y="29" text-anchor="end">semana 1</text>
+  <text class="dg-tier dg-t-m" x="126" y="29">BASE</text>
+  <text class="dg-ev" x="200" y="29">CLAUDE.md inicial: 5 líneas <tspan class="w">— nombre, comando de test, convención de commits</tspan></text>
+  <circle class="dg-d-m" cx="108" cy="56" r="5"/>
+  <text class="dg-wk" x="96" y="61" text-anchor="end">semana 1</text>
+  <text class="dg-tier dg-t-m" x="126" y="61">MEMORY</text>
+  <text class="dg-ev" x="200" y="61">feedback-local-build-before-ci <tspan class="w">— "acordate del typecheck", anotado. Y me lo olvidé igual</tspan></text>
+  <circle class="dg-d-s" cx="108" cy="88" r="5"/>
+  <text class="dg-wk" x="96" y="93" text-anchor="end">semana 1</text>
+  <text class="dg-tier dg-t-s" x="126" y="93">SKILL</text>
+  <text class="dg-ev" x="200" y="93">local-build-gate <tspan class="w">— CI roto 2 veces por un typo que typecheck cazaba en 2 seg</tspan></text>
+  <circle class="dg-d-r" cx="108" cy="120" r="5"/>
+  <text class="dg-wk" x="96" y="125" text-anchor="end">semana 3</text>
+  <text class="dg-tier dg-t-r" x="126" y="125">RULE</text>
+  <text class="dg-ev" x="200" y="125">no-parallel-ci <tspan class="w">— los 90 minutos cazando flaky tests fantasma en stage</tspan></text>
+  <circle class="dg-d-r" cx="108" cy="152" r="5"/>
+  <text class="dg-wk" x="96" y="157" text-anchor="end">semana 3</text>
+  <text class="dg-tier dg-t-r" x="126" y="157">RULE</text>
+  <text class="dg-ev" x="200" y="157">english-only <tspan class="w">— un compañero no podía revisar un commit en español</tspan></text>
+  <circle class="dg-d-s" cx="108" cy="184" r="5"/>
+  <text class="dg-wk" x="96" y="189" text-anchor="end">semana 6</text>
+  <text class="dg-tier dg-t-s" x="126" y="189">SKILL</text>
+  <text class="dg-ev" x="200" y="189">ci-failure-triage <tspan class="w">— las mismas 3 preguntas cada lunes</tspan></text>
+  <circle class="dg-d-s" cx="108" cy="216" r="5"/>
+  <text class="dg-wk" x="96" y="221" text-anchor="end">semana 6</text>
+  <text class="dg-tier dg-t-s" x="126" y="221">SKILL</text>
+  <text class="dg-ev" x="200" y="221">known-issues-registry-update <tspan class="w">— perdía el registro de qué flaky test ya vi</tspan></text>
+  <circle class="dg-d-s" cx="108" cy="248" r="5"/>
+  <text class="dg-wk" x="96" y="253" text-anchor="end">semana 9</text>
+  <text class="dg-tier dg-t-s" x="126" y="253">SKILL</text>
+  <text class="dg-ev" x="200" y="253">multi-agent-pr-review <tspan class="w">+ plugin pr-review-toolkit — de secuencial a paralelo</tspan></text>
+  <circle class="dg-d-h" cx="108" cy="280" r="5"/>
+  <text class="dg-wk" x="96" y="285" text-anchor="end">semana 11</text>
+  <text class="dg-tier dg-t-h" x="126" y="285">HOOK</text>
+  <text class="dg-ev" x="200" y="285">typecheck-after-edit <tspan class="w">— memory + skill no alcanzaban</tspan></text>
+  <circle class="dg-d-s" cx="108" cy="312" r="5"/>
+  <text class="dg-wk" x="96" y="317" text-anchor="end">semana 13</text>
+  <text class="dg-tier dg-t-s" x="126" y="317">SKILL</text>
+  <text class="dg-ev" x="200" y="317">ticket-coverage-gap-analysis <tspan class="w">— la misma conversación 4 sprints seguidos</tspan></text>
+  <circle class="dg-d-m" cx="108" cy="344" r="5"/>
+  <text class="dg-wk" x="96" y="349" text-anchor="end">semana 16</text>
+  <text class="dg-tier dg-t-m" x="126" y="349">MEMORY</text>
+  <text class="dg-ev" x="200" y="349">known-issues <tspan class="w">— el registry crece con cada flaky test: se lee cuando hace falta</tspan></text>
+  <circle class="dg-d-h" cx="108" cy="376" r="5"/>
+  <text class="dg-wk" x="96" y="381" text-anchor="end">ahora</text>
+  <text class="dg-ev" x="126" y="381">El setup quedó versionado en el repo <tspan class="w">— los compañeros lo mejoran con sus propias PRs</tspan></text>
+  <circle class="dg-future" cx="108" cy="408" r="5"/>
+  <text class="dg-wk" x="96" y="413" text-anchor="end">futuro</text>
+  <text class="dg-ev" x="126" y="413"><tspan class="w">Nuevas ideas, nuevas necesidades — seguimos buscando patrones</tspan></text>
 </svg>
 </div>
 
@@ -859,7 +863,7 @@ Ahí empiezan a aparecer los patrones repetibles.
 La segunda vez que escribís *"acordate de X antes de Y"*, eso es una memory.
 La tercera, un skill.
 
-**4. Bajá lo que ya existe:** `/plugin` → `superpowers` + `pr-review-toolkit`.
+**4. Bajá lo que ya existe:** `/plugin marketplace add` y después `/plugin install` → `superpowers` + `pr-review-toolkit`.
 Arrancás con workflows que no tuviste que escribir. Son públicos: usá los de
 confianza, los que tu organización ya aceptó.
 
@@ -1015,7 +1019,9 @@ Rule statement: what you must / must not do.
 **How to apply:** when this kicks in.
 ```
 
-A diferencia de un skill, **siempre está cargada** en el contexto.
+A diferencia de un skill, **siempre está cargada** — pero no por ser una rule:
+lo está porque `CLAUDE.md` la **importa** con `@`. Sin ese import, el archivo no
+hace nada, y su `description` —a diferencia de la de un skill— no la lee nadie.
 
 ---
 
@@ -1114,7 +1120,7 @@ el memory y el skill**. El hook fue el final del camino.
 - 5 subagentes = 5 contextos aislados — pagás tokens para **no** pagar contexto contaminado
 - El costo contra el que se compara: 10 min de CI roto · 90 min de flaky
   tests fantasma · un review que espera 2 días
-- Memory, rules y hooks cuestan ~0: texto plano en el contexto que ya pagás
+- **Lo siempre-cargado es lo único con costo recurrente**: memory y rules se pagan en cada mensaje, de cada sesión. Una skill cuesta su `description` siempre y su cuerpo sólo cuando se usa; un hook no consume contexto. Por eso las skills viven afuera hasta que hacen falta
 
 ---
 
@@ -1130,7 +1136,7 @@ el memory y el skill**. El hook fue el final del camino.
 # ¿Funciona offline? ¿Sirve en mi stack?
 
 - Este demo corre **100% offline**: mocks JSON en disco, cero credenciales
-- Solo los **MCPs** reales (Jira, Jenkins, TestRail, GitHub) necesitan red
+- Solo los **MCPs** reales (Jira, TestRail, Jenkins, GitHub, Confluence) necesitan red
 - El patrón no sabe de lenguajes: idéntico en **Java/TestNG/RestAssured**
 - Todo es texto plano: clonalo y reemplazá los mocks por tus sistemas
 

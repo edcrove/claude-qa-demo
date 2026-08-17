@@ -24,7 +24,7 @@
   "failures": [
     {
       "test": "GET /api/v1/channels/:slug > returns the channel for a known slug",
-      "message": "AssertionError: expected genre 'news' to be 'sports'",
+      "message": "AssertionError: expected genre 'sports' to be 'news'",
       "stack": "at demo-app/tests/api.test.ts:7"
     },
     {

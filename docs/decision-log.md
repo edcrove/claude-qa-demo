@@ -741,6 +741,51 @@ Nota de sintaxis que costó un render: `![w:640 hero](…)` **no** genera
 resto queda como texto alternativo. Para que aplique una clase hay que escribir
 el `<img class="…">` a mano.
 
+## 2026-08-17 — Revisión conceptual: cinco cosas que el deck decía mal
+
+Un subagente experto en workflows de Claude Code revisó deck + repo + runbook
+buscando errores conceptuales y contradicciones repo↔deck. Encontró una cuarta
+tanda de las mismas — la charla se demuestra en vivo sobre este repo, así que
+cualquier afirmación que el repo desmienta se cae sola en escena. Arreglado:
+
+- **La timeline inventaba dos cosas.** Decía que el hook nació porque
+  *"memory + rule no alcanzaban"*, pero **no existe ninguna rule de typecheck**
+  y la pirámide argumenta lo contrario: ese dolor *saltea* la Rule. Y listaba
+  una memory (`heurística de flaky tests en stage`) que no existe, mientras
+  omitía la única real. Ahora las 13 filas corresponden a artefactos que están
+  en disco — verificado uno por uno. La fila de semana 16 pasó a ser el
+  registry `known-issues`, que además enseña la distinción importado /
+  on-demand en vez de sólo repetir "cada pieza nació de un dolor".
+- **"memory + rules cargadas todo el tiempo"** (flujo end-to-end) era falso
+  justo para la memory que esa misma slide muestra: `known-issues` es
+  deliberadamente **no** importada. Y el runbook manda mostrar `/context` en
+  vivo como prueba de la distinción, así que la contradicción era proyectable.
+- **La slide de costos decía lo contrario de lo que pasa.** *"Memory, rules y
+  hooks cuestan ~0"*: al revés, lo siempre-cargado es lo único con costo
+  recurrente por mensaje. Reescrita, y de paso ahora contesta la pregunta que
+  la charla nunca respondía: por qué no meter todo en el `CLAUDE.md`.
+- **Las rules no son una primitiva.** Están siempre cargadas *sólo porque*
+  `CLAUDE.md` las importa con `@`, y su `description` —a diferencia de la de un
+  skill— no la lee nadie. Sin eso, quien copie la plantilla el lunes no obtiene
+  nada y no se entera. Aclarado en el apéndice y en `SOURCES.md`, que además
+  afirmaba que Cursor lee `.claude/rules/` (lee `.cursor/rules/`).
+- **Riesgo de falla silenciosa en escena.** Demos 2, 4 y 6 invocan skills que
+  vienen en plugins, y `prep-demo.sh` chequeaba todo menos que los plugins
+  estuvieran habilitados: si no resuelven, la skill no existe y Claude
+  improvisa. Assert agregado, con la advertencia de que sólo prueba que el
+  perfil los *declara* — que resuelvan se ve en un lanzamiento real.
+
+Menores, de la misma revisión: el mensaje de falla de `build-44.json` invertía
+el test al que estaba anclado (vitest imprime *expected `<actual>` to be
+`<esperado>`*), la slide de Q&A listaba 4 MCPs con la tabla en 5, el paso 4
+omitía `/plugin marketplace add` antes de `install` —literalmente lo que el
+público va a tipear— y el README decía 32 slides de main flow con 31.
+
+**Una del reporte no se aplicó:** marcaba `defaultMode: "auto"` en
+`demo-profile.sh` como valor no documentado. `auto` sí es válido, junto con
+`default`, `plan`, `acceptEdits`, `dontAsk` y `bypassPermissions`. Verificar
+antes de propagar, incluso lo que viene de una revisión buena.
+
 ### Known open items
 
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file
