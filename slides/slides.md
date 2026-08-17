@@ -219,7 +219,7 @@ Edgardo Crovetto · 2026
 ## cazando flaky tests fantasma
 
 <div>
-<svg class="dg" viewBox="0 0 1080 176" role="img" aria-label="Dos builds simultáneos contra el mismo ambiente, los dos en rojo">
+<svg class="dg" viewBox="0 -16 1080 192" role="img" aria-label="Dos builds simultáneos contra el mismo ambiente, los dos en rojo">
   <rect class="dg-fail" x="40"  y="0" width="400" height="78" rx="6"/>
   <text class="dg-sm"   x="62"  y="32">build #128 · regression</text>
   <text class="dg-red"  x="62"  y="58">FAILED — 14 tests</text>
@@ -350,7 +350,7 @@ Plataforma de streaming · servicio backend REST
 - Lo demás vino con el tiempo
 
 **2. Agregar MCPs, uno a uno**
-Jira, TestRail, Jenkins, GitHub, Confluence — el detalle, en la próxima slide.
+Jira, TestRail, Jenkins, GitHub, Confluence — el detalle, enseguida.
 
 A partir de ahí: **prompts del día a día**.
 No hubo plan. Aparecieron patrones.
