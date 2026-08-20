@@ -967,3 +967,63 @@ de agregarle una excepción al chequeo.
 contenido es interno puro), el validador de nombres de repo contra la política
 de la organización (el patrón es bueno, pero cada tabla de datos que tiene es
 identificatoria) y los nombres de los dos repos del toolkit.
+
+
+## 2026-08-20 — Dos slides: que el modelo falla, y qué abrir al clonar
+
+### "El modelo se equivoca"
+
+El deck mostraba veinticinco minutos de un agente funcionando y nunca decía en
+voz alta lo obvio: un LLM es probabilístico y falla. Sin eso, toda la pirámide
+se lee como productividad, cuando la mitad de su razón de ser es contención.
+
+Va **inmediatamente antes de "Qué le toca a la persona"**, y esa posición es el
+argumento entero. Esa tabla venía afirmando el reparto humano/agente como
+principio; ahora llega con su causa: el criterio se queda del lado humano
+**porque el modelo es probabilístico**, no por política de la empresa.
+
+Los tres ejemplos son autorreferenciales a propósito, y eso es lo que hace que
+no suene a disclaimer:
+
+- **La Demo 3**, que la sala acaba de ver. El agente iba a triggear un build que
+  no debía y no lo frenó el modelo: lo frenó una rule.
+- **Las tres afirmaciones que este deck hacía y su propio repo desmentía**
+  (revisión del 2026-08-13). Las encontró alguien que fue a leer el repo, no
+  que le volvió a preguntar al modelo. Esa distinción es el método.
+- **La slide del linter, que estaba mal.** Decía que SonarQube no ve el
+  `// TODO`; lo ve (`S1135`). Se arregló leyendo la regla del linter, no
+  confiando en la memoria — el mismo error que la slide describe, cometido por
+  el deck que lo describe.
+
+Cierra en que el trabajo no es que el agente no se equivoque, sino que se
+equivoque **donde se nota** y que el error no vuelva — que es literalmente el
+mecanismo de promoción, ahora con su motivo explícito. *"El error es la materia
+prima del setup."*
+
+**No es gratis:** es la primera slide de flujo principal que se agrega desde los
+recortes de timing, y suma ~40 s a un camino que ya está ~18 min pasado. Queda
+anotado en la decisión pendiente 1 de STATUS en vez de disimulado.
+
+### "Qué abrir cuando clones el repo"
+
+Última slide, y la que la audiencia fotografía. Tabla path→para qué de
+`CLAUDE.md`, `.claude/rules|skills`, `settings.json`, `memory/`,
+`skill-templates/`, `mocks/` y `evolution-timeline.md`, y después el bloque que
+explica `docs/showable-inventory.md`: qué es —catálogo sanitizado de piezas del
+setup de trabajo real, las que no entraron en 30 minutos— y **cómo usarlo**:
+buscá tu dolor en la columna *"por qué mostrarla"*, copiá la pieza, reemplazá
+los nombres genéricos por los tuyos, y arrancá por la tabla de las tres
+primeras.
+
+No se cuenta como Q&A backup: no responde una pregunta, es una referencia que
+existe para leerse *después* de la charla. El conteo ahora es 32 main / 9
+appendix / 6 Q&A backup / 1 mapa del repo.
+
+Deck: 46 → **48 slides**, **0/48 overflowing** en los cuatro builds, PDFs
+re-renderizados.
+
+**Nota de entorno que cuesta cada vez:** el gate de overflow venía fallando con
+`Executable doesn't exist` de Playwright. No hace falta bajar el Chromium: el
+script ya honra `CHROME_PATH` y lo pasa como `executablePath`. Con el Chrome del
+sistema, más `PATH`/`NODE_PATH` apuntando a donde quedaron instalados `marp` y
+`playwright`, buildea y verifica sin instalar nada nuevo.

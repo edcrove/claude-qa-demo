@@ -844,6 +844,26 @@ aplicado a un linter o a un quality gate, la conversación es la misma.
 
 ---
 
+# El modelo se equivoca
+
+Un LLM es probabilístico: alucina un comando, afirma una API que no existe, se
+va por la rama — y **suena igual de convincente cuando acierta que cuando no.**
+
+- **Demo 3:** el agente iba a triggear un build que no debía. No lo frenó el
+  modelo — lo frenó una rule
+- **Este deck afirmaba tres cosas que su propio repo desmentía.** Las encontró
+  una revisión que fue a leer el repo, no que volvió a preguntarle al modelo
+- **Y dije que SonarQube no ve el `// TODO`.** Lo ve (`S1135`) — se arregló
+  leyendo la regla, no mi memoria
+
+**Mi trabajo no es que el agente no se equivoque: es que se equivoque donde se
+nota, y que el error no vuelva.**
+
+> Cada pieza de la pirámide nació de un error concreto.
+> **El error es la materia prima del setup.**
+
+---
+
 <!-- _class: dense -->
 
 # Qué le toca a la persona
@@ -1219,3 +1239,28 @@ La pirámide es el piso, no el techo. Otras piezas que hoy no demostré:
   5 de la Demo 4 son eso, pero vienen de un plugin — los tuyos los escribís vos
 
 **Ninguna reemplaza a la pirámide: la usan.**
+
+---
+
+<!-- _class: dense -->
+
+# Qué abrir cuando clones el repo
+
+| Path | Qué es |
+|---|---|
+| `CLAUDE.md` | lo que se carga en **toda** sesión: convenciones + los `@` imports |
+| `.claude/rules/` · `.claude/skills/` | 3 rules siempre cargadas · 5 skills que cargan sólo cuando hacen falta |
+| `.claude/settings.json` | el hook de typecheck |
+| `memory/` | lo que sobrevive al `/clear` + el registry de known issues |
+| `skill-templates/` | plantillas vacías: tu primer skill, rule y hook |
+| `mocks/` | Jira, Jenkins y GitHub falsos — corre sin red |
+| `evolution-timeline.md` | cómo creció, semana por semana y con qué dolor |
+| `docs/showable-inventory.md` | el catálogo de piezas ⬇ |
+
+**`docs/showable-inventory.md`** — catálogo de skills, rules, hooks y otras piezas
+de mi setup **de trabajo real**, sanitizadas: qué hace cada una y por qué existe.
+Es lo que no entró en 30 minutos.
+
+**Cómo usarlo:** buscá tu dolor en la columna *"por qué mostrarla"* → copiá la
+pieza → reemplazá los nombres genéricos (`api-tests`, `PROJ-1234`) por los tuyos.
+Empezá por la tabla **"si agregás sólo tres cosas"**.

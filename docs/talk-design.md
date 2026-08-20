@@ -108,15 +108,27 @@ The deck (see `slides/slides.md`) applies these deliberate storytelling devices:
 
 ## Slide map
 
-`slides/slides.md` — 46 slides total (counts verified against Marp's own
+`slides/slides.md` — 48 slides total (counts verified against Marp's own
 section count, not eyeballed):
 
-- **Main flow: 31** (cold open → thesis → mechanics → 6 demos, each of the
+- **Main flow: 32** (cold open → thesis → mechanics → 6 demos, each of the
   last three followed by a short *nota al pasar* — "¿Y esto no lo hacía ya
   un linter?", "El triage no termina en la categoría", "Y no siempre tenés
-  que contar vos" — → timeline → "el agente también construye" → "qué le
-  toca a la persona" (human/agent split summary) → question answered →
-  "4 pasos para el lunes" → close).
+  que contar vos" — → timeline → "el agente también construye" → **"el modelo
+  se equivoca"** → "qué le toca a la persona" (human/agent split summary) →
+  question answered → "4 pasos para el lunes" → close).
+
+  **"El modelo se equivoca" (added 2026-08-20, author request)** — the deck
+  demonstrated an agent succeeding for 25 minutes and never said out loud that
+  an LLM is probabilistic and fails. It sits immediately before "qué le toca a
+  la persona" on purpose: it converts that table from a moral claim into an
+  engineering one. The criterion stays human *because the model is
+  probabilistic*, not because of policy. Its three examples are deliberately
+  self-referential — the rule that stopped the agent in Demo 3 (which the room
+  just watched), three claims this deck made that its own repo refuted, and a
+  linter claim on a slide that was itself wrong. Showing your own errors in the
+  artifact on screen is what makes it land instead of reading as a disclaimer.
+  Costs ~40 s of a path already ~18 min over; see STATUS.
 
   Two merges in the 2026-08-13 timing pass: **the pyramid absorbed "Las 4
   piezas"** — each level of the pyramid now carries its own real
@@ -163,6 +175,16 @@ section count, not eyeballed):
   firma?" gets uncomfortable), and agents as pieces with their own defined
   role, tools and criteria. Closes on "ninguna reemplaza a la pirámide: la
   usan".
+- **Repo map: 1** — "Qué abrir cuando clones el repo" (added 2026-08-20, author
+  request). The last slide, and the one the audience photographs: a path→purpose
+  table for `CLAUDE.md`, `.claude/rules|skills`, `settings.json`, `memory/`,
+  `skill-templates/`, `mocks/` and `evolution-timeline.md`, then a block
+  explaining `docs/showable-inventory.md` — what it is (a sanitized catalogue of
+  pieces from the author's real work setup, the ones that did not fit in 30
+  minutes) and how to use it (find your pain in the "por qué mostrarla" column →
+  copy the piece → swap the generic names for yours → start from the
+  "si agregás sólo tres cosas" table). Not a Q&A answer, so it is counted
+  separately: it is a reference slide that exists to be read after the talk.
 
 ## Title — decided
 

@@ -47,7 +47,7 @@ which is what a critical review flagged as the deck's main structural weakness.
 
 ## Current state (2026-08-19)
 
-- **Deck: 46 slides** — 31 main flow, 9 appendix (anatomy + real example of
+- **Deck: 48 slides** — 32 main flow, 9 appendix (anatomy + real example of
   memory/skill/rule/hook), 6 Q&A backup (token costs and how they are actually
   measured, model churn, offline/stack portability, who audits the CI-triage
   classifier, and "lo que no entró en la charla"). Count verified against
@@ -55,7 +55,7 @@ which is what a critical review flagged as the deck's main structural weakness.
 - **One source, four builds.** `./scripts/build-deck.sh` renders dark/light ×
   16:9/16:10, HTML + PDF, from `slides/slides.md` alone. **The four PDFs are
   versioned** so anyone cloning the repo can read the deck without Marp. All
-  four verified at **0/46 slides overflowing** (Marp clips overflow silently;
+  four verified at **0/48 slides overflowing** (Marp clips overflow silently;
   `scripts/check-slide-overflow.js` measures it in a real browser).
 - **Visual pass done (2026-08-16/17):** 9 visuals, Ink Black palette,
   hand-written inline SVG where layout carries meaning and Mermaid

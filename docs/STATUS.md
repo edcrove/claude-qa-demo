@@ -17,8 +17,8 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
 - **Repo + deck are rehearsal-ready.** All demo premises were audited and fixed
   on 2026-08-04 (see decision-log entry of that date). `./scripts/prep-demo.sh`
   passes all state assertions; `./scripts/check-leaks.sh` is clean; the deck
-  renders (46 slides: 31 main / 9 appendix / 6 Q&A backup — count verified
-  against Marp's own section count).
+  renders (48 slides: 32 main / 9 appendix / 6 Q&A backup / 1 repo-map
+  reference — count verified against Marp's own section count).
 - **Title decided and announced:** "Tu setup de QA no se diseña: se cultiva"
   — de prompt suelto a skills, rules y hooks. Propagated across
   `slides/slides.md`, `CLAUDE.md`, `README.md`, `talk-design.md`, this file
@@ -123,6 +123,17 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
   design docs; `slides/gamma-version.md` was deleted — a prose copy of the deck
   for Gamma, frozen at 41 slides, referenced by nothing. Detail in the
   decision-log entry of the same date.
+- **Two slides added (2026-08-20, author request).** **"El modelo se equivoca"**
+  in the main flow, immediately before "qué le toca a la persona": an LLM is
+  probabilistic, and the deck showed 25 minutes of an agent succeeding without
+  ever saying so. Its three examples are self-referential on purpose — the rule
+  that stopped the agent in Demo 3, three claims this deck made that its own
+  repo refuted, and a linter claim on a slide that was itself wrong. It converts
+  the human/agent table from a moral claim into an engineering one. **~40 s on a
+  path already ~18 min over** — flagged in pending decision 1, not free. And
+  **"Qué abrir cuando clones el repo"** as the last slide: a path→purpose table
+  plus what `docs/showable-inventory.md` is and how to use it. Deck 46 → **48**,
+  all four builds at **0/48 overflowing**.
 - **Showable inventory compiled (2026-08-20):**
   [`showable-inventory.md`](showable-inventory.md) catalogues what the author's
   private toolkit has that the deck could use — sanitized, with a substitution
@@ -202,9 +213,12 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
    - [ ] cut "El flujo end-to-end"
    - [ ] compress the two opening pain slides into one
 
-   Target: **4 demos live, 2 pre-recorded, ~27 slides.** Deck is at 46 (31
-   main flow) after the cuts and merges above — the growth since is all in the
-   appendix and Q&A backup, which do not spend live time.
+   Target: **4 demos live, 2 pre-recorded, ~27 slides.** Deck is at 48 (32
+   main flow) after the cuts and merges above. The growth had been confined to
+   the appendix and Q&A backup, which cost no live time — **"El modelo se
+   equivoca" (2026-08-20) is the first main-flow addition since, and it adds
+   ~40 s** to a path already ~18 min over. It earns it (see the decision-log
+   entry), but it does not come free, and the cut list above is still open.
 2. **The GitHub repo is still PRIVATE.** The slides print
    `github.com/edcrove/claude-qa-demo` and the pre-flight checklist assumes a
    public repo — flip visibility before the talk (`gh repo edit
