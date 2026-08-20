@@ -8,7 +8,8 @@ real.
 **Está organizado por tipo de pieza, no por dónde vive.** En la práctica esto
 está repartido en más de un repo privado, pero eso es contabilidad interna: a la
 audiencia le importa qué es cada pieza y por qué existe. Los nombres de los repos
-no van al deck.
+no van al deck. Hay una excepción y está marcada: `talk-deck-editing` no viene
+del setup de trabajo, salió de escribir esta charla y vive en este repo.
 
 Este doc es un catálogo, no un plan. Materializar cualquiera de estos como
 `.mdc` o `SKILL.md` en el repo del demo es un paso aparte.
@@ -174,6 +175,17 @@ del demo — van marcadas. Así se ve el conjunto, no sólo el delta.
 |---|---|---|
 | `session-status-panel` | Con la palabra **"status"** sola, responde tres cosas a la vez: qué está haciendo cada sesión de agente abierta del proyecto (branch, último turno, cuál te dejó una pregunta sin responder), qué hace CI (builds en vuelo y recién terminados), y qué llegó a **Slack** en los canales configurados — sólo lo que te necesita: menciones, pedidos de release, preguntas sobre tus PRs, incidentes. Cierra con **una** acción recomendada, no una lista. | Va con la slide de background agents: cuando corrés más de una sesión necesitás **una vista sobre tus agentes**, y esa vista es un skill. Dos detalles de craft para señalar: el skill **define su formato de salida** (tres bloques, el más accionable primero, sin preámbulo) porque lo vas a leer veinte veces al día; y `"check again"` significa *diffear contra lo último que reportaste y liderar con lo que cambió* — si no cambió nada, decir exactamente eso en una línea. |
 | `preprod-deploy` | Dispara el deploy de una branch a preproducción. | **El ejemplo más puro de "un skill es donde vive el gotcha".** Los parámetros del job son dinámicos: si el job no fue consultado por API en esta sesión, el trigger **descarta silenciosamente todos los parámetros** y el build muere mucho más adelante con un NullPointerException que no dice nada. Y el "primado" **no es un no-op**: corre el pipeline completo con los defaults y *los deploya*, quince minutos. Así que por API cuesta **dos builds**. El skill trae el one-liner que responde PRIMED / NEEDS_PRIME antes de tocar nada. Eso es un día de alguien, escrito una vez. |
+
+### El setup sobre sí mismo
+
+| Skill | Qué hace | Por qué mostrarlo |
+|---|---|---|
+| `talk-deck-editing` | Las reglas de cómo se edita este deck: el gate de render que toda edición tiene que pasar, las fallas que son **silenciosas** (slides recortadas, paths relativos que dejan de resolver, una línea en blanco adentro de un `<svg>`, una clase de CSS que sólo desvía el color en un tema), los **callbacks que se editan de a pares** con la tabla de qué línea cita a cuál, la regla de que las afirmaciones se verifican y no se recuerdan, y que agregar una slide al flujo principal cuesta segundos que hay que decir. | **Ya en el repo del demo** — es la sexta skill, y la única del inventario cuyo tema es la charla misma. Cada regla que tiene está porque ya salió mal una vez, con el incidente en el decision-log. Y ahí está el beat: **la charla que dice que el setup se cultiva, se cultivó.** No es un argumento, es un archivo en el repo que la audiencia clona. |
+
+Va de la mano con **`test-skills.sh`** (en *Otros elementos*): son la misma jugada
+a dos niveles. Uno testea tus skills; el otro codifica cómo se edita tu propio
+artefacto. Las dos son el setup apuntándose a sí mismo, que es exactamente lo que
+una audiencia de QA reconoce como madurez.
 
 ---
 
