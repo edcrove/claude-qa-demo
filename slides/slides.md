@@ -62,7 +62,12 @@ style: |
     padding:10px 14px; margin:.5em 0;
   }
   pre code { background:transparent; color:var(--pre-fg); font-size:.58em; line-height:1.3; padding:0; }
-  table { border-collapse:collapse; width:100%; margin:.4em 0; font-size:.93em; }
+  /* El margen de abajo es mayor que el de arriba a propósito: las 3 tablas del
+     deck llevan texto inmediatamente después, y como la última fila va sin
+     borde inferior (regla de más abajo) nada cierra la tabla — el párrafo se
+     leía como otra fila. Y no se arregla desde el markdown: dejar líneas en
+     blanco entre la tabla y el texto no genera espacio, Markdown las colapsa. */
+  table { border-collapse:collapse; width:100%; margin:.4em 0 1.05em; font-size:.93em; }
   section table, section table thead, section table tbody,
   section table tr, section table th, section table td {
     background:transparent !important; background-color:transparent !important;
@@ -83,6 +88,20 @@ style: |
     margin:.5em 0; padding-left:.8em; font-size:.95em;
   }
   blockquote strong { color:var(--ink); }
+  /* gaia decora cada blockquote con un par de comillas ABSOLUTAS: la de
+     apertura en top/left 0 — encima de la barra roja, pegada a ella — y la de
+     cierre en right/bottom 0, o sea contra el borde derecho de la slide,
+     lejísimos del final de la frase. Se pasan a inline sobre el párrafo (no
+     sobre el blockquote: adentro hay un <p>, que es block, y una pseudo
+     inline caería en su propio renglón). El espacio es nbsp para que la
+     comilla no quede huérfana en un salto de línea. */
+  blockquote::before, blockquote::after { content:none; }
+  blockquote p:first-of-type::before {
+    content:'\201C\00A0'; font-family:'Times New Roman',serif; font-weight:700;
+  }
+  blockquote p:last-of-type::after {
+    content:'\00A0\201D'; font-family:'Times New Roman',serif; font-weight:700;
+  }
   a { color:var(--accent); }
   /* Sólo background-image, nunca el shorthand `background`: el shorthand
      resetea background-color a transparent, y como la capa ambiental de arriba
@@ -142,6 +161,7 @@ style: |
   .dg-stage2 { fill:var(--accent2); font:600 14px Inter,sans-serif; letter-spacing:.12em; }
   .dg-pc2    { fill:var(--accent2); font:600 15px Inter,sans-serif; letter-spacing:.06em; }
   .dg-pn2    { fill:var(--muted); font:14px Inter,sans-serif; }
+  .dg-tick2  { fill:var(--accent); font:15.5px Inter,sans-serif; }
   .dg-arrow  { fill:none; stroke:var(--accent2); stroke-width:1.8; }
   .dg-ev .w { fill:var(--muted); }
   /* el comentario agregado, con la forma que realmente tiene en GitHub */
@@ -159,6 +179,8 @@ style: |
     font-size:.82em; letter-spacing:.09em;
   }
   .gh-b { color:var(--hot); }
+  .gh-c { font-family:ui-monospace,'SF Mono',Menlo,monospace; font-size:.94em; }
+  .gh-w { color:var(--muted); font-style:normal; font-size:.9em; }
   .gh-s { color:var(--accent); }
   .gh-n { color:var(--muted); }
   .gh-det {
@@ -313,15 +335,15 @@ Plataforma de streaming · servicio backend REST
 
 ---
 
-# Tu día como QA, hoy
+# Mi día como QA, hoy
 
 - **Análisis del ticket** — Jira + repo + Confluence (AC) + TestRail · nada de eso queda escrito en un solo lugar
-- **Mapeo AC ↔ cambio** — comparás docs vs branch a ojo, página por página
-- **Test cases + automation** — copiás AC a TestRail, traducís a TestNG/RestAssured, linkeás IDs a mano
-- **Ejecución multi-env** — Jenkins contra 3 ambientes · comparás resultados · investigás cada <span class="rojo">rojo</span>
-- **PR review** — armás la evidencia, pingeás 2 peers, esperás, re-pingeás
-- **Bug encontrado** — abrís ticket, pegás logs, follow-up del ciclo de vida en Jira
-- **Mañana** — sesión nueva. Re-explicás el ticket, el plan, las convenciones.
+- **Mapeo AC ↔ cambio** — comparo docs vs branch a ojo, página por página
+- **Test cases + automation** — copio AC a TestRail, traduzco a TestNG/RestAssured, linkeo IDs a mano
+- **Ejecución multi-env** — Jenkins contra 3 ambientes · comparo resultados · investigo cada <span class="rojo">rojo</span>
+- **PR review** — armo la evidencia, pingeo 2 peers, espero, re-pingeo
+- **Bug encontrado** — abro ticket, pego logs, follow-up del ciclo de vida en Jira
+- **Mañana** — sesión nueva. Re-explico el ticket, el plan, las convenciones.
 
 **Mucho de eso es conocimiento que se pierde entre sesiones.**
 
@@ -335,11 +357,11 @@ Plataforma de streaming · servicio backend REST
 
 <!-- _class: lead -->
 
-# La tesis
+# La tesis:
 
-# Mi setup no se diseña.
+# Mi setup no se diseña,
 
-# Se cultiva.
+# se cultiva.
 
 ---
 
@@ -370,11 +392,11 @@ No hubo plan. Aparecieron patrones.
   <text class="dg-ev2"  x="400" y="167">proyecto/CLAUDE.md</text>
   <text class="dg-note2" x="400" y="191">convenciones del repo</text>
   <path class="dg-wire" d="M330 175 H380"/>
-  <path class="dg-wire" d="M670 175 H668 M668 37 V313"/>
-  <path class="dg-wire" d="M668 37 H690"/>
-  <path class="dg-wire" d="M668 129 H690"/>
-  <path class="dg-wire" d="M668 221 H690"/>
-  <path class="dg-wire" d="M668 313 H690"/>
+  <path class="dg-wire" d="M670 175 H680 M680 37 V313"/>
+  <path class="dg-wire" d="M680 37 H690"/>
+  <path class="dg-wire" d="M680 129 H690"/>
+  <path class="dg-wire" d="M680 221 H690"/>
+  <path class="dg-wire" d="M680 313 H690"/>
   <rect class="dg-on" x="690" y="0" width="480" height="74" rx="7"/>
   <text class="dg-ev2"   x="710" y="31">memory/</text>
   <text class="dg-note2" x="710" y="55">hechos entre sesiones</text>
@@ -461,7 +483,7 @@ tu historial, y al principal solo le vuelve el resumen.
 
 **Antes de que un peer humano vea el PR, ya pasó por 5 revisores especializados**,
 cada uno cazando su propia clase de bug. Al peer le queda lo que un especialista
-de tipos no puede ver: arquitectura. *(Mis compañeros aplaudieron esto.)*
+de tipos no puede ver: arquitectura.
 
 **Lo que no cambia: quien aprueba sigue siendo responsable de lo que aprueba.**
 
@@ -509,7 +531,7 @@ de tipos no puede ver: arquitectura. *(Mis compañeros aplaudieron esto.)*
   <text class="dg-pn2" x="1070" y="196" text-anchor="middle">known-issues</text>
   <path class="dg-base" d="M0 246 H1178"/>
   <text class="dg-note" x="0" y="240">rules y memory importadas: siempre cargadas · el registry se lee cuando hace falta</text>
-  <text class="dg-tick" x="0" y="284">⟳ corrección repetida 3× ──▶ writing-skills ──▶ skill nueva</text>
+  <text class="dg-tick2" x="0" y="284">⟳ corrección repetida 3× ──▶ writing-skills ──▶ skill nueva</text>
 </svg>
 </div>
 
@@ -642,9 +664,11 @@ PR sembrado con 5 bugs distintos (`mocks/github/pr-7.diff`):
   <div class="gh-bar">claude · comentó en <b>#7</b> · hace 1 minuto</div>
   <div class="gh-body">
     <div class="gh-h">Review summary</div>
-    <div class="gh-row"><span class="gh-b">BLOCKERS</span> silent-failure-hunter · 1</div>
-    <div class="gh-row"><span class="gh-s">SUGGESTIONS</span> type-design-analyzer · 1 &nbsp; comment-analyzer · 1 &nbsp; pr-test-analyzer · 1</div>
-    <div class="gh-row"><span class="gh-n">NITPICKS</span> code-reviewer · 1</div>
+    <div class="gh-row"><span class="gh-b">BLOCKER</span> <b class="gh-c">catch (e) { return [] }</b> — un fallo de red vuelve como lista vacía <i class="gh-w">silent-failure-hunter</i></div>
+    <div class="gh-row"><span class="gh-s">SUGGESTION</span> <b class="gh-c">as Channel</b> afirma un tipo que puede no existir: devuelve <b class="gh-c">undefined</b> <i class="gh-w">type-design-analyzer</i></div>
+    <div class="gh-row"><span class="gh-s">SUGGESTION</span> el comentario promete <b class="gh-c">sorted by relevance</b> — la función no ordena <i class="gh-w">comment-analyzer</i></div>
+    <div class="gh-row"><span class="gh-s">SUGGESTION</span> el único test nuevo asserta <b class="gh-c">toBeDefined()</b>: pasa con el channel equivocado <i class="gh-w">pr-test-analyzer</i></div>
+    <div class="gh-row"><span class="gh-n">NITPICK</span> <b class="gh-c">// TODO: should probably be an enum</b> quedó en producción <i class="gh-w">code-reviewer</i></div>
     <div class="gh-det">▸ Per-axis details</div>
   </div>
 </div>
@@ -660,9 +684,11 @@ el PR, la respuesta soy yo — "no sé, lo hizo la IA" no es una respuesta.**
 
 Buena parte sí — y **el linter no se saca**: es más barato y no se cansa.
 
-SonarQube marca ese `catch` que ignora la excepción (`S2486`). Lo que no ve es
-que el comentario dice *"sorted"* sobre código que no ordena, ni que un
-`toBeDefined()` no prueba nada.
+De las 5 cosas del reporte, un linter agarra **dos**: el `catch` que se traga
+la excepción (`S2486`) y el `// TODO` en producción (`S1135`). Las otras tres
+hay que leerlas: el comentario promete *"sorted by relevance"* y la función no
+ordena, el `as Channel` afirma un tipo que puede no existir, y el
+`toBeDefined()` pasa igual con el channel equivocado.
 
 **El linter matchea patrones. El subagente lee.** Van juntos.
 
@@ -698,7 +724,7 @@ te dice **por dónde empezar a mirar** — no solo "esto es un flaky test".
 
 <img class="hero" src="img/logs-triage.png" alt="De logs completos a fallas agrupadas por servicio, priorizadas por impacto, con una sugerencia de por dónde empezar">
 
-*Triage hecho. Pero hoy, tres veces, me corregiste lo mismo... →*
+*Tres veces hoy le pedí lo mismo: "chequeá el registry primero". →*
 
 ---
 
@@ -718,7 +744,7 @@ Durante la sesión, Claude fue corregido **3 veces** con
 Output: un `SKILL.md` nuevo en `.claude/skills/`.
 
 La slide del principio terminaba:
-*"Mañana — sesión nueva. Re-explicás el ticket, el plan, las convenciones."*
+*"Mañana — sesión nueva. Re-explico el ticket, el plan, las convenciones."*
 
 **Mañana — sesión nueva. No se re-explica ni el ticket,
 ni el plan, ni las convenciones.**
@@ -873,8 +899,8 @@ confianza, los que tu organización ya aceptó.
 
 <!-- _class: lead -->
 
-# Tu setup no se diseña.
-# Se cultiva.
+# Tu setup no se diseña,
+# se cultiva.
 
 **Memory + Skills + Rules + Hooks = workflow reproducible**
 
@@ -1121,6 +1147,12 @@ el memory y el skill**. El hook fue el final del camino.
 - El costo contra el que se compara: 10 min de CI roto · 90 min de flaky
   tests fantasma · un review que espera 2 días
 - **Lo siempre-cargado es lo único con costo recurrente**: memory y rules se pagan en cada mensaje, de cada sesión. Una skill cuesta su `description` siempre y su cuerpo sólo cuando se usa; un hook no consume contexto. Por eso las skills viven afuera hasta que hacen falta
+- **Cómo se mide:** `/context` muestra qué está cargado y cuánto ocupa · `/usage`
+  el consumo de la sesión · headless, `claude -p --output-format json` devuelve
+  `total_cost_usd` y tokens por corrida
+- **Evals, no intuición:** 5 tareas representativas, corridas headless con dos
+  configuraciones (con y sin una skill, mid-tier vs. modelo grande), comparando
+  costo *y* resultado. Optimizar sin medir es adivinar
 
 ---
 
@@ -1130,6 +1162,10 @@ el memory y el skill**. El hook fue el final del camino.
 - **Skills, rules y memory sobreviven** — describen tu proceso, no al modelo
 - El **hook** ni siquiera pasa por el modelo: lo ejecuta el runtime
 - Por eso la pirámide promociona hacia arriba: **cada nivel es más robusto al cambio**
+- Cambiar de modelo —o de LLM— **no es migrar, es revisar**: que las estructuras
+  sigan siendo las óptimas es una conversación con el agente nuevo. *"Optimizá
+  estas skills y rules para cómo funcionás vos"* aplica igual en Claude, ChatGPT
+  o Gemini
 
 ---
 
@@ -1139,6 +1175,9 @@ el memory y el skill**. El hook fue el final del camino.
 - Solo los **MCPs** reales (Jira, TestRail, Jenkins, GitHub, Confluence) necesitan red
 - El patrón no sabe de lenguajes: idéntico en **Java/TestNG/RestAssured**
 - Todo es texto plano: clonalo y reemplazá los mocks por tus sistemas
+- Lo genérico puede vivir **en un repo aparte y compartible** — skills, rules y
+  hooks que no son de un proyecto puntual — y clonarse en cada equipo. El mío
+  está separado del repo del producto
 
 ---
 
@@ -1153,3 +1192,30 @@ el memory y el skill**. El hook fue el final del camino.
   — el skill sesga hacia flaggear de más, no de menos
 - Igual que en la Demo 4: el agente propone la categoría, vos la confirmás
   antes de actuar
+
+---
+
+<!-- _class: dense -->
+
+# Lo que no entró en la charla
+
+La pirámide es el piso, no el techo. Otras piezas que hoy no demostré:
+
+- **`/loop`** — repetir un prompt o un skill cada X minutos, o dejar que el
+  agente marque el ritmo: mirar un build hasta que termine, re-triagear hasta
+  que quede verde
+- **`/goal`** — fijás una condición de fin y el agente sigue trabajando hasta
+  que **un evaluador aparte** confirma que se cumplió; no es el mismo agente
+  declarándose listo
+- **`/schedule`** — agentes en cron: el triage de la regression nocturna ya
+  hecho cuando llegás a la mañana
+- **Background agents + worktrees** — trabajo largo sin bloquear la sesión, y
+  cada ticket en su propio workspace aislado
+- **Unattended agents** — el agente corriendo sin nadie mirando: headless en CI,
+  en cron, disparado por un webhook. Acá la pregunta del cierre se vuelve
+  incómoda: si nadie lo leyó, ¿quién firma?
+- **Agentes como piezas con función propia** — un agente no es "otro Claude":
+  se le define su rol, sus tools y su criterio, y se compone como un skill. Los
+  5 de la Demo 4 son eso, pero vienen de un plugin — los tuyos los escribís vos
+
+**Ninguna reemplaza a la pirámide: la usan.**

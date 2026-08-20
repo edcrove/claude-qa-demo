@@ -84,6 +84,7 @@ section .gh-det { color: #2c3e50; }
 /* El marcador de lista y los ticks de los diagramas son naranja vivo: bien
    como grafismo, pero el tick lleva texto de 13px. */
 section .dg-tick { fill: #a8453d; }
+section .dg-tick2 { fill: #a8453d; }
 
 /* Los enlaces son texto chico: el naranja vivo daría 3.2:1. */
 section a { color: #a8453d; }
