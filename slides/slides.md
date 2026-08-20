@@ -1168,8 +1168,8 @@ el memory y el skill**. El hook fue el final del camino.
   tests fantasma · un review que espera 2 días
 - **Lo siempre-cargado es lo único con costo recurrente**: memory y rules se pagan en cada mensaje, de cada sesión. Una skill cuesta su `description` siempre y su cuerpo sólo cuando se usa; un hook no consume contexto. Por eso las skills viven afuera hasta que hacen falta
 - **Cómo se mide:** `/context` muestra qué está cargado y cuánto ocupa · `/usage`
-  el consumo de la sesión · headless, `claude -p --output-format json` devuelve
-  `total_cost_usd` y tokens por corrida
+  el consumo de la sesión · `/doctor` te dice **qué de eso no estás usando** ·
+  headless, `claude -p --output-format json` devuelve `total_cost_usd` por corrida
 - **Evals, no intuición:** 5 tareas representativas, corridas headless con dos
   configuraciones (con y sin una skill, mid-tier vs. modelo grande), comparando
   costo *y* resultado. Optimizar sin medir es adivinar
@@ -1230,8 +1230,9 @@ La pirámide es el piso, no el techo. Otras piezas que hoy no demostré:
   hecho cuando llegás a la mañana
 - **Background agents + worktrees** — trabajo largo sin bloquear la sesión, y
   cada ticket en su propio workspace aislado
-- **`/doctor`** — cuando no anda: diagnostica instalación, keychain y el proxy
-  corporativo que te rompe el TLS. El primero que necesitás el lunes
+- **`/doctor`** — te audita el setup: qué skills y MCPs pagás en contexto y no
+  usás, qué hooks están lentos, y qué de tu `CLAUDE.md` siempre-cargado puede
+  pasar a on-demand. Reporta primero y pregunta antes de tocar nada
 - **Unattended agents** — sin nadie mirando: headless en CI, disparado por un
   webhook. Acá la pregunta del cierre incomoda: si nadie lo leyó, ¿quién firma?
 - **Agentes propios** — un agente no es "otro Claude": se le define su rol, sus

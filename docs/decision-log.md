@@ -1396,3 +1396,35 @@ cuatro PDF unos 90 segundos. Contra veinte minutos colgado.
 
 Está también en la skill `talk-deck-editing`, en la sección del build: si se
 cuelga, es stdin. Es exactamente la clase de cosa por la que esa skill existe.
+
+### Corrección: `/doctor` hacía algo bastante más interesante que lo que decía la slide
+
+La slide decía *"diagnostica instalación, keychain y el proxy corporativo que te
+rompe el TLS"*. No era falso, pero describía la cosa chica: eso es
+`claude doctor`, el modo read-only de terminal. La documentación oficial del
+comando en sesión dice otra cosa, y es mucho mejor para este deck:
+
+> audita el setup — encuentra **skills, MCP servers y plugins que no usás contra
+> su costo de contexto**, marca **hooks lentos**, deduplica los `CLAUDE.md`
+> locales contra los versionados, recorta de los versionados lo que Claude podría
+> deducir del código, y **migra la guía siempre-cargada que queda a skills y
+> `CLAUDE.md` anidados que cargan on-demand.** Reporta primero y pide
+> confirmación antes de cambiar nada.
+
+Eso es **la pirámide del deck, auditada por una herramienta.** Encuentra lo que
+está siempre-cargado y no debería, y te ofrece bajarlo a on-demand — que es
+exactamente la distinción que la charla dedica una slide entera a explicar. La
+línea nueva dice eso, en una respiración.
+
+Y por eso se agregó también a la slide de costos, donde conceptualmente vive: al
+lado de `/context` (qué está cargado y cuánto ocupa) y `/usage` (el consumo),
+`/doctor` es **qué de eso no estás usando**. Una cláusula en una línea que ya
+existía, cero tiempo.
+
+**La lección, que fue a la skill.** Grepear el binario probó que el comando
+existe y me mostró strings sobre keychain y proxy — así que escribí un
+diagnosticador de red. La mitad interesante era invisible desde ahí.
+**Verificar que algo existe no es verificar qué hace.** La regla en
+`talk-deck-editing` decía "una afirmación sobre una herramienta → chequeá la
+herramienta"; ahora aclara que hay que leer la documentación *de la afirmación que
+estás haciendo*, no del nombre.

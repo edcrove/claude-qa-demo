@@ -140,6 +140,13 @@ read the repo. The rule that came out of it:
 - **A claim about a tool** → check the tool. A linter rule id, a CLI command
   name, a flag. The deck once said a linter misses a `// TODO` (it does not,
   `S1135`) and once said `/cost` when the command is `/usage`.
+- **Verifying that something exists is not verifying what it does.** Grepping the
+  binary proved `/doctor` was real and showed strings about keychain and proxy
+  diagnostics — so the slide described a network troubleshooter. The actual
+  command audits your setup's context cost: unused skills and MCP servers, slow
+  hooks, always-loaded guidance that could load on demand. The interesting half
+  was invisible from the binary. **Read the documentation for the claim you are
+  making**, not just for the name.
 - **A claim about what the live demo does** → the slide and the stage must agree.
   If a slide says "my own agents" while the demo dispatches a plugin's, say which
   version is running.
