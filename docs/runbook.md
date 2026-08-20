@@ -53,7 +53,9 @@ test first (malformed slug must be rejected — today `getChannelBySlug` returns
 refactor.
 
 **Watch for:** the PostToolUse hook firing typecheck after each `.ts` edit —
-call it out ("nadie lo invocó, es el runtime"). The red must be genuine: if
+call it out ("nadie lo invocó, es el runtime"). This beat needs an
+**interactive** session: PostToolUse hooks do not fire under `claude -p`, so a
+headless smoke test of this scene proves nothing. The red must be genuine: if
 Claude claims the test already passes, something restored state — abort to
 fallback. The skill *guides* the order, it doesn't enforce it: if Claude
 writes the implementation before the failing test, stop it and ask for the
@@ -87,7 +89,13 @@ into one comment (Blockers / Suggestions / Nitpicks + per-axis details).
 **Watch for:** the 5 seeded bugs, one per specialist: swallowed catch
 (`return []`), lying `as Channel` cast, comment claiming "sorted" over unsorted
 code, `toBeDefined()`-only test, `// TODO` left in production code. Parallel
-dispatch must be visible in the UI — that is the money shot.
+dispatch should be visible in the UI — that is the money shot.
+
+**Do not assume the parallel dispatch.** The 2026-08-19 rehearsal did not
+reliably get all 5 subagents out in a single visible batch. Confirm it in the
+stage profile before building the narration around it; if they go out
+sequentially, narrate the *aggregation* instead ("cinco revisores, un solo
+comentario") and let the diagram on the previous slide carry the fan-out.
 
 **Say out loud, don't just let the slide say it:** before posting the
 aggregated comment, actually scroll through the per-axis details on stage —

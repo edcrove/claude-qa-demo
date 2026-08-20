@@ -63,9 +63,12 @@ The deck (see `slides/slides.md`) applies these deliberate storytelling devices:
    produced (`feature/DEMO-100-channels-coverage`), so the fiction is
    self-consistent end to end.
 4. **The "Mañana" mirror.** The pain slide ends with *"Mañana — sesión nueva.
-   Re-explicás el ticket, el plan, las convenciones."* Demo 6 closes by quoting
+   Re-explico el ticket, el plan, las convenciones."* Demo 6 closes by quoting
    that line and negating it word for word. That is the emotional arc of the
-   talk in two sentences.
+   talk in two sentences. The whole pain slide is **first person** since
+   2026-08-19 ("Mi día como QA"), so the two lines must be edited together —
+   Demo 6 quotes this one verbatim and a one-sided edit breaks the quote
+   silently.
 5. **The agent loses on stage.** In Demo 3 Claude *tries* to trigger CI and the
    rule blocks it (build 43 is RUNNING on stage in the mock). Guardrails are
    shown catching the agent, not just the human — this inoculates against
@@ -105,7 +108,7 @@ The deck (see `slides/slides.md`) applies these deliberate storytelling devices:
 
 ## Slide map
 
-`slides/slides.md` — 45 slides total (counts verified against Marp's own
+`slides/slides.md` — 46 slides total (counts verified against Marp's own
 section count, not eyeballed):
 
 - **Main flow: 31** (cold open → thesis → mechanics → 6 demos, each of the
@@ -147,10 +150,19 @@ section count, not eyeballed):
   candidates itself.
 - **Appendix: 9** — anatomy + real example for memory / skill / rule / hook
   (moved out of the main flow to protect demo time)
-- **Q&A backup: 5** — token costs, model churn (skills survive, prompts don't
-  always), offline/stack portability, **who audits the CI-triage classifier**
+- **Q&A backup: 6** — token costs (how they are actually measured: `/context`,
+  `/usage`, `total_cost_usd` from `claude -p --output-format json`, and evals
+  over intuition), model churn (skills survive, prompts don't always — and
+  changing model is a *review* conversation with the new agent, not a
+  migration), offline/stack portability (plus: the generic pieces can live in
+  a separate shareable repo), **who audits the CI-triage classifier**
   (added 2026-08-13 — the most QA-native skeptical question the deck didn't
-  have a prepared answer for)
+  have a prepared answer for), and **"lo que no entró en la charla"**
+  (added 2026-08-19) — `/loop`, `/goal`, `/schedule`, background agents +
+  worktrees, unattended agents (headless in CI/cron/webhook — where "¿quién
+  firma?" gets uncomfortable), and agents as pieces with their own defined
+  role, tools and criteria. Closes on "ninguna reemplaza a la pirámide: la
+  usan".
 
 ## Title — decided
 
@@ -206,10 +218,13 @@ CLAUDE.md, MCP server names, tokens in autocomplete) — that is what
       projector is**; the wrong one letterboxes. Pick **light** if the room is
       bright or the projector washes out, and because the demos run in a light
       editor theme. Everything renders locally — no Wi-Fi needed
-- [ ] `node scripts/check-slide-overflow.js slides/slides-16x9.html` (and the
-      16x10 one) → "every slide fits" and no ❌ broken-image line (Marp
-      silently clips content that runs past the bottom edge; this caught 13
-      clipped slides on 2026-08-13)
+- [ ] `node scripts/check-slide-overflow.js slides/slides-dark-16x9.html`
+      (and the other three variants — `build-deck.sh` writes
+      `slides-{dark,light}-{16x9,16x10}.html`, there is no plain
+      `slides-16x9.html`) → "every slide fits" and no ❌ broken-image line
+      (Marp silently clips content that runs past the bottom edge; this caught
+      13 clipped slides on 2026-08-13). Needs playwright's Chromium:
+      `npx playwright install chromium` if it errors on a missing executable
 - [ ] backup recording on the desktop
 
 ## Out of scope

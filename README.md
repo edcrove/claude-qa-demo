@@ -20,8 +20,8 @@ Everything here is plain text on disk. Clone it, read it, copy what works.
 | `docs/` | STATUS (continuation anchor), talk design, decision log, live runbook, HANDOFF (chat capsule) |
 | `evolution-timeline.md` | How this repo grew week by week (the demo fiction) |
 | `SOURCES.md` | Where to download the pre-existing pieces |
-| `scripts/` | `check-leaks.sh`, `prep-demo.sh`, `demo-profile.sh` |
-| `slides/` | Marp deck (31-slide main flow + anatomy appendix + Q&A backup). Los PDF renderizados están versionados: `slides-{dark,light}-{16x9,16x10}.pdf` — se leen sin instalar nada |
+| `scripts/` | Stage safety (`prep-demo.sh`, `check-leaks.sh`, `demo-profile.sh`) and deck build (`build-deck.sh`, `build-diagrams.sh`, `build-logos.js`, `check-slide-overflow.js`) |
+| `slides/` | Marp deck, 46 slides (31 main flow + 9 anatomy appendix + 6 Q&A backup). The rendered PDFs are versioned — `slides-{dark,light}-{16x9,16x10}.pdf`, readable without installing anything. See [`slides/README.md`](slides/README.md) |
 
 ## Running the demo app
 

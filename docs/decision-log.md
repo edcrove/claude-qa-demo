@@ -791,3 +791,110 @@ antes de propagar, incluso lo que viene de una revisión buena.
 - `mocks/github/pr-7.diff` is readable but not `git apply`-able (the test-file
   diff is nested inside the first hunk). Fine for the demo, broken for anyone
   who tries to apply it.
+
+
+## 2026-08-19 — Feedback de la presentación: once cambios del autor
+
+Lectura completa del deck por parte del autor, con once observaciones. Lo que
+salió de aplicarlas:
+
+- **Slide 6 pasó a primera persona** (*"Tu día como QA"* → *"Mi día como QA"*).
+  No alcanzaba con el título: los bullets estaban en segunda persona
+  (*comparás*, *copiás*, *armás*) y quedaban peleados con el encabezado, así que
+  se movieron con él. Y hay una trampa: la slide 24 **cita esa línea textual**
+  (*"La slide del principio terminaba: ..."*), así que el callback se movió
+  también. Cambiar una sola de las dos rompe la cita en silencio.
+- **La slide 10 tenía las líneas encimadas de verdad, no por percepción.** El
+  spine vertical del árbol estaba en `x=668` mientras la caja
+  `proyecto/CLAUDE.md` termina en `x=670` — y los `path` se pintan *después* de
+  los `rect`, así que la línea se dibujaba **adentro** de la caja, a 2px de su
+  borde derecho, a lo largo de todo su alto. Movido a `x=680`, con los stubs
+  acompañando. Verificado exportando la slide a PNG, no razonando la geometría.
+- **El tick de la slide 14 tiene su propia clase.** *"corrección repetida 3×"*
+  usaba `.dg-tick`, que también dibuja los horarios 9:00→17:00 de la slide 15:
+  agrandarla ahí habría agrandado la tira. Se agregó `.dg-tick2` (13px → 15.5px)
+  **más su override en `qa-light.css`** — sin eso el color se desviaba sólo en el
+  tema claro, que es exactamente la falla silenciosa que documenta STATUS.
+- **La slide 20 mostraba un marcador, no un reporte.** Era un conteo por eje
+  (`silent-failure-hunter · 1`), del que no se entendía qué había encontrado
+  nadie. Ahora cada fila dice el hallazgo concreto, con las cinco cadenas
+  **verificadas contra `mocks/github/pr-7.diff`** una por una.
+- **Y eso destrabó la slide 21.** El pedido era que la aclaración se apoyara en
+  algo visible en el reporte; ahora se apoya. De paso se corrigió el argumento:
+  decía que SonarQube agarra *el catch* y no ve el resto, pero un linter también
+  marca el `// TODO` (`S1135`). El corte honesto es **2 de 5** matcheables por
+  patrón y 3 que hay que leer — que sigue siendo el punto, sin exagerarlo.
+- **La transición de la slide 23 rompía la voz.** *"Pero hoy, tres veces, me
+  corregiste lo mismo"* le hablaba al agente, cuando las otras cuatro
+  transiciones son el presentador narrando su día en primera persona.
+- **Slides 42/43/44 y una slide nueva al final.** En costos: cómo se mide de
+  verdad (`/context`, `/usage`, y `total_cost_usd` de `claude -p --output-format
+  json`) y evals en vez de intuición. En cambio de modelo: revisar las
+  estructuras es una conversación con el modelo nuevo, no una migración. En
+  stack: lo genérico puede vivir en un repo aparte y compartible.
+
+**Cuidado con lo que se afirma de las features.** La slide nueva lista `/loop`,
+`/goal`, `/schedule`, background agents + worktrees y subagentes propios. Los
+nombres se verificaron contra la lista real de `slash_commands` que devuelve la
+sesión, y la definición de `/goal` se sacó del binario de Claude Code, no de
+memoria: *"propone una condición de fin de sesión; una vez fijada, Claude sigue
+trabajando hasta que **un evaluador aparte** confirma que se cumplió"*. También
+se corrigió un reflejo: el comando es `/usage`, no `/cost`.
+
+Deck: 45 → **46 slides** (31 main / 9 appendix / 6 Q&A backup), **0/46
+overflowing** en los cuatro builds.
+
+
+## 2026-08-19 (cierre) — Auditoría de los docs y vuelta a `main`
+
+Revisión de todos los documentos del repo contra lo que el repo dice hoy. Lo
+que estaba mal no era opinable: eran números y nombres de archivo.
+
+- **El conteo de slides estaba viejo en tres lugares.** `talk-design.md` decía
+  45 y "Q&A backup: 5"; el mapa de slides es lo que lee una sesión nueva para
+  saber qué hay. `STATUS.md` decía 45 en el bloque de timing. Todo a **46**
+  (31 main / 9 appendix / 6 Q&A backup), verificado contra los `<section>` del
+  HTML renderizado, no contra los `---` del markdown — hay 47 separadores para
+  46 slides y contar a mano da mal.
+- **Dos docs mandaban a un archivo que no existe.** El checklist de
+  `talk-design.md` y el docstring de `check-slide-overflow.js` decían
+  `slides/slides-16x9.html`. `build-deck.sh` escribe cuatro variantes con
+  tema en el nombre (`slides-dark-16x9.html`, …); ese archivo no se generó
+  nunca. Un chequeo pre-charla que falla con "file not found" es un chequeo que
+  no se corre.
+- **La cita de la slide 24 estaba desincronizada en los docs.** El deck ya
+  quedó en primera persona el 2026-08-19, pero `talk-design.md` y `HANDOFF.md`
+  seguían citando *"Re-explicás el ticket…"* como el texto del espejo. Ahora los
+  dos dicen que las dos líneas se editan juntas — es exactamente el error que
+  se cometió una vez.
+- **`HANDOFF.md` estaba generado el 2026-08-13 y no mencionaba el blocker
+  principal.** La cápsula que existe para arrancar una sesión desde un chat no
+  decía que la charla no entra en 30 minutos — que es justo lo que un chat
+  *sí* puede ayudar a resolver (cirugía narrativa, sin filesystem).
+  Regenerado completo, con el recorte pendiente arriba.
+- **El runbook prometía algo que el ensayo no confirmó.** Decía que el fan-out
+  de los 5 subagentes "must be visible in the UI — that is the money shot". El
+  ensayo del 2026-08-19 no lo consiguió de forma confiable. Queda escrito como
+  supuesto a verificar, con un plan B narrando la *agregación* en vez del
+  paralelismo. Y el beat del hook de la Demo 2 aclara que necesita sesión
+  interactiva: bajo `claude -p` los PostToolUse no disparan.
+- **Los hallazgos del ensayo entraron a STATUS.** Estaban sólo en el buffer de
+  la sesión: dispatch no visiblemente paralelo, hooks ausentes en headless, y
+  `pr-7.diff` que no aplica. Tres cosas que se pierden con el `/clear` si no se
+  escriben.
+- **Borrado `slides/gamma-version.md`.** Era una copia en prosa del deck para
+  importar en Gamma, congelada en 41 slides y con el texto viejo (*"Tu día como
+  QA"*). No la referenciaba ningún doc ni el decision-log. Un deck paralelo que
+  nadie sincroniza no es un entregable, es una trampa: queda en el historial
+  de git si alguna vez hace falta.
+- **`README.md`** listaba 3 de los 7 scripts y tenía una fila mitad en
+  castellano; `slides/README.md` seguía diciendo que el deck se buildea con un
+  `npx marp-cli` a mano, sin mencionar `build-deck.sh`, las cuatro variantes,
+  los PDF versionados ni el chequeo de overflow.
+
+**Y se cerró la branch.** `claude/estructura-revision-fwdb2c` nunca tuvo
+commits propios — main y la branch apuntaban al mismo sha durante tres días, y
+lo único que vivía ahí era el árbol de trabajo. Todo se commiteó, se llevó a
+`main` y la branch se borró (local y remota). El trabajo del deck sigue en
+`main`: una branch que no aísla nada sólo agrega un lugar más donde
+desincronizarse.

@@ -1,6 +1,6 @@
 # STATUS — start here to resume work
 
-**Last updated:** 2026-08-17
+**Last updated:** 2026-08-19
 
 This is the continuation anchor. A session with zero prior context should read,
 in this order: this file → [`talk-design.md`](talk-design.md) (what the talk is)
@@ -17,7 +17,7 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
 - **Repo + deck are rehearsal-ready.** All demo premises were audited and fixed
   on 2026-08-04 (see decision-log entry of that date). `./scripts/prep-demo.sh`
   passes all state assertions; `./scripts/check-leaks.sh` is clean; the deck
-  renders (45 slides: 31 main / 9 appendix / 5 Q&A backup — count verified
+  renders (46 slides: 31 main / 9 appendix / 6 Q&A backup — count verified
   against Marp's own section count).
 - **Title decided and announced:** "Tu setup de QA no se diseña: se cultiva"
   — de prompt suelto a skills, rules y hooks. Propagated across
@@ -109,10 +109,49 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
 - **Careful with inline SVG:** a blank line inside an `<svg>` ends the markdown
   HTML block, Marp closes the tag there, and the rest of the diagram renders as
   loose text with no error raised. Keep inline SVG free of blank lines.
-- **Everything is committed and pushed to origin**, working on branch
-  `claude/estructura-revision-fwdb2c` (2026-08-16).
+- **Everything is committed and pushed to origin. Work happens on `main`
+  (2026-08-19).** The `claude/estructura-revision-fwdb2c` topic branch was
+  merged and deleted (local + remote) — it never carried commits of its own,
+  only a working tree, so there was nothing to reconcile. Do not re-open a
+  topic branch for deck work: it split the state for three days without
+  buying isolation.
+- **All docs audited against the repo (2026-08-19).** Slide count was stale in
+  `talk-design.md` and here (45 → 46); two docs pointed at a
+  `slides/slides-16x9.html` that `build-deck.sh` never writes; `HANDOFF.md` was
+  generated 2026-08-13 and did not mention the timing blocker at all
+  (regenerated); the "Mañana" mirror quote was still second person in the
+  design docs; `slides/gamma-version.md` was deleted — a prose copy of the deck
+  for Gamma, frozen at 41 slides, referenced by nothing. Detail in the
+  decision-log entry of the same date.
+- **Presentation-feedback pass done (2026-08-19).** Eleven items from the
+  author's own read-through: slide 6 turned first person ("Mi día como QA" — the
+  bullets moved with it, and the slide-24 callback that *quotes* that line moved
+  too), the slide-10 tree had its connector spine drawn **through** the
+  `proyecto/CLAUDE.md` box (it sat at x=668 while the box ends at x=670, and
+  wires paint after boxes) → moved to x=680, the slide-14 promotion tick got its
+  own `.dg-tick2` size because `.dg-tick` is shared with the 9:00→17:00 strip,
+  and the Demo 4 report on slide 20 now shows **what each specialist found**
+  instead of a tally — which let slide 21 anchor the linter argument in
+  something visible on screen. Deck is 45 → **46 slides** (new final Q&A backup:
+  `/loop`, `/goal`, `/schedule`, background agents + worktrees, own subagents).
+  All four builds verified at **0/46 overflowing**.
+- **Scene-by-scene rehearsal done (2026-08-19), and it found demo blockers.**
+  Demos 1–6 were driven individually (PR #7 reviewed: 4 blockers / 3
+  suggestions / 5 nitpicks; build 44 triaged: 2 flakes / 2 regressions
+  `a1b2c3d` + `e4f5a6b` / 1 infra; the TDD gap closed with a genuine red).
+  Three findings that are **not fixed** and will bite on stage:
+  - **Subagent dispatch is not visibly parallel.** Demo 4's money shot is the 5
+    subagents going out in one message; the rehearsal did not reliably produce
+    that. Verify it in the real stage profile before relying on it — the
+    runbook's "parallel dispatch must be visible in the UI" is an assumption,
+    not a guarantee.
+  - **PostToolUse hooks do not fire in headless `-p` mode.** Irrelevant if the
+    demo runs interactively (it does), but it invalidates any attempt to
+    pre-record or smoke-test Demo 2's typecheck beat with `claude -p`.
+  - **`mocks/github/pr-7.diff`** — same nested-hunk problem as pending
+    decision 3 below, hit live.
 - **No rehearsal of the full 30-minute run has happened yet** with the current
-  deck and fixed demos.
+  deck and fixed demos — the scenes have been driven, the clock has not.
 
 ## Environment facts (non-derivable, will bite you)
 
@@ -154,8 +193,9 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
    - [ ] cut "El flujo end-to-end"
    - [ ] compress the two opening pain slides into one
 
-   Target: **4 demos live, 2 pre-recorded, ~27 slides.** Deck is at 45 (31
-   main flow) after the cuts and merges above.
+   Target: **4 demos live, 2 pre-recorded, ~27 slides.** Deck is at 46 (31
+   main flow) after the cuts and merges above — the growth since is all in the
+   appendix and Q&A backup, which do not spend live time.
 2. **The GitHub repo is still PRIVATE.** The slides print
    `github.com/edcrove/claude-qa-demo` and the pre-flight checklist assumes a
    public repo — flip visibility before the talk (`gh repo edit

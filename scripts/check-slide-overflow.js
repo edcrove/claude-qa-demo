@@ -14,8 +14,11 @@
  *
  * Usage:
  *   ./scripts/build-deck.sh html
- *   node scripts/check-slide-overflow.js slides/slides-16x9.html
- *   node scripts/check-slide-overflow.js slides/slides-16x10.html
+ *   node scripts/check-slide-overflow.js slides/slides-dark-16x9.html
+ *   node scripts/check-slide-overflow.js slides/slides-light-16x10.html
+ *
+ * build-deck.sh writes four variants (dark/light x 16:9/16:10); check the one
+ * you are going to present with, or all four.
  *
  * Measurement is scale-invariant, so the same script checks either ratio.
  *
