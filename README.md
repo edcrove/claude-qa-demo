@@ -5,6 +5,19 @@ cultiva"** — de prompt suelto a skills, rules y hooks.
 
 Everything here is plain text on disk. Clone it, read it, copy what works.
 
+## Start here
+
+**The deck** — [slides-light-16x9.pdf](slides/slides-light-16x9.pdf) · 48 slides,
+in Spanish. Also in [16:10](slides/slides-light-16x10.pdf), and in a dark theme:
+[16:9](slides/slides-dark-16x9.pdf) · [16:10](slides/slides-dark-16x10.pdf).
+Versioned on purpose, so you can read it without installing Marp.
+
+**The catalogue** — [`docs/showable-inventory.md`](docs/showable-inventory.md).
+The pieces of a real QA setup, sanitized: rules, skills, agents, hooks and
+permissions. Every row says what the piece does and **why it exists** — usually
+the concrete pain that produced it. If you recognise the pain, copy the piece.
+Start from its *"si copiás sólo tres cosas"* table.
+
 ## What's inside
 
 | Path | Purpose |

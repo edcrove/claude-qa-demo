@@ -10,6 +10,11 @@ const CHANNELS: Channel[] = [
   { slug: 'sports', name: 'Sports Channel', genre: 'sports' },
 ];
 
+const SLUG_PATTERN = /^[a-z0-9-]+$/;
+
 export function getChannelBySlug(slug: string): Channel | null {
+  if (!SLUG_PATTERN.test(slug)) {
+    throw new Error(`invalid slug: ${JSON.stringify(slug)}`);
+  }
   return CHANNELS.find(c => c.slug === slug) ?? null;
 }
