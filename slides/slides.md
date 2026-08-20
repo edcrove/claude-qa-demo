@@ -236,7 +236,7 @@ Edgardo Crovetto · 2026
 
 <!-- _class: lead -->
 
-# Una noche perdí 90 minutos
+# Un día perdí 90 minutos
 
 ## cazando flaky tests fantasma
 
