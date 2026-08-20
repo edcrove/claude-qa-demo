@@ -898,3 +898,72 @@ lo único que vivía ahí era el árbol de trabajo. Todo se commiteó, se llevó
 `main` y la branch se borró (local y remota). El trabajo del deck sigue en
 `main`: una branch que no aísla nada sólo agrega un lugar más donde
 desincronizarse.
+
+
+## 2026-08-20 — Inventario de lo mostrable del toolkit privado
+
+El deck asegura, en la slide de stack, que lo genérico puede vivir en un repo
+aparte y compartible. Ese repo existe y es privado. Se revisó completo para
+sacar qué tiene que al deck le sirva, y quedó en
+[`showable-inventory.md`](showable-inventory.md) ya sanitizado.
+
+**Lo que apareció y el deck no tiene:**
+
+- **El bloque de permissions `allow`/`ask`/`deny`.** `settings.json` no es sólo
+  hooks. Tres niveles con tres intenciones: `allow` para lo read-only (dejás de
+  clickear aprobar cincuenta veces por día), `ask` para todo lo que sale de tu
+  máquina, `deny` sobre los archivos que el agente no tiene que poder leer
+  siquiera — `secrets.env`, `.env`, claves SSH. Es el hilo de accountability
+  hecho mecánico, en un solo JSON. La mejor relación valor/tiempo de todo el
+  inventario.
+- **Tests para los propios skills.** Un script con nueve chequeos estáticos por
+  skill: que el frontmatter parsee, que `name` coincida con el directorio (si no,
+  **el harness nunca encuentra el skill** — falla en silencio y parece que el
+  modelo te ignora), que los links relativos resuelvan, que los `[[wikilinks]]`
+  apunten a algo que existe, que las variables de config estén declaradas en el
+  `.env.example`, que los scripts pasen `bash -n`. Más su propio disclaimer
+  honesto: es análisis estático, no prueba que el skill produzca buen output.
+  En una charla de QA, esto cierra el loop que la charla misma abre.
+- **La regla de alcance de evidencia.** No prohíbe nada: dice *cuánta* evidencia
+  debe una PR según los paths que toca, con default explícito para la
+  ambigüedad y un gate rápido antes de las suites caras. Es lo que un QA senior
+  hace en la cabeza, escrito.
+- **`Last verified: YYYY-MM-DD`** en cualquier afirmación sobre cómo se comporta
+  hoy un sistema externo. La idea más barata del inventario.
+- **Los transcripts son superficie de leak.** El toolkit lo dice de una forma
+  que a la audiencia le va a caer nueva: nunca pases un token como literal en la
+  línea de comandos, queda en el historial de shell *y en el transcript del
+  agente*.
+
+**Y una categoría de rule que el deck no nombra.** Sale de mirar las doce que
+tiene el toolkit: sólo dos son prohibiciones. Las otras son reglas de formato
+(la primera línea de la PR es el ticket), procedimientos de decisión (cuánta
+evidencia), de archivo (dónde van los docs que genera el agente) y de
+vocabulario (qué significa "R2" en este equipo). Una rule también puede ser un
+glosario.
+
+**Sanitización: se endureció el guard, no se prometió.** El doc tiene tabla de
+sustituciones, pero una tabla es una promesa. `check-leaks.sh` ahora matchea
+case-insensitive —una sola entrada cubre todas las capitalizaciones de una
+marca, donde antes hacían falta tres— y banea los
+identificadores internos que no son obviamente confidenciales pero están a una
+búsqueda de la organización: nombres de repo, de job, de suite, de servicio, y
+los dos repos del toolkit privado. Dos detalles que costaron un ciclo:
+
+- **`gqe` quedó afuera.** Aparece dentro de un hash base64 de
+  `package-lock.json`. Una palabra baneada que salta con ruido termina en que
+  alguien desactiva el chequeo entero. Regla nueva: nada de tres letras o menos.
+- **El punto del patrón del mail hay que escaparlo.** Al pasar a
+  case-insensitive, el `.` dejó de ser un punto y matcheó el espacio del nombre
+  propio del autor — que está a propósito en la slide de título y en el LICENSE.
+  Lo baneado es el local part del mail de trabajo, con punto literal.
+
+Nota al margen que vale como anécdota: el guard cazó el propio entry de este
+decision-log. Escribir *sobre* la lista de palabras prohibidas usando las
+palabras prohibidas falla, y está bien que falle — se reescribió el texto en vez
+de agregarle una excepción al chequeo.
+
+**Qué no se muestra:** las entradas del knowledge base (la estructura sí, el
+contenido es interno puro), el validador de nombres de repo contra la política
+de la organización (el patrón es bueno, pero cada tabla de datos que tiene es
+identificatoria) y los nombres de los dos repos del toolkit.

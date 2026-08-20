@@ -123,6 +123,15 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
   design docs; `slides/gamma-version.md` was deleted — a prose copy of the deck
   for Gamma, frozen at 41 slides, referenced by nothing. Detail in the
   decision-log entry of the same date.
+- **Showable inventory compiled (2026-08-20):**
+  [`showable-inventory.md`](showable-inventory.md) catalogues what the author's
+  private toolkit has that the deck could use — sanitized, with a substitution
+  table. Ranked shortlist for a deck already ~18 min over budget: the
+  permissions allow/ask/deny block, `test-skills.sh` (tests for the skills
+  themselves), and the evidence-scope rule. `check-leaks.sh` was hardened in the
+  same change so the sanitization is enforced, not promised: it now matches
+  case-insensitively and bans the internal repo/job/suite/service identifiers,
+  not just the employer's brands.
 - **Presentation-feedback pass done (2026-08-19).** Eleven items from the
   author's own read-through: slide 6 turned first person ("Mi día como QA" — the
   bullets moved with it, and the slide-24 callback that *quotes* that line moved
