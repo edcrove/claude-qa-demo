@@ -1109,3 +1109,37 @@ calendario, así que no vuelve a envejecer.
 
 El callback de la Demo 6 no se toca: cita el último *bullet* (*"Mañana — sesión
 nueva. Re-explico el ticket, el plan, las convenciones."*), no el título.
+
+### El inventario se reorganizó por tipo de pieza, no por repo
+
+Venía partido en dos bloques según de qué repo privado salía cada cosa, con una
+sección aparte para "el repo hermano". A una audiencia general eso no le dice
+nada: es contabilidad interna. Ahora está por **tipo de artefacto**, con todo
+mezclado como si viviera en un solo lugar.
+
+Lo que el merge destrabó, que es más que cosmética:
+
+- **Apareció una sección de `## Agentes`** que antes no existía. Es la categoría
+  que el deck más roza y menos muestra: los 5 subagentes de la Demo 4 vienen de
+  un plugin, y la última slide dice *"los tuyos los escribís vos"* sin mostrar
+  uno. Ahora hay cinco propios con rol, tools, criterio y modelo en una tabla.
+- **Tres prohibiciones nuevas entraron a `## Rules`** en vez de quedar como
+  "principios" de un pipeline: *green is never the goal*, *no leer el código para
+  diseñar los tests* y *AC congelados*. Como rules se leen mejor y compiten
+  derecho con las que ya estaban — la primera es probablemente la prohibición más
+  importante del inventario.
+- **Los dos bloques de permisos quedaron uno al lado del otro** y el contraste se
+  volvió el contenido: no es "el repo A vs el repo B", es **sesión interactiva vs
+  corrida semi-desatendida**. Con `ask` cuando hay alguien a quien preguntarle y
+  `deny` cuando no. Ese reencuadre sólo aparece cuando se borra la frontera de
+  repos.
+- **Las lecciones del POC quedaron en su propia sección** (`## Lo que se aprendió
+  midiendo`) porque no son artefactos: son hallazgos. Mezclarlas con las piezas
+  las hacía parecer features.
+- **El top 3 cambió.** El `verifier` desplazó a `regression-evidence-scope` al
+  cuarto puesto: es la respuesta directa a *"¿y quién revisa al agente que
+  escribió los tests?"*, que es la pregunta que esta audiencia va a hacer.
+
+Y en el deck, la última slide ahora nombra las cinco categorías —rules, skills,
+**agentes**, hooks, permisos— en vez de "skills, rules, hooks y otras piezas".
+"Agentes" es a propósito: cierra el loop que abre la slide anterior.

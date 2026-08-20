@@ -203,7 +203,10 @@ section count, not eyeballed):
   pieces from the author's real work setup, the ones that did not fit in 30
   minutes) and how to use it (find your pain in the "por qué mostrarla" column →
   copy the piece → swap the generic names for yours → start from the
-  "si agregás sólo tres cosas" table). Not a Q&A answer, so it is counted
+  "si agregás sólo tres cosas" table). The slide names its five categories —
+  rules, skills, **agentes**, hooks, permisos — and "agentes" is deliberate: the
+  final main-flow slide says *"los tuyos los escribís vos"* without showing one,
+  and the inventory is where the worked examples are. Not a Q&A answer, so it is counted
   separately: it is a reference slide that exists to be read after the talk.
 
 ## Title — decided

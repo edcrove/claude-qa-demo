@@ -1259,9 +1259,9 @@ La pirámide es el piso, no el techo. Otras piezas que hoy no demostré:
 | `evolution-timeline.md` | cómo creció, semana por semana y con qué dolor |
 | `docs/showable-inventory.md` | el catálogo de piezas ⬇ |
 
-**`docs/showable-inventory.md`** — catálogo de skills, rules, hooks y otras piezas
-de mi setup **de trabajo real**, sanitizadas: qué hace cada una y por qué existe.
-Es lo que no entró en 30 minutos.
+**`docs/showable-inventory.md`** — catálogo de rules, skills, **agentes**, hooks y
+permisos de mi setup **de trabajo real**, sanitizado: qué hace cada pieza y por
+qué existe. Es lo que no entró en 30 minutos.
 
 **Cómo usarlo:** buscá tu dolor en la columna *"por qué mostrarla"* → copiá la
 pieza → reemplazá los nombres genéricos (`api-tests`, `PROJ-1234`) por los tuyos.
