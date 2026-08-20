@@ -22,6 +22,8 @@ All under `.claude/skills/`. Adapt freely:
 - `multi-agent-pr-review`
 - `ci-failure-triage`
 - `known-issues-registry-update`
+- `talk-deck-editing` — not a QA workflow: the rules for editing the deck itself,
+  distilled from the incidents in `docs/decision-log.md`
 
 ## Rules authored for this demo
 

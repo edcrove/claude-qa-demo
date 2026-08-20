@@ -10,7 +10,7 @@ Everything here is plain text on disk. Clone it, read it, copy what works.
 | Path | Purpose |
 |------|---------|
 | `CLAUDE.md` | Project conventions Claude loads at session start |
-| `.claude/skills/` | 5 invocable workflows |
+| `.claude/skills/` | 6 invocable workflows — five for the QA day, plus the one that came out of building this talk |
 | `.claude/rules/` | 3 always-on guardrails |
 | `.claude/settings.json` | 1 PostToolUse hook |
 | `memory/` | Cross-session memory: one feedback entry + the known-issues registry |

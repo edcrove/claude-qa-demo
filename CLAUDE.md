@@ -46,6 +46,11 @@ whole difference between a skill and a rule — importing them would erase it.
 - `multi-agent-pr-review` — 5 specialized subagents in parallel, one summary
 - `ci-failure-triage` — classify CI failures against the known-issues registry
 - `known-issues-registry-update` — record a confirmed flake in the registry
+- `talk-deck-editing` — the rules for editing this talk's deck: the render gate,
+  the failures that are silent, the callbacks that must be edited in pairs.
+  **This one is the repo eating its own cooking** — it was cultivated the same
+  way the deck says to cultivate anything: the same corrections, repeated, until
+  they were worth writing down.
 
 ## Demo app
 
