@@ -1428,3 +1428,51 @@ diagnosticador de red. La mitad interesante era invisible desde ahí.
 `talk-deck-editing` decía "una afirmación sobre una herramienta → chequeá la
 herramienta"; ahora aclara que hay que leer la documentación *de la afirmación que
 estás haciendo*, no del nombre.
+
+## 2026-08-20 (cierre) — Auditoría de consistencia de todas las referencias
+
+Revisión mecánica, no a ojo: cada path, cada link, cada callback, cada conteo y
+cada premisa del demo, contra el disco.
+
+**Lo que cerró exacto** (vale escribirlo, porque la próxima vez el chequeo
+arranca de acá):
+
+- **Paths y links.** Todo path en backticks resuelve; todo link relativo entre
+  docs resuelve. Los únicos "faltantes" son de otro repo o ejemplos inventados
+  (`test-skills.sh`, `analysis-final-v2.md`), y uno que dice explícitamente que
+  fue borrado.
+- **Los cuatro callbacks.** La línea del espejo aparece textual en las dos
+  slides y negada palabra por palabra en la tercera. La pregunta de la slide 4
+  se responde en la 44. El título, la tesis y el cierre dicen lo mismo con el
+  cambio de persona a propósito. Y la branch del día en la slide es idéntica a
+  la del mock del build 44.
+- **Los conteos, computados desde el HTML renderizado:** apéndice arranca en 33
+  → **32 de flujo principal**; backup arranca en 42 → **9 de apéndice**; mapa del
+  repo en 48 → **6 de Q&A**. Suma 48. Es exactamente lo que dicen README, STATUS,
+  HANDOFF y talk-design.
+- **Los números de slide citados en los docs.** Cold open = slide 2 ✓, la
+  pregunta = slide 4 ✓, "Mi día como QA" = 6 ✓, el reporte de la Demo 4 = 20 ✓.
+  Siguen siendo correctos después de sumar dos slides.
+- **Las premisas del demo contra los mocks.** El build 44 tiene `passed: 280`,
+  `failed: 5` — el output esperado del runbook es exacto. De las cinco fallas,
+  dos son `Test timed out in 5000ms` (y el registry tiene esa firma con **last
+  seen: build 39**, que es lo que dice la slide), una es `ECONNREFUSED` a auth, y
+  quedan dos regresiones reales con los commits `a1b2c3d` y `e4f5a6b`, los dos
+  presentes en el mock. 2 + 1 + 2 = 5.
+- **`CLAUDE.md` importa 3 rules y el memory, y ningún skill** — así que lo que
+  el runbook promete que muestra `/context` en escena es cierto.
+- **La escalada de la pirámide es deliberada, no descuidada:** el ejemplo de
+  memory dice *"me olvidé 2 veces"*, el tick de la pirámide y la Demo 6 dicen
+  **3**, y el ejemplo del hook dice **5 — teniendo memory y skill**. Los tres
+  ejemplos del apéndice instancian la escalera que enseña "4 pasos para el
+  lunes": la segunda vez es memory, la tercera un skill. Se chequeó por
+  sospechoso y quedó igual.
+
+**El único hallazgo real: dos nombres para lo mismo, a dos slides de distancia.**
+Al poner los reviewers propios en el diagrama de fan-out, su nodo raíz quedó
+`pr-review`, mientras el diagrama del flujo end-to-end y la línea de tiempo
+siguen diciendo `multi-agent-pr-review` — que es el skill del repo del demo.
+Defendible (son dos cosas distintas) pero confuso: el que mira ve dos nombres y
+asume que es el mismo skill mal escrito. El nodo pasó a **"review de PRs · un
+SKILL.md"**, sin nombre: esa slide habla del concepto —un skill puede delegar—, no
+de un archivo en particular, así que sacarle el nombre es además más correcto.
