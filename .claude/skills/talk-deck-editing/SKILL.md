@@ -34,6 +34,13 @@ export CHROME_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome
 export PATH="$HOME/node_modules/.bin:$PATH" NODE_PATH="$HOME/node_modules"
 ```
 
+**If the build hangs, it is stdin.** Marp waits for stdin when it inherits one
+nobody will close — a background task, a CI runner, `nohup`. It prints
+*"Currently waiting data from stdin stream"* once and then sits there forever:
+no error, no timeout. `build-deck.sh` now redirects `< /dev/null` for exactly
+this reason. With stdin closed the four variants take about 90 seconds; the same
+build hung for twenty minutes before the fix.
+
 ## The gate is not optional
 
 Marp clips overflow instead of complaining. `check-slide-overflow.js` measures

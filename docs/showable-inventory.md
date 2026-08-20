@@ -25,13 +25,18 @@ de proyecto, tu host. Nada de lo que sigue nombra a mi empleador, un repo real,
 un job real ni un ticket real.
 
 Y la lección que vale más que la tabla, si algún día publicás tu setup: **una
-promesa de sanear no alcanza, necesitás enforcement.** Este repo tiene
+promesa de sanear no alcanza, necesitás enforcement.** Este repo trae
 `scripts/check-leaks.sh`, que greppea todo el árbol —trackeado y no— buscando
-nombres prohibidos y falla el commit. Está enganchado como hook de git:
+nombres prohibidos y devuelve error. Enganchalo como hook de git y no te podés
+olvidar:
 
 ```bash
 ln -s ../../scripts/check-leaks.sh .git/hooks/pre-commit
 ```
+
+Ese `ln -s` lo tenés que correr vos: **`.git/hooks/` no se versiona**, así que
+clonar el repo te trae el script pero no la protección. Es una trampa cómoda —
+asumís que el guard vino con el clone y no vino.
 
 Dos cosas que aprendí escribiéndolo: **nada de tres letras o menos** en la lista
 de palabras prohibidas (`gqe` aparecía dentro de un hash base64 y saltaba con
@@ -62,6 +67,7 @@ prohibiciones.** El resto son otras cosas, y ahí está la parte útil.
 | Rule | Qué dice | Por qué existe |
 |---|---|---|
 | `pr-description-ticket-first-line` | Línea 1 del cuerpo de la PR es el ticket. Línea 2 vacía. Y si la PR toca tests, va un bloque de evidencia con el link directo al build, comparación before/after contra la branch principal **en la misma matriz**, y una frase sobre fallas nuevas netas. | Es aburrida, es verificable, y es de lo que todo reviewer reclama para siempre — perfecta para delegar. La mitad interesante es la cláusula de vencimiento: **si entran commits después del build, la evidencia está vieja.** Codifica *cuándo la prueba deja de valer*, que es lo que nadie escribe. |
+| `status-format` | Los reportes de estado de CI van en una línea sola: `❌ build 52 — 280 passed / 5 failed (3 flakes, 2 real)`. | **Está en este repo**, y es la rule más chica que tengo: cuatro líneas. Su *por qué* es lo que la hace valer — **el estado se escanea, no se lee.** Un formato consistente te deja triagear de un vistazo y, de paso, hace que esos mensajes se puedan pipear a otra herramienta. Si tenés un mensaje que mandás veinte veces por semana, ése es tu primer candidato a rule. |
 | `response-context-header` | Toda respuesta del agente arranca con tres líneas: branch, workspace, hora. | La rara, y por eso vale la pena copiarla: gobierna **cómo te habla el agente**, no qué le hace al código. Nació de trabajar en la branch equivocada porque la respuesta no decía en cuál estaba. Podés gobernar el formato de la respuesta, no sólo la acción. |
 
 ### Procedimiento de decisión — la categoría más QA de todas
@@ -333,6 +339,27 @@ Y el `allow` enumera las tools de las integraciones **una por una** — el agent
 puede crear un ticket y comentar, y nada más. Una integración conectada no es un
 permiso: es una superficie que también se recorta.
 
+### El hook que ejecuta el runtime, no el modelo
+
+**Está en este repo**, y son seis líneas en `.claude/settings.json`: después de
+cada edición de un archivo `.ts`, corre el typecheck.
+
+```json
+{ "hooks": { "PostToolUse": [ { "matcher": "Edit|Write|MultiEdit",
+  "hooks": [ { "type": "command", "command": "<corré tu typecheck>" } ] } ] } }
+```
+
+Salió de olvidarme de correr el typecheck después de que el agente editaba: primero
+fue una corrección que repetí, después una nota en memoria, después un skill, y
+recién al final esto. Lo que cambia al llegar acá es una sola cosa y es la que
+importa: **ya no depende de que el modelo se acuerde.** Lo ejecuta el runtime
+después de cada edición, no consume contexto, y no se puede saltear.
+
+Y el límite honesto, que conviene saber antes de convertir todo en hooks: **un
+hook no razona.** Matchea una tool y corre un comando. Todo lo que necesite
+criterio —decidir *si* corresponde, elegir *qué* correr— sigue siendo un skill o
+una rule. Por eso son pocas las piezas que llegan hasta acá.
+
 ### El hook de git, que el agente no puede esquivar
 
 ```bash
@@ -343,6 +370,10 @@ Vale la distinción: un **hook de la herramienta** dispara con las tool calls de
 agente; un **hook de git** dispara sobre el repo, commitee quien commitee. El
 hook del agente protege tu sesión; el de git protege el repo — del agente
 incluido.
+
+Y acordate de que este no viaja: `.git/hooks/` no se versiona, así que en cada
+clon hay que volver a linkearlo. Si te importa que no se olvide, ponelo en el
+README o en un `make setup`.
 
 ---
 

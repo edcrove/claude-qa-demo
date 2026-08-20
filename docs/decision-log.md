@@ -1333,3 +1333,66 @@ ninguna de las dos se llama más así. Arregladas.
 Queda un wart: el archivo se sigue llamando `showable-inventory.md`, y
 "showable" es el encuadre viejo —lo que yo puedo mostrar en pantalla—. Renombrarlo
 toca la slide que imprime el path, así que se decide aparte.
+
+## 2026-08-20 — Revisión cruzada charla ↔ catálogo, `/doctor`, y por qué se colgaban los builds
+
+### Cuatro cosas que la revisión encontró
+
+Pasar el deck contra el catálogo, buscando que no se contradigan. Tres de las
+cuatro eran del tipo que más duele: **afirmaciones sobre este repo, falsas.**
+
+- **`status-format` no estaba en el catálogo.** Es la tercera rule del repo y la
+  más chica que tengo —cuatro líneas— y el catálogo listaba dos. Su *por qué* es
+  lo que la hace valer: **el estado se escanea, no se lee.** Agregada al grupo de
+  formato.
+- **"Es lo que no entró en 30 minutos"**, en la slide del mapa del repo, dejó de
+  ser cierto cuando el catálogo pasó a listar *todo* —incluidas las piezas que sí
+  están en el repo y sí se demuestran—. Ahora la slide dice qué es el catálogo y
+  que lo que ya está acá va marcado, que es la información que el lector
+  necesita.
+- **El catálogo afirmaba que `check-leaks.sh` "está enganchado como hook de
+  git".** No lo estaba: `.git/hooks/` tenía sólo los samples. Y hay algo peor que
+  el error, que es la razón por la que nunca podría ser cierto: **`.git/hooks/` no
+  se versiona**, así que clonar el repo te trae el script y no la protección. La
+  redacción pasó a imperativo —*enganchalo así*— con esa trampa dicha en voz alta,
+  y de paso el hook quedó instalado localmente.
+- **Faltaba el hook de typecheck**, que es el remate de toda la pirámide del deck.
+  El catálogo tenía permisos y el hook de git, y no la pieza que un lector va a
+  querer copiar primero. Ahora está, con su historia (corrección → memoria →
+  skill → hook) y con su límite honesto: **un hook no razona.** Matchea una tool y
+  corre un comando; todo lo que necesite criterio sigue siendo skill o rule, y por
+  eso son pocas las piezas que llegan hasta arriba.
+
+### `/doctor` entró, y no gratis
+
+Verificado antes de escribirlo, que es la regla: el binario tiene
+`doctorHandler`, un `DISABLE_DOCTOR_COMMAND`, y strings que lo usan para
+diagnosticar acceso al keychain, entitlements y TLS detrás de un proxy
+corporativo. No se puso de memoria.
+
+Con la fila nueva, la slide se pasaba **75px**. Se pagó recortando cuatro bullets
+donde había redundancia real: `/loop` tenía dos ejemplos que decían lo mismo,
+*unattended* repetía "en cron" que ya estaba en `/schedule` dos bullets antes, y
+*agentes como piezas* venía diciendo lo que ahora dice el diagrama de fan-out.
+Neto: cuatro líneas menos para una fila de dos.
+
+Y encaja mejor de lo que parece: los otros ítems de esa slide son más capacidad,
+`/doctor` es la contracara honesta —**cuando no anda, hay un comando que te dice
+por qué**—. Para alguien que el lunes va a probar esto en la laptop del trabajo,
+detrás de un proxy, es probablemente el ítem más útil de la slide.
+
+### Y la causa de los builds que se colgaban
+
+Los builds venían tardando veinte minutos o muriendo sin renderizar nada. No era
+iCloud ni Chrome: **marp espera stdin.** Cuando hereda un stdin abierto que nadie
+va a cerrar —una tarea en background, un runner de CI, un `nohup`— imprime
+*"Currently waiting data from stdin stream"* una vez y se queda ahí. No falla, no
+tiene timeout, no dice nada más.
+
+`build-deck.sh` ahora redirige `< /dev/null` en las dos invocaciones de marp, con
+el comentario de por qué. Verificado en las dos direcciones: los cuatro HTML
+tardan **2 segundos** —el export a HTML no necesita browser, sólo el PDF— y los
+cuatro PDF unos 90 segundos. Contra veinte minutos colgado.
+
+Está también en la skill `talk-deck-editing`, en la sección del build: si se
+cuelga, es stdin. Es exactamente la clase de cosa por la que esa skill existe.

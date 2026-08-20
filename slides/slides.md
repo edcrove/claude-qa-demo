@@ -1222,8 +1222,7 @@ el memory y el skill**. El hook fue el final del camino.
 La pirámide es el piso, no el techo. Otras piezas que hoy no demostré:
 
 - **`/loop`** — repetir un prompt o un skill cada X minutos, o dejar que el
-  agente marque el ritmo: mirar un build hasta que termine, re-triagear hasta
-  que quede verde
+  agente marque el ritmo: mirar un build hasta que termine
 - **`/goal`** — fijás una condición de fin y el agente sigue trabajando hasta
   que **un evaluador aparte** confirma que se cumplió; no es el mismo agente
   declarándose listo
@@ -1231,12 +1230,12 @@ La pirámide es el piso, no el techo. Otras piezas que hoy no demostré:
   hecho cuando llegás a la mañana
 - **Background agents + worktrees** — trabajo largo sin bloquear la sesión, y
   cada ticket en su propio workspace aislado
-- **Unattended agents** — el agente corriendo sin nadie mirando: headless en CI,
-  en cron, disparado por un webhook. Acá la pregunta del cierre se vuelve
-  incómoda: si nadie lo leyó, ¿quién firma?
-- **Agentes como piezas con función propia** — un agente no es "otro Claude":
-  se le define su rol, sus tools y su criterio, y se compone como un skill. Los
-  cinco del diagrama son eso, y escribir uno propio es un archivo de markdown
+- **`/doctor`** — cuando no anda: diagnostica instalación, keychain y el proxy
+  corporativo que te rompe el TLS. El primero que necesitás el lunes
+- **Unattended agents** — sin nadie mirando: headless en CI, disparado por un
+  webhook. Acá la pregunta del cierre incomoda: si nadie lo leyó, ¿quién firma?
+- **Agentes propios** — un agente no es "otro Claude": se le define su rol, sus
+  tools y su criterio. Escribir uno es un archivo de markdown
 
 **Ninguna reemplaza a la pirámide: la usan.**
 
@@ -1257,9 +1256,9 @@ La pirámide es el piso, no el techo. Otras piezas que hoy no demostré:
 | `evolution-timeline.md` | cómo creció, semana por semana y con qué dolor |
 | `docs/showable-inventory.md` | el catálogo de piezas ⬇ |
 
-**`docs/showable-inventory.md`** — catálogo de rules, skills, **agentes**, hooks y
-permisos de mi setup **de trabajo real**, sanitizado: qué hace cada pieza y por
-qué existe. Es lo que no entró en 30 minutos.
+**`docs/showable-inventory.md`** — catálogo de mi setup **de trabajo real**:
+rules, skills, agentes, hooks, permisos. Cada fila dice qué hace la pieza y **por
+qué existe** — el dolor que la hizo aparecer. Lo que ya está acá, va marcado.
 
 **Cómo usarlo:** buscá tu dolor en la columna *"por qué existe"* → copiá la pieza
 → reemplazá los nombres genéricos (`api-tests`, `PROJ-1234`) por los tuyos.

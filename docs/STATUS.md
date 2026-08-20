@@ -134,6 +134,23 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
   **"Qué abrir cuando clones el repo"** as the last slide: a path→purpose table
   plus what `docs/showable-inventory.md` is and how to use it. Deck 46 → **48**,
   all four builds at **0/48 overflowing**.
+- **Build hangs were stdin, not the machine (2026-08-20).** Marp waits on an
+  inherited stdin nobody closes — a background task, a CI runner — printing
+  *"Currently waiting data from stdin stream"* once and then sitting there with no
+  error and no timeout. `build-deck.sh` now redirects `< /dev/null` on both marp
+  calls. Measured after the fix: **four HTML variants in ~2 s** (HTML needs no
+  browser, only the PDF export does) and four PDFs in ~90 s, against twenty
+  minutes of hanging before. Also recorded in the `talk-deck-editing` skill.
+- **Cross-review of deck vs. catalogue (2026-08-20)** found three false claims
+  about this repo and one gap: `status-format` was missing from the catalogue,
+  the repo-map slide still said the catalogue is "lo que no entró en 30 minutos"
+  (it lists everything now), the catalogue claimed `check-leaks.sh` **is** hooked
+  as pre-commit when `.git/hooks/` was empty — and since `.git/hooks/` is not
+  versioned, that can never be true in a fresh clone, which is now said out loud
+  — and the typecheck hook, the payoff of the whole pyramid, was absent. All
+  fixed; the hook is now installed locally too. `/doctor` was added to the
+  closing slide, verified against the binary rather than recalled, and paid for
+  by trimming four redundant bullets.
 - **Own PR reviewers now in the deck (2026-08-20).** The deck used to claim its
   own agents while the stage dispatches a plugin's five. Fixed by placing them
   rather than choosing: the **fan-out diagram** (before the demos) shows the real

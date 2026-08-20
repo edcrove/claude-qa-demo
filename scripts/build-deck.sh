@@ -76,8 +76,13 @@ build() {
   fi
   [[ "$ratio" == "16:10" ]] && sed -i.bak 's/^size: 16:9$/size: 16:10/' "$TMP" && rm -f "$TMP.bak"
 
-  "${MARP[@]}" "$TMP" -o "$OUT/slides-$label.html"
-  [[ "$ONLY" != "html" ]] && "${MARP[@]}" "$TMP" --pdf -o "$OUT/slides-$label.pdf"
+  # `< /dev/null` no es decorativo. Si marp hereda un stdin abierto que nadie va
+  # a cerrar —una tarea en background, un runner de CI, un `nohup`— se queda
+  # esperando: "Currently waiting data from stdin stream. Conversion will start
+  # after finished reading." No falla, no imprime nada más, y cuelga para
+  # siempre. Con stdin cerrado, los cuatro variantes tardan ~90 s.
+  "${MARP[@]}" "$TMP" -o "$OUT/slides-$label.html" < /dev/null
+  [[ "$ONLY" != "html" ]] && "${MARP[@]}" "$TMP" --pdf -o "$OUT/slides-$label.pdf" < /dev/null
   return 0
 }
 
