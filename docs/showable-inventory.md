@@ -1,279 +1,144 @@
-# Showable inventory — what the private toolkit has that the deck could use
+# Inventario de lo mostrable
 
-The demo repo ships a deliberately small setup: 5 skills, 3 rules, 1 hook. The
-author's real toolkit — a separate, private repo, the one the "lo genérico puede
-vivir en un repo aparte" slide refers to — has considerably more, and some of it
-is better talk material than what is on stage today.
+Qué tiene el toolkit privado del autor —el repo aparte al que apunta la slide de
+stack— que le sirva al deck. Ya sanitizado: nada de acá nombra a la empresa, un
+repo real, un job real, un ticket real ni un host real.
 
-This is the inventory, **already sanitized**. Every entry says what it is, why it
-would earn stage time, and whether the demo repo already has it. Nothing below
-names the employer, a real repo, a real job, a real ticket key or a real host.
+Este doc es un catálogo, no un plan. Materializar cualquiera de estos como
+`.mdc` o `SKILL.md` en el repo del demo es un paso aparte.
 
-## Sanitization contract
+## Sanitización
 
-`scripts/check-leaks.sh` is the enforcement, not this section. It greps the whole
-repo (tracked + untracked) for banned strings and fails the build. When you lift
-anything from this file into a slide, run it.
+`scripts/check-leaks.sh` es la enforcement, no esta tabla. Corrélo cada vez que
+pases algo de acá a una slide.
 
-Substitutions used throughout:
-
-| Real thing | Written here as |
+| Real | Acá |
 |---|---|
-| the employer, the product, sibling products | Acme Streaming / "the product" / "the sibling team" |
-| the functional-test monorepo | `api-tests` |
-| the deployable service repo | `platform-service` |
-| the CI regression job | `api-regression` |
-| the one suite that must not overlap | `catalogRegression` |
-| the two API gateways | `web-gateway` / `app-gateway` |
-| ticket keys | `PROJ-1234`, release tickets `REL-4321` |
-| hosts | `ci.example.com`, `jira.example.com`, `testrail.example.com` |
-| the shared team channel | `#platform-contributors` |
-| framework classes | `ApiTestBase`, `ApiContext`, `ProductTestData` |
-| the toolkit repo itself | "the shared toolkit repo" — deliberately unnamed |
+| empresa, producto, productos hermanos | Acme Streaming · "el producto" · "el equipo hermano" |
+| monorepo de tests funcionales | `api-tests` |
+| repo del servicio deployable | `platform-service` |
+| job de regresión en CI | `api-regression` |
+| la suite que no puede solaparse | `catalogRegression` |
+| los dos gateways de API | `web-gateway` · `app-gateway` |
+| tickets | `PROJ-1234` · release `REL-4321` |
+| hosts | `ci.example.com` · `jira.example.com` · `testrail.example.com` |
+| canal del equipo | `#platform-contributors` |
+| clases del framework | `ApiTestBase` · `ApiContext` · `ProductTestData` |
+| el repo del toolkit | "un repo aparte" — **sin nombre, a propósito** |
 
-**The toolkit's name stays out of the deck.** It is a real repo in the
-employer's GitHub org; printing the name is a one-search path from the talk to
-the org. Say "un repo aparte, compartible" and show the *shape*, not the name.
+El nombre del toolkit no va al deck: es un repo real en el org de la empresa, y
+publicarlo es una búsqueda de distancia entre la charla y la organización.
 
 ---
 
 ## Rules
 
-The demo repo has 3. These are the ones worth adding or upgrading, grouped by
-what kind of rule they are — which is itself a slide, because "rule" gets read
-as "prohibition" and only two of these are prohibitions.
+De las doce del toolkit **sólo dos son prohibiciones.** Esa es la observación que
+vale una slide: el deck usa "rule" como sinónimo de guardrail y hay categorías
+más ricas.
 
-### Already in the demo repo, but thinner than the real one
+### Prohibición
 
-**`no-parallel-ci`** — the real version has three things the demo's does not,
-and each is a beat:
-
-1. It names the *scope* of serialization precisely ("only `catalogRegression` is
-   serialized per environment; other suites are not"). A rule that over-reaches
-   gets ignored.
-2. It points at a **guard script** the trigger scripts already call, so the rule
-   is not the only line of defence — the rule tells the agent, the script tells
-   everything else.
-3. It ships an **emergency bypass**: `CI_GUARD_SKIP=1`. Beat: *"una regla sin
-   válvula de escape no se respeta, se saltea a mano y en silencio."*
-
-**`english-only`** — the real one enumerates the surfaces (PR titles and bodies,
-review comments, issue comments, inline replies, commit messages, release notes)
-and then lists **exceptions that must not be translated**: ticket ids, build
-numbers, branch names, code identifiers, log excerpts, quoted third-party text.
-The exceptions are what makes it survive contact with reality.
-
-### New — format rules (mechanical, cheap, near-perfect compliance)
-
-**`pr-description-ticket-first-line`**
-> Line 1 of a PR description is the ticket key. Line 2 blank. Then the body.
-> A PR that changes test code must include a `## Test evidence` block with the
-> direct build link, a before/after-vs-`main` comparison **on the same matrix**,
-> and a net-new-failures statement. Evidence must reflect the current head — if
-> commits land after the build, the evidence is stale.
-
-Why it shows well: it is boring, it is verifiable, and it is the kind of thing
-every reviewer nags about forever. The staleness clause is the interesting half —
-it encodes *when evidence stops counting*.
-
-**`response-context-header`**
-> Every reply starts with three lines: branch, workspace, time. `Time:` is never
-> optional; run `date` to fill it.
-
-The odd one out, and worth 20 seconds precisely because of that: this rule
-governs **how the agent talks to you**, not what it does to the code. It exists
-because an answer that does not say which branch it was about caused a wrong-branch
-mistake once. Beat: *"podés gobernar el formato de la respuesta, no sólo la
-acción."*
-
-### New — decision-procedure rules (the QA-native category)
-
-**`regression-evidence-scope`** — the single best rule in the toolkit for this
-audience. It does not forbid anything; it tells the agent **how much evidence a
-change needs, derived from the changed file paths, not from the ticket**:
-
-> - Every changed file under `tests/catalog/` → attach a `catalogRegression` run.
-> - Anything outside it — shared framework, base classes, common services → attach
->   **both** a full `regression` **and** a `catalogRegression` run, because common
->   code is shared with the sibling team and the narrow suite does not prove
->   no-regression.
-> - When unsure whether a path counts as common, treat it as common.
->
-> Fast gate first: run the narrow validation group before the full suites. A full
-> regression costs ~an hour; the gate catches an obviously broken fix in minutes.
-> Never attach the gate run *instead of* the full evidence.
-
-Three things in one slide: risk-scaled effort, a stated default for ambiguity,
-and a cheap-check-before-expensive-check ordering. This is what a senior QA does
-in their head, written down.
-
-**`scratchpad-for-working-docs`** — where the agent's generated documents go.
-
-> Every document you generate while working a ticket goes in
-> `<repo-root>/scratchpad/`, gitignored. Plans, coverage matrices, failure
-> analyses, triage notes, proposals. Never a `.md` at the repo root. Never in the
-> tool-config directory — that is config, not a document store.
-
-And the table that makes it click:
-
-| Location | Lifetime | For |
+| Rule | Qué dice | Por qué mostrarla |
 |---|---|---|
-| `<repo>/scratchpad/` | survives the session | documents you will reopen: plans, analyses, evidence |
-| the harness's own session scratchpad | session-only | throwaway scripts, JSON dumps, intermediate output |
+| `no-parallel-ci` | No arranques `catalogRegression` si ya hay una corriendo o encolada en el mismo ambiente. | Ya está en el demo, pero la real tiene tres cosas más: acota el alcance (sólo esa suite, no todas), apunta a un **script guard** que corre igual sin el agente, y trae **bypass de emergencia** (`CI_GUARD_SKIP=1`). *"Una regla sin válvula de escape no se respeta: se saltea a mano y en silencio."* |
+| `english-only` | Todo lo que va a GitHub, en inglés. | Ya está en el demo. La real enumera las superficies (título y body de PR, comments, commits, release notes) y sobre todo las **excepciones que no se traducen**: ticket ids, build numbers, nombres de branch, identificadores de código, log excerpts. Las excepciones son lo que la hace sobrevivir al uso real. |
 
-Beat: an agent that writes files needs a **filing rule**, or six months later the
-repo root is a landfill of `analysis-final-v2.md`. Nobody thinks of this until it
-has already happened.
+### Formato — mecánicas, baratas, cumplimiento casi perfecto
 
-**`branch-management`** — rebase onto the default branch, never merge, when
-updating a ticket branch; `--force-with-lease` after. Stash or commit before
-switching. Generic, one screen, immediately copyable.
+| Rule | Qué dice | Por qué mostrarla |
+|---|---|---|
+| `pr-description-ticket-first-line` | Línea 1 del body es el ticket. Línea 2 vacía. Y si la PR toca tests, va un bloque `## Test evidence` con el link directo al build, comparación before/after vs `main` **en la misma matriz**, y statement de net-new-failures. | Aburrida, verificable, y es de lo que todo reviewer reclama para siempre. La mitad interesante es la cláusula de vencimiento: si entran commits después del build, **la evidencia está vieja** — codifica *cuándo la prueba deja de valer*. |
+| `response-context-header` | Toda respuesta arranca con tres líneas: branch, workspace, hora. | La rara del set, y por eso vale 20 segundos: gobierna **cómo te habla el agente**, no qué le hace al código. *"Podés gobernar el formato de la respuesta, no sólo la acción."* |
 
-### New — vocabulary rules (the category nobody expects)
+### Procedimiento de decisión — la categoría más QA de todas
 
-**`second-checkout-definition`** — "R1" is the main checkout, "R2" is a second
-local checkout of the same remote used in parallel; both paths come from config;
-if R2 is not configured on this machine, say so instead of guessing a path.
+| Rule | Qué dice | Por qué mostrarla |
+|---|---|---|
+| `regression-evidence-scope` | Cuánta evidencia debe una PR **según los paths que toca, no según el ticket**: sólo la suite angosta si todo cae dentro de la carpeta de la feature; suite completa **además** si toca framework, clases base o servicios comunes. Si dudás si un path es común, tratalo como común. Y gate rápido primero: la suite completa cuesta una hora, el gate caza el fix roto en minutos. | La mejor del toolkit para esta audiencia. Tres ideas en una slide: esfuerzo escalado al riesgo, default explícito para la ambigüedad, y chequeo barato antes del caro. Es lo que un QA senior hace en la cabeza, escrito. |
+| `scratchpad-for-working-docs` | Todo doc que genera el agente va a `<repo>/scratchpad/` (gitignored). Nunca un `.md` en la raíz. Nunca en el directorio de config de la herramienta. | Un agente que escribe archivos necesita **regla de archivo**, o en seis meses la raíz del repo es un basural de `analysis-final-v2.md`. Nadie lo piensa hasta que ya pasó. Va con la tabla de abajo. |
+| `branch-management` | Rebase sobre la branch default, nunca merge, al actualizar una branch de ticket. `--force-with-lease` después. | Genérica, entra en una pantalla, se copia y pega. |
 
-This rule teaches the agent **your team's jargon**. It has no procedure and
-forbids nothing. Great 15-second aside: *"una rule también puede ser un
-glosario."*
+Los dos scratchpads, que es lo que hace que la regla se entienda:
 
-### New — the distilled-review-feedback rule
+| Dónde | Vive | Para |
+|---|---|---|
+| `<repo>/scratchpad/` | sobrevive la sesión | lo que vas a reabrir: planes, análisis, evidencia |
+| el scratchpad de sesión del harness | sólo la sesión | scripts descartables, dumps de JSON, intermedios |
 
-**`test-antipatterns`** — the biggest rule in the toolkit, and the one that
-proves the deck's thesis best, because every bullet is a defect that was caught
-in a real code review and then written down so it would never be caught again.
-Show three or four items, never the whole thing:
+### Vocabulario — la categoría que nadie espera
 
-- **Fail fast in suite setup.** Don't `catch → log → return null` for required
-  setup: a null cached token makes every request 401 and produces a confusing
-  mass-failure run instead of one clear setup error.
-- **Smoke tests must assert the value the production path consumes**, not a fresh
-  fetch — otherwise a cache-injection regression passes the smoke test.
-- **Soft-assert the leaves, hard-assert the gates.** Route independent field
-  checks through a soft assert so one run surfaces every wrong field; keep hard
-  any check that gates a later dereference, or the soft path NPEs before the
-  final assertion runs.
-- **Reuse the test-data constants instead of hardcoding strings.**
-- **No ticket id in any source comment.** A comment explains what and why; the
-  ticket that added it goes stale and is already reachable via `git blame`.
-- **No AI commentary anywhere** — no verbose reasoning prose in Javadoc, no
-  generated-by footer in PR descriptions or commit messages. Write comments a
-  human engineer would leave.
+| Rule | Qué dice | Por qué mostrarla |
+|---|---|---|
+| `second-checkout-definition` | "R1" es el checkout principal, "R2" el segundo checkout del mismo remoto que usás en paralelo. Los paths salen de config; si R2 no está configurado, decilo en vez de adivinar. | No tiene procedimiento y no prohíbe nada: le enseña al agente **la jerga de tu equipo**. Aside de 15 segundos: *"una rule también puede ser un glosario."* |
 
-That last one is the sleeper. It is a rule whose entire job is to keep the agent's
-fingerprints off the artifact, and it lands hard with an audience that is quietly
-worried about exactly that. Beat: *"la regla existe porque el output se tiene que
-poder defender como tuyo."*
+### Feedback de review destilado
 
-Also worth saying out loud: this rule cites the **PR number** each item came
-from, never the reviewer's name. Provenance without naming a person.
+**`test-antipatterns`** — la más grande del toolkit, y la que mejor prueba la
+tesis del deck: cada bullet es un defecto que se cazó en un review real y se
+escribió para no volver a cazarlo. Mostrá tres o cuatro, nunca toda:
 
-### Rule placement — a slide in itself
+- **Fallá rápido en el setup de suite.** Nada de `catch → log → return null` en
+  setup obligatorio: un token nulo cacheado hace que *todo* request dé 401 y
+  produce una corrida de fallas masivas confusa en lugar de un error claro.
+- **Los smoke tests assertean el valor que consume el path productivo**, no un
+  fetch fresco — si no, una regresión de cache/inyección pasa el smoke.
+- **Soft assert en las hojas, hard assert en las compuertas.** Los chequeos de
+  campos independientes van por soft assert, para que una corrida muestre *todos*
+  los campos mal; queda hard cualquier chequeo que habilita un dereference
+  posterior, o el path soft explota antes del `assertAll()`.
+- **Ningún ticket id en comentarios de código.** El comentario explica qué y por
+  qué; el ticket que lo agregó envejece y ya se llega por `git blame`.
+- **Nada de comentarios de IA en ningún lado** — ni prosa de razonamiento en el
+  Javadoc, ni footer de "generated with" en PRs o commits.
 
-Two directories, one discipline:
+Ese último es el sleeper: una rule cuyo único trabajo es que **no queden las
+huellas del agente en el artefacto**, y le pega fuerte a una audiencia que tiene
+justo esa preocupación. *"La regla existe porque el output se tiene que poder
+defender como tuyo."*
 
-- `rules/user/` — loads in **every** project. Keep this set small.
-- `rules/workspaces/<repo>/` — loads for one repository only.
+Detalle para decir al pasar: cada ítem cita el **número de PR** de donde salió,
+nunca al reviewer. Trazabilidad sin nombrar a una persona.
 
-> Filing a project-specific rule under `user/` makes it load everywhere, which is
-> almost always wrong. If the rule names a repo, a job or a package, it belongs
-> under `workspaces/`.
+### Dónde vive cada rule — slide en sí misma
 
-This is the concrete, mechanical version of the deck's cost slide: *lo
-siempre-cargado es lo único con costo recurrente.* The real toolkit has 4 global
-rules and 8 repo-scoped ones — a ratio you can put on screen.
+- `rules/user/` → carga en **todos** los proyectos. Este set se mantiene chico.
+- `rules/workspaces/<repo>/` → carga en un repo solo.
+
+> Meter una rule específica de un proyecto en `user/` la hace cargar en todos
+> lados, que es casi siempre lo incorrecto. Si la rule nombra un repo, un job o
+> un package, va en `workspaces/`.
+
+Es la versión mecánica del argumento de costo del deck. El toolkit real tiene
+**4 globales y 8 por repo** — una proporción que se puede poner en pantalla.
 
 ---
 
 ## Skills
 
-The demo repo has 5. These are the additions that carry a distinct idea rather
-than another instance of the same one.
-
-**`feature-knowledge-base`** — the strongest new skill, and the only one that
-changes what the audience thinks a skill *is*. Two modes:
-
-- **RECALL**, at the start of ticket work: grep the knowledge base for the
-  endpoint / domain / region / ticket keywords, read every match, follow
-  `[[cross-links]]`, and surface what is already known **before** proposing work.
-- **CAPTURE**, after analysis: copy the template, fill the frontmatter, write
-  Summary / What we learned / Evidence / How to apply, cross-link, index it.
-
-The payoff line is in its quality bar: *"an entry that only records what happened
-is a changelog, not knowledge — every entry needs a **How to apply to future
-tickets** section."* This is durable memory that is **not** the harness's memory
-feature: plain files, grep-addressable, shared across two different agent tools.
-
-**`ci-regression-review`** — reviews a whole CI regression run and produces a
-**verdict, not a list**:
-
-1. **Reconciled counts, not the dashboard's.** Cross-check the totals for
-   internal inconsistency before quoting them — totals against the sum of the
-   suites, the suite list against the matrix that was supposed to run — and
-   adjust, stating both the raw and the reconciled number. Flag partial
-   coverage when part of the matrix is missing from the report.
-2. Clusters by **root cause**, not by test class.
-3. A **per-team split** derived from the test package, flagging failures one
-   team's tests surfaced in another team's code.
-4. Skip classification.
-5. Whether the release under test is **actually at fault** — reproduced against
-   production.
-
-Best beat available anywhere in the toolkit: point 1. Every reporting pipeline
-grows quirks — a run counted twice somewhere, a fork missing from the summary,
-a retry inflating a total — and the number on the dashboard is the one that ends
-up in a status update. The skill is where that reconciliation lives, so nobody
-re-derives it at 9am on a Monday, and nobody quotes the raw number by accident.
-Beat: *"un skill también es donde guardás cómo se leen de verdad los números de
-tu propio reporte."*
-
-**`session-status-panel`** — one panel: what every other open agent session in
-this project is doing (branch, last turn, what it is blocked on), what CI is
-doing, and what came in on the team channels. Fires on the single word "status".
-
-Pairs with the deck's background-agents / parallel-work slide: once you run more
-than one session, you need a **view over your agents**, and that view is itself a
-skill. Its implementation reads the harness's own transcript files — see
-`session-mining` below.
-
-**`release-ticket-structure`** — reads release-management tickets, where the
-validation evidence lives in **custom fields**, not in comments or attachments.
-
-Include this one specifically to make a point the deck currently misses: this
-skill has **no checklist and no procedure**. It is a *reference* — it tells the
-agent where the information actually is in a system whose UI hides it. Roughly
-half the toolkit's skills are references, not procedures. Beat: *"un skill no es
-sólo un procedimiento; a veces es sólo saber dónde está la data."*
-
-**`local-ci-compile`** — replicates the CI compile step locally, offline, in a
-clean `git worktree` so untracked files cannot cause duplicate-class errors.
-Generic pattern, and the worktree detail is a genuinely non-obvious trick.
-
-**`ticket-to-tests-workflow`** — the composite: ticket → plan → coverage matrix →
-implement → create the test-management cases → map ids → PR. Worth one line as
-the "skills compose into a pipeline" example; too big to demo.
+| Skill | Qué hace | Por qué mostrarlo |
+|---|---|---|
+| `feature-knowledge-base` | **RECALL** al empezar un ticket: greppea la base por endpoint/dominio/región, lee los matches, sigue los `[[cross-links]]` y te dice qué se sabe *antes* de proponer trabajo. **CAPTURE** después de analizar: copia el template, llena el frontmatter, escribe Summary / Qué aprendimos / Evidencia / Cómo aplicarlo. | El más fuerte de los nuevos, y el único que cambia qué cree la audiencia que *es* un skill: memoria durable que **no** es la feature de memory del harness. Archivos planos, greppeables, compartidos entre dos herramientas distintas. Su barra de calidad tiene la frase: *"una entrada que sólo registra qué pasó es un changelog, no conocimiento."* |
+| `ci-regression-review` | Produce un **veredicto, no una lista**: (1) totales reconciliados —cross-check de inconsistencias internas antes de citar un número, y decís el crudo y el corregido—, (2) clusters por causa raíz y no por clase de test, (3) split por equipo derivado del package, (4) clasificación de skips, (5) si el release es realmente culpable, reproducido contra prod. | El punto 1. Todo pipeline de reporting junta rarezas, y el número del dashboard es el que termina en un status update. *"Un skill también es donde guardás cómo se leen de verdad los números de tu propio reporte."* |
+| `session-status-panel` | Un panel: qué está haciendo cada sesión de agente abierta del proyecto (branch, último turno, en qué está trabada), qué hace CI, qué llegó a los canales. Dispara con la palabra "status". | Va con la slide de background agents: cuando corrés más de una sesión necesitás **una vista sobre tus agentes**, y esa vista es un skill. |
+| `release-ticket-structure` | Lee tickets de release management, donde la evidencia de validación vive en **custom fields**, no en comments ni attachments. | **No tiene checklist ni procedimiento**: es una *referencia*. Le dice al agente dónde está la data en un sistema cuya UI la esconde. Cerca de la mitad de los skills del toolkit son referencias. *"Un skill no es sólo un procedimiento; a veces es sólo saber dónde está la data."* |
+| `local-ci-compile` | Replica el compile de CI local, offline, en un `git worktree` limpio para que los untracked no causen errores de clase duplicada. | Patrón genérico, y el detalle del worktree no es obvio. |
+| `ticket-to-tests-workflow` | El compuesto: ticket → plan → matriz de coverage → implementar → crear los casos en el gestor → mapear ids → PR. | Una línea, como ejemplo de "los skills se componen en pipeline". Demasiado grande para demostrar. |
 
 ---
 
-## Hooks and permissions
+## Hooks y permisos
 
-The demo repo has one `PostToolUse` typecheck hook. Two additions, and they are
-different *kinds* of automatic.
+### El bloque de permissions — el hueco más grande del repo del demo
 
-### The permissions block — the biggest gap in the demo repo
-
-`settings.json` is not only hooks. The real one carries an allow / ask / deny
-split that a QA-and-security audience will react to more than any skill:
+`settings.json` no es sólo hooks:
 
 ```json
 {
   "permissions": {
     "allow": [
       "Bash(git status:*)", "Bash(git diff:*)", "Bash(git log:*)",
-      "Bash(git show:*)", "Bash(gh pr view:*)", "Bash(gh pr checks:*)",
-      "Bash(jq:*)"
+      "Bash(gh pr view:*)", "Bash(gh pr checks:*)", "Bash(jq:*)"
     ],
     "ask": [
       "Bash(git push:*)", "Bash(gh pr edit:*)",
@@ -287,243 +152,100 @@ split that a QA-and-security audience will react to more than any skill:
 }
 ```
 
-Three tiers, three intents: **allow** the read-only things so you stop clicking
-approve fifty times a day; **ask** on anything that leaves your machine or
-changes someone else's view of the work; **deny** the files the agent should not
-be able to read at all, so a prompt cannot talk it into it.
+Tres niveles, tres intenciones: **allow** lo read-only y dejás de clickear
+aprobar cincuenta veces por día · **ask** todo lo que sale de tu máquina o cambia
+lo que otro ve · **deny** los archivos que el agente no tiene que poder leer
+siquiera, así ningún prompt lo convence.
 
-Beat, and it lands: *"`ask` es donde vive la firma. Todo lo que sale de tu
-máquina pasa por ahí."* This is the accountability thread made mechanical, and
-it is one JSON block.
+*"`ask` es donde vive la firma. Todo lo que sale de tu máquina pasa por ahí."*
+Es el hilo de accountability hecho mecánico, en un solo bloque de JSON.
 
-### `check-leaks` as a **git** pre-commit hook
+### `check-leaks` como hook de **git**
 
 ```bash
 ln -s ../../scripts/check-leaks.sh .git/hooks/pre-commit
 ```
 
-Useful for drawing the line the deck never draws explicitly: a **harness hook**
-fires on the agent's tool calls; a **git hook** fires on the repository, whoever
-or whatever is committing. The agent cannot route around the second one. Beat:
-*"el hook del agente protege tu sesión; el hook de git protege el repo — del
-agente incluido."*
+Sirve para marcar la línea que el deck nunca marca: un **hook del harness**
+dispara con las tool calls del agente; un **hook de git** dispara sobre el repo,
+commitee quien commitee. Al segundo el agente no lo puede esquivar. *"El hook del
+agente protege tu sesión; el de git protege el repo — del agente incluido."*
 
 ---
 
-## Otros elementos — the section the deck does not have
+## Otros elementos
 
-This is where the real toolkit is furthest ahead of the demo repo, and where a
-QA audience will lean in, because it is all the same move: **treat your agent
-setup as software, and apply the practices you already sell.**
+Acá el toolkit está más lejos del repo del demo, y es todo la misma jugada:
+**tratar tu setup de agente como software y aplicarle las prácticas que ya
+vendés.**
 
-### 1. Static validation of your own skills — `test-skills.sh`
+| Elemento | Qué es | Por qué mostrarlo |
+|---|---|---|
+| **`test-skills.sh`** | Validación estática de cada skill: 9 chequeos — que el frontmatter parsee, que `name` coincida con el directorio, que los links relativos resuelvan, que los `[[wikilinks]]` apunten a algo, que las variables de config estén declaradas en el `.env.example`, que los scripts pasen `bash -n`, que no queden referencias a archivos borrados. | **La adición más fuerte disponible.** Si `name` no coincide con el directorio, **el harness nunca encuentra el skill**: falla en silencio, para siempre, y parece que el modelo te ignora. Trae su propio disclaimer honesto: *"es análisis estático; no prueba que el skill produzca buen output."* Una charla de QA que muestra tests de su propio setup cierra el loop que abre. |
+| **`test-skills-live.sh`** | Smoke tests read-only contra los sistemas reales, con tres resultados: **PASS** (respondió como se esperaba) · **SKIP** (falta una precondición: VPN caída, valor sin configurar — no es un bug) · **FAIL** (el sistema está accesible y se portó mal). Nunca escribe; los skills que escriben están cubiertos sólo hasta sus pre-flight y marcados `WRITE-GATED`. | El SKIP-no-es-FAIL es craft de diseño de tests real, y es la misma distinción que hace `ci-failure-triage` con los flakes. Mismo instinto, un nivel más arriba. |
+| **Arquitectura de secretos** | Credenciales en `~/.config/<toolkit>/secrets.env`, modo `0600`, **fuera del repo**. Valores de sitio (org, repo, URLs, ids) en otro archivo, también afuera. El repo sólo trae `*.env.example`. Un script de helpers sourcea los dos, así ningún skill arma `curl` con credenciales inline. | La regla que vale la sección entera: **nunca pases un token como literal en la línea de comandos — queda en el historial de shell *y en el transcript del agente*.** Esa segunda mitad es información nueva para casi toda la sala. |
+| **Split config/site** | Si un número, id, URL o path cambia entre equipos o máquinas, va a `site.env` y el skill lee la variable. La variable se agrega al `.env.example` en el mismo cambio — y el chequeo 6 de `test-skills.sh` lo **fuerza**. | Es la maquinaria que le da sustento a la slide de "repo aparte y compartible". Sin esto, "compartible" significa "cada uno lo forkea y edita doce strings hardcodeados". |
+| **Knowledge base con forma** | `INDEX.md` (tabla: dominio, **status**, tickets, resumen) · `TEMPLATE.md` con frontmatter tipado · ciclo de vida `hypothesis → open → confirmed` · `[[slug]]` entre entradas · secciones fijas, con **Cómo aplicarlo a futuros tickets** obligatoria. | El campo `status`: *"el agente puede escribir acá, pero tiene que marcar si lo confirmó o lo supone."* Un store escribible por el agente que distingue verificado de supuesto es un artefacto de QA, no una página de wiki. |
+| **`Last verified: YYYY-MM-DD`** | Toda afirmación sobre cómo se comporta **hoy** un sistema externo lleva fecha de verificación. | La idea más barata del inventario. Se roba en cinco segundos, y hace visible el vencimiento en vez de dejarlo podrirse en una instrucción que el agente sigue con total confianza. |
+| **Distribución como plugin** | `.claude-plugin/plugin.json` + `marketplace.json` + un `install.sh` que mergea el fragmento de settings y linkea los skills. | Tu setup deja de ser "mis dotfiles" y pasa a ser algo que un compañero **instala**. Contrapeso honesto: el deck ya dice que audites plugins de terceros — acá el tercero sos vos. |
+| **Slash command envolviendo un skill** | `commands/review-regression.md`, con `argument-hint` y `$1`, y en el cuerpo: *"invocá el skill y seguí sus etapas en orden — no improvises un análisis atajo"*. Si falta el build, listá los recientes, elegí y **decí cuál elegiste**; si hay más de uno plausible, preguntá. | Dos cosas en 30 segundos: un **command** es una puerta de entrada que tipeás, un **skill** lo descubre el modelo — y acá el trabajo del command es impedir que el agente tome el camino corto dentro del skill que acaba de invocar. |
+| **`scan_sessions.py`** | Lee los transcripts del harness (JSONL, en disco, por proyecto) e imprime por sesión reciente: branch, cwd, primera tarea, último turno del usuario, último del asistente. | Es la prueba de que "pedile que escanee tus conversaciones pasadas" no es humo: los transcripts son **archivos**, y los archivos se greppean, se cuentan y se resumen. |
 
-One script, nine checks, per skill:
+### Gobernanza del propio setup
 
-```
-1. SKILL.md exists
-2. frontmatter parses, and `name` matches the directory name
-3. `description` exists, is non-trivial, and states when to invoke
-4. relative markdown links resolve to real files
-5. [[wikilinks]] resolve to a rule or knowledge-base entry
-6. config variables referenced are declared in a *.env.example
-7. helper functions referenced exist in the helpers script
-8. shipped scripts pass `bash -n`
-9. no references to files retired from the repo
-```
+Las cuatro reglas para contribuirle al toolkit: **inglés** · **ni un secreto, ni
+en un ejemplo** · **ningún dato personal** (escribí "el operador"; citá el número
+de PR, no al reviewer) · **ningún valor de sitio hardcodeado**.
 
-And its own honest disclaimer, which is the best line in the toolkit:
+Y dos insights que no son obvios y no son sobre código:
 
-> This is static analysis. It cannot prove a skill produces good output — it
-> proves a skill will not fail on a broken reference, a missing variable or a
-> function that does not exist.
-
-Check 2 is the one to say out loud: if `name` does not match the directory, **the
-harness never finds the skill** — it fails silently, forever, and looks like the
-model ignoring you. Check 5 catches the real rot in a markdown repo: a rule got
-renamed and four skills now point at nothing.
-
-**This is the single strongest addition available.** A QA talk that shows tests
-for the test setup closes its own loop.
-
-### 2. Read-only live smoke tests — `test-skills-live.sh`
-
-Exercises the read-only path of every integration each skill depends on, against
-the real systems, with the operator's own credentials, and three outcomes with
-explicit meanings:
-
-- **PASS** — the dependency answered as expected
-- **SKIP** — a precondition is absent (VPN down, value not configured). Not a bug.
-- **FAIL** — the dependency is reachable but behaved wrong. Investigate.
-
-Plus a safety contract stated in the header: it **never writes** — no build
-triggered, no deploy, no ticket labelled, no case created, no reviewer requested.
-Skills whose purpose *is* to write are covered only up to their pre-flight gates,
-and those are marked `WRITE-GATED` in the source.
-
-The SKIP-is-not-FAIL distinction is a small, real piece of test-design craft, and
-it is the same distinction the demo's `ci-failure-triage` skill makes about
-flakes. Same instinct, one level up.
-
-### 3. The secrets architecture
-
-- Credentials live in `~/.config/<toolkit>/secrets.env`, mode `0600`, **outside
-  the repo**. Nothing in the tree may contain a token.
-- Non-secret but machine- or team-specific values (org, repo, URLs, board and
-  project ids) live in a separate `site.env`, also outside the repo.
-- The repo ships only `*.env.example` templates.
-- One helpers script sources both and exposes functions, so skills never
-  hand-roll `curl` with inline credentials.
-
-And the rule that is worth the whole section:
-
-> **Never pass a token as a literal on a command line** — it is recorded in shell
-> history *and in agent transcripts.*
-
-That second clause is new information for most of the room. The transcript is a
-leak surface people have not thought about yet, and it is exactly the kind of
-thing this talk should be handing out.
-
-### 4. The config/site split — the mechanism that makes sharing possible
-
-> If a number, id, URL or path differs between teams or machines, it goes in
-> `site.env` and the skill reads the variable. Add the variable to
-> `site.env.example` in the same change.
-
-And `test-skills.sh` check 6 **enforces it**: a skill referencing an undeclared
-variable fails validation.
-
-This is the concrete answer to the deck's "lo genérico puede vivir en un repo
-aparte y compartible" slide. Right now that slide asserts shareability; this is
-the machinery that earns it. Without it, "shareable" means "everyone forks it and
-edits twelve hardcoded strings".
-
-### 5. The knowledge base as a structured artifact
-
-Not a notes file — a directory with a shape:
-
-- `INDEX.md` — a table of every entry: domain, **status**, tickets, one-line
-  summary
-- `TEMPLATE.md` — the entry skeleton, with typed frontmatter (`domain`,
-  `endpoints`, `platforms`, `regions`, `tickets`, `tags`, `status`,
-  `last_updated`, `related`)
-- a **status lifecycle**: `hypothesis` → `open` → `confirmed`, flipped forward
-  only when proven
-- `[[slug]]` cross-links between entries
-- fixed sections: Summary / What we learned / Evidence / How to apply to future
-  tickets / Open questions
-
-The status field is the beat: *"el agente puede escribir acá, pero tiene que
-marcar si lo confirmó o lo supone."* An agent-writable knowledge store that
-distinguishes verified from guessed is a QA artifact, not a wiki page.
-
-### 6. `Last verified: YYYY-MM-DD`
-
-Any claim about how an external system **currently** behaves carries a
-verified-on date in the body. One line per claim, and staleness becomes visible
-instead of silently rotting into a wrong instruction the agent follows
-confidently.
-
-Cheapest idea in the whole inventory. Steal it in five seconds.
-
-### 7. Distribution: the setup as an installable plugin
-
-`.claude-plugin/plugin.json` + `marketplace.json` + an `install.sh` that merges
-the settings fragment and symlinks the skills. Your cultivated setup stops being
-"my dotfiles" and becomes something a teammate installs.
-
-Ties the "repo aparte y compartible" slide to something concrete: not "copy these
-files", but `/plugin` and done. Also the honest counterweight — the deck already
-tells people to vet third-party plugins; here you are the third party.
-
-### 8. Slash commands wrapping skills
-
-`commands/review-regression.md`, with frontmatter `description` and
-`argument-hint`, `$1` for the build number, and this instruction in the body:
-
-> Invoke the `ci-regression-review` skill and follow its stages in order — **do
-> not improvise a shortcut analysis.** If no build number was given, list recent
-> runs, pick the most recent finished one matching the group, and say which one
-> you chose before analysing it. If more than one plausibly matches, ask rather
-> than guessing.
-
-Two things worth 30 seconds: a **command** is a typed entry point (`/review-regression 44`)
-while a **skill** is model-discovered — and the command's job here is to stop the
-agent from taking the cheap path through the skill it just invoked.
-
-### 9. Session mining — `scan_sessions.py`
-
-Reads the harness's own transcript files (JSONL, on disk, per project) and prints
-per recent session: branch, working directory, first task, last user turn, last
-assistant turn.
-
-Directly under two slides the deck already has: the conversation-mining note
-after Demo 6, and the background-agents item on the final slide. It is the proof
-that "pedile que escanee tus conversaciones pasadas" is not hand-waving — the
-transcripts are **files**, and files can be grepped, counted and summarized.
-
-### 10. Governance conventions worth quoting verbatim
-
-From the toolkit's own CONTRIBUTING, the four rules for contributing to the
-setup: **English only** · **no secrets, not even in an example** · **no personal
-data** (write "the operator", cite a PR number rather than a reviewer's name) ·
-**no site values hardcoded**.
-
-Then two agent-specific insights that are not obvious and are not about code:
-
-- **Example vs data.** A ticket id introduced by "e.g." is an example and must be
-  a placeholder — a real one reads as live state and rots. A ticket id that *is*
-  the content (the known-issues registry, a genuine dependency, the review a
-  convention came from) stays real; replacing it destroys the information the
-  artifact exists to carry. Test: *could a reader still act on the line with the
-  id removed?* If yes, it was an example.
-- **Deprecating something means deleting it.** Git history is the archive. A
-  `removed-*` or `old-*` directory is dead weight **an agent may still read and
-  act on.** This one is genuinely new for most people: dead code is a human
-  smell; dead *instructions* are an active hazard.
+- **Ejemplo vs. dato.** Un ticket id introducido por "e.g." es un ejemplo y va
+  como placeholder: uno real se lee como estado vivo y envejece. Un ticket id que
+  **es** el contenido (el registry de known issues, una dependencia real, el
+  review de donde salió una convención) se queda; reemplazarlo destruye la
+  información por la que el artefacto existe. Test: *¿podría el lector seguir
+  actuando sobre la línea sin el id?* Si sí, era un ejemplo.
+- **Deprecar es borrar.** El historial de git es el archivo. Un directorio
+  `removed-*` u `old-*` es peso muerto **que un agente igual puede leer y
+  ejecutar.** Esta es genuinamente nueva para casi todos: el código muerto es un
+  olor humano, las *instrucciones* muertas son un peligro activo.
 
 ---
 
-## If you only add three things
+## Si agregás sólo tres cosas
 
-Ranked by (stage value ÷ time to explain), for a deck that is already ~18 minutes
-over budget:
+Ranking por valor de escenario ÷ tiempo de explicar, para un deck que ya está
+~18 minutos pasado:
 
-1. **The permissions allow/ask/deny block.** One JSON screen, ~40 seconds, and it
-   makes the whole accountability thread mechanical instead of rhetorical.
-   Belongs in the appendix next to the hook anatomy.
-2. **`test-skills.sh`.** ~60 seconds. Tests for the test setup, in a QA talk. It
-   closes the loop the talk opens, and no other AI-for-testing talk is showing
-   this.
-3. **`regression-evidence-scope`.** ~45 seconds as a *nota al pasar* after Demo 3
-   or in the Q&A backup. It is the most QA-native artifact in the inventory: a
-   rule that encodes how much proof a change owes.
+| # | Qué | Cuánto | Dónde |
+|---|---|---|---|
+| 1 | El bloque `allow`/`ask`/`deny` | ~40 s | apéndice, al lado de la anatomía del hook |
+| 2 | `test-skills.sh` | ~60 s | tests para el setup de tests, en una charla de QA |
+| 3 | `regression-evidence-scope` | ~45 s | nota al pasar después de la Demo 3, o Q&A backup |
 
-Runners-up, cheap and quotable in one line each: `Last verified:` dates, the
-transcripts-are-a-leak-surface warning, and the `rules/user/` vs
-`rules/workspaces/` ratio as the concrete version of the context-cost argument.
+Suplentes, una línea cada uno: las fechas `Last verified:`, el aviso de que los
+transcripts son superficie de leak, y la proporción 4 globales / 8 por repo como
+versión concreta del argumento de costo de contexto.
 
-## Deliberately not showable
+## Deliberadamente no mostrable
 
-- **The knowledge-base entries themselves.** The structure is showable, the
-  content is pure product internals — endpoint shapes, gateway behaviour
-  differences, region enforcement, account provisioning. Show `TEMPLATE.md` and
-  a redacted `INDEX.md` row shape, never a real entry.
-- **`check-repo-policy.sh`.** Validates a repo name against the org's naming
-  policy: approved suffixes, a redundant-word blocklist that is literally a list
-  of the employer's brands, discouraged internal abbreviations. The *pattern* is
-  great — encode your org's written policy as a script the agent runs before
-  creating a repo — but every data table in it is identifying. Describe the
-  pattern in one sentence; do not put the file on screen.
-- **The repo-scoped rules that are all product knowledge**
-  (test-management conventions with real project and suite ids, the shared-code
-  ownership map, the CI parameter reference). Their *shape* is the reusable part
-  and it is already covered above.
-- **The specific reporting defect behind the reconciled-counts step.** The
-  toolkit names the exact mechanism and the exact multiplier, because the skill
-  needs it to do arithmetic. That is a live bug in a team's own tooling and it
-  is not the author's to put on a projector. Keep the step generic — *check the
-  totals for internal inconsistency and adjust* — and do not lift the mechanism
-  back out of the toolkit on a future pass.
-- **The toolkit's name and the sibling repo's name.** See the sanitization
-  contract at the top.
+- **Las entradas del knowledge base.** La estructura sí; el contenido es
+  internals del producto puros. Mostrá `TEMPLATE.md` y la forma de una fila del
+  índice, nunca una entrada real.
+- **El defecto de reporting detrás del paso de totales reconciliados.** El
+  toolkit nombra el mecanismo exacto y el multiplicador exacto porque el skill
+  necesita eso para hacer la aritmética. Es un bug vivo en la herramienta de un
+  equipo y no es del autor para proyectarlo. El paso queda genérico —*cross-check
+  de inconsistencias internas y ajustá*— y **no se vuelve a levantar el mecanismo
+  del toolkit en un pase futuro.**
+- **El validador de nombres de repo contra la política del org.** El patrón es
+  bueno (codificar la política escrita de tu organización como un script que el
+  agente corre), pero cada tabla de datos que tiene es identificatoria: sufijos
+  aprobados, blocklist de palabras redundantes que es literalmente la lista de
+  marcas de la empresa. Describí el patrón en una oración; el archivo no va a
+  pantalla.
+- **Las rules por repo que son puro conocimiento de producto** (convenciones del
+  gestor de test cases con ids reales, el mapa de ownership del código
+  compartido, la referencia de parámetros de CI). Su *forma* es la parte
+  reutilizable y ya está arriba.
+- **El nombre del toolkit y el del repo hermano.** Ver la sanitización arriba.
