@@ -213,9 +213,15 @@ section count, not eyeballed):
   `skill-templates/`, `mocks/` and `evolution-timeline.md`, then a block
   explaining `docs/showable-inventory.md` — what it is (a sanitized catalogue of
   pieces from the author's real work setup, the ones that did not fit in 30
-  minutes) and how to use it (find your pain in the "por qué mostrarla" column →
+  minutes) and how to use it (find your pain in the "por qué existe" column →
   copy the piece → swap the generic names for yours → start from the
-  "si agregás sólo tres cosas" table). The slide names its five categories —
+  "si copiás sólo tres cosas" table).
+
+  **That document is written to the audience, not to the presenter** (2026-08-20).
+  Its reader is someone who came out of the talk and cloned the repo, so every
+  row answers "why does this piece exist / what pain does it solve" rather than
+  "why would this show well on a slide". Keep it that way: the presenter-facing
+  notes live in STATUS and the decision log. The slide names its five categories —
   rules, skills, **agentes**, hooks, permisos — and "agentes" is deliberate: the
   final main-flow slide says *"los tuyos los escribís vos"* without showing one,
   and the inventory is where the worked examples are. Not a Q&A answer, so it is counted

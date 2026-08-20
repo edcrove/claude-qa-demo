@@ -190,8 +190,9 @@ relevance" over code that does not sort, a `toBeDefined()`-only test, and a
 - `docs/` — `STATUS.md` (anchor, environment traps, pending decisions),
   `talk-design.md` (full design + slide map), `decision-log.md` (real
   history, newest entries in Spanish), `runbook.md` (per-scene stage script),
-  `showable-inventory.md` (sanitized catalogue of material from the author's
-  private toolkit, with a ranked shortlist of what to actually add), this file
+  `showable-inventory.md` (sanitized catalogue of the author's real work setup —
+  **written to the audience, not to the presenter**: each row answers what pain
+  the piece solves, and it closes on what to copy first), this file
 - `slides/slides.md` — the whole deck (Marp, Spanish); `slides/themes/`,
   `slides/diagrams/`, `slides/img/` are its inputs; the four
   `slides-{dark,light}-{16x9,16x10}.pdf` are its versioned outputs

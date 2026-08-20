@@ -1290,3 +1290,46 @@ El repo pasa de 5 a **6 skills**. La sexta no es un workflow de QA y se dice as�
 en `CLAUDE.md`, en `SOURCES.md` y en la slide del mapa del repo: *"una es cómo se
 edita este deck"*. Que es, probablemente, la mejor prueba de la tesis que el repo
 puede ofrecer sin decir una palabra más.
+
+### El inventario cambió de destinatario
+
+Estaba escrito para el autor: *"por qué mostrarlo"*, *"si agregás sólo tres
+cosas"*, *"deliberadamente no mostrable"*, estimaciones en segundos de escenario,
+referencias a en qué slide iría cada pieza. Un doc de preparación de charla.
+
+Pero el que lo va a abrir es otra persona: alguien que salió de la charla y clonó
+el repo para robarse ideas. Reescrito entero para ese lector.
+
+Los cambios que importan, más allá del tono:
+
+- **La tercera columna pasó de "por qué mostrarlo" a "por qué existe".** No es
+  cosmético: obliga a nombrar el **dolor concreto** que hizo aparecer cada pieza,
+  que es la única información con la que el lector puede decidir si le sirve. Y
+  es la tesis del deck aplicada al doc — si reconocés el dolor, copiá la pieza; si
+  no, salteala.
+- **"Si agregás sólo tres cosas" → "si copiás sólo tres cosas"**, con esfuerzo de
+  adopción ("veinte minutos, una vez" · "media tarde") en vez de segundos de
+  escenario, y una columna de qué te da.
+- **"Deliberadamente no mostrable" → "lo que no publiqué, y por qué".** La misma
+  lista, pero deja de ser mi checklist de sanitización y pasa a ser consejo para
+  alguien que va a publicar su propio setup: qué hay que decidir *antes* de subir
+  el repo.
+- **La sección de sanitización dejó la tabla de sustituciones** —que era para mí—
+  y quedó en la lección: una promesa de sanear no alcanza, necesitás enforcement.
+  Con los dos errores que me costó escribirlo (nada de tres letras o menos en la
+  blocklist; escapá los puntos de los patrones de mail).
+- **Se fue la sección "ya aplicado al deck"**, que era pura historia de
+  construcción del deck y al lector no le dice nada.
+- **Los "beats" de escenario pasaron a takeaways.** La misma frase, sin el
+  andamiaje de *"vale 20 segundos"* o *"decilo al pasar"* alrededor.
+- Y el catálogo cierra con lo único que sirve si no copiás nada: **la próxima
+  corrección que repitas por tercera vez, escribila.**
+
+**Y rompió dos referencias del deck**, que es exactamente lo que la skill
+`talk-deck-editing` avisa que pasa: la slide del mapa del repo mandaba a la
+columna *"por qué mostrarla"* y a la tabla *"si agregás sólo tres cosas"*, y
+ninguna de las dos se llama más así. Arregladas.
+
+Queda un wart: el archivo se sigue llamando `showable-inventory.md`, y
+"showable" es el encuadre viejo —lo que yo puedo mostrar en pantalla—. Renombrarlo
+toca la slide que imprime el path, así que se decide aparte.

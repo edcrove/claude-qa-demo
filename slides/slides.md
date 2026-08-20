@@ -1261,6 +1261,6 @@ La pirámide es el piso, no el techo. Otras piezas que hoy no demostré:
 permisos de mi setup **de trabajo real**, sanitizado: qué hace cada pieza y por
 qué existe. Es lo que no entró en 30 minutos.
 
-**Cómo usarlo:** buscá tu dolor en la columna *"por qué mostrarla"* → copiá la
-pieza → reemplazá los nombres genéricos (`api-tests`, `PROJ-1234`) por los tuyos.
-Empezá por la tabla **"si agregás sólo tres cosas"**.
+**Cómo usarlo:** buscá tu dolor en la columna *"por qué existe"* → copiá la pieza
+→ reemplazá los nombres genéricos (`api-tests`, `PROJ-1234`) por los tuyos.
+Empezá por la tabla **"si copiás sólo tres cosas"**.
