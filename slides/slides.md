@@ -474,16 +474,15 @@ propia cicatriz — `no-parallel-ci`, los 90 minutos del principio.
 
 # Un skill no siempre ejecuta: a veces delega
 
-`multi-agent-pr-review` es un `SKILL.md` como cualquier otro — markdown en tu
-repo, la misma pirámide. Lo distinto es lo que hace adentro: en vez de correr
-pasos él mismo, **despacha subagentes.** Cada uno con su propio contexto: no ve
-tu historial, y al principal solo le vuelve el resumen.
+El skill de review es un `SKILL.md` como cualquier otro. Lo distinto es lo que
+hace adentro: en vez de correr pasos él mismo, **despacha subagentes** — cada uno
+con su contexto propio: no ve tu historial, y al principal solo vuelve el resumen.
 
 ![w:900 center](diagrams/subagentes.svg)
 
-**Antes de que un peer humano vea el PR, ya pasó por 5 revisores especializados**,
-cada uno cazando su propia clase de bug. Al peer le queda lo que un especialista
-de tipos no puede ver: arquitectura.
+**Antes de que un peer humano vea el PR, ya pasó por 5 revisores especializados**
+— y son **míos**: saben que el id del caso es el prefijo del método y qué AC pedía
+el ticket. Eso no lo sabe ningún plugin.
 
 **Lo que no cambia: quien aprueba sigue siendo responsable de lo que aprueba.**
 
@@ -654,7 +653,8 @@ PR sembrado con 5 bugs distintos (`mocks/github/pr-7.diff`):
 - `pr-test-analyzer` → test que solo verifica `toBeDefined()`
 - `code-reviewer` → `// TODO` en producción
 
-**Dispatch:** 5 agentes en paralelo, **un solo mensaje**.
+**5 en paralelo, un solo mensaje.** Acá corren los **genéricos** de un plugin:
+la versión simplificada del demo, para que ande en cualquier repo.
 
 ---
 
@@ -664,11 +664,11 @@ PR sembrado con 5 bugs distintos (`mocks/github/pr-7.diff`):
   <div class="gh-bar">claude · comentó en <b>#7</b> · hace 1 minuto</div>
   <div class="gh-body">
     <div class="gh-h">Review summary</div>
-    <div class="gh-row"><span class="gh-b">BLOCKER</span> <b class="gh-c">catch (e) { return [] }</b> — un fallo de red vuelve como lista vacía <i class="gh-w">silent-failure-hunter</i></div>
-    <div class="gh-row"><span class="gh-s">SUGGESTION</span> <b class="gh-c">as Channel</b> afirma un tipo que puede no existir: devuelve <b class="gh-c">undefined</b> <i class="gh-w">type-design-analyzer</i></div>
-    <div class="gh-row"><span class="gh-s">SUGGESTION</span> el comentario promete <b class="gh-c">sorted by relevance</b> — la función no ordena <i class="gh-w">comment-analyzer</i></div>
-    <div class="gh-row"><span class="gh-s">SUGGESTION</span> el único test nuevo asserta <b class="gh-c">toBeDefined()</b>: pasa con el channel equivocado <i class="gh-w">pr-test-analyzer</i></div>
-    <div class="gh-row"><span class="gh-n">NITPICK</span> <b class="gh-c">// TODO: should probably be an enum</b> quedó en producción <i class="gh-w">code-reviewer</i></div>
+    <div class="gh-row"><span class="gh-b">BLOCKER</span> <b class="gh-c">catch (e) { return [] }</b> — un fallo de red vuelve como lista vacía <i class="gh-w">fallas silenciosas</i></div>
+    <div class="gh-row"><span class="gh-s">SUGGESTION</span> <b class="gh-c">as Channel</b> afirma un tipo que puede no existir: devuelve <b class="gh-c">undefined</b> <i class="gh-w">diseño de tipos</i></div>
+    <div class="gh-row"><span class="gh-s">SUGGESTION</span> el comentario promete <b class="gh-c">sorted by relevance</b> — la función no ordena <i class="gh-w">comentarios</i></div>
+    <div class="gh-row"><span class="gh-s">SUGGESTION</span> el único test nuevo asserta <b class="gh-c">toBeDefined()</b>: pasa con el channel equivocado <i class="gh-w">diseño de tests</i></div>
+    <div class="gh-row"><span class="gh-n">NITPICK</span> <b class="gh-c">// TODO: should probably be an enum</b> quedó en producción <i class="gh-w">código</i></div>
     <div class="gh-det">▸ Per-axis details</div>
   </div>
 </div>
@@ -684,11 +684,9 @@ el PR, la respuesta soy yo — "no sé, lo hizo la IA" no es una respuesta.**
 
 Buena parte sí — y **el linter no se saca**: es más barato y no se cansa.
 
-De las 5 cosas del reporte, un linter agarra **dos**: el `catch` que se traga
-la excepción (`S2486`) y el `// TODO` en producción (`S1135`). Las otras tres
-hay que leerlas: el comentario promete *"sorted by relevance"* y la función no
-ordena, el `as Channel` afirma un tipo que puede no existir, y el
-`toBeDefined()` pasa igual con el channel equivocado.
+De las 5 cosas del reporte, un linter agarra **dos**: el `catch` que se traga la
+excepción (`S2486`) y el `// TODO` (`S1135`). Las otras tres —el comentario que
+miente, el cast que miente, el test que no prueba nada— hay que **leerlas**.
 
 **El linter matchea patrones. El subagente lee.** Van juntos.
 
@@ -1238,7 +1236,7 @@ La pirámide es el piso, no el techo. Otras piezas que hoy no demostré:
   incómoda: si nadie lo leyó, ¿quién firma?
 - **Agentes como piezas con función propia** — un agente no es "otro Claude":
   se le define su rol, sus tools y su criterio, y se compone como un skill. Los
-  5 de la Demo 4 son eso, pero vienen de un plugin — los tuyos los escribís vos
+  cinco del diagrama son eso, y escribir uno propio es un archivo de markdown
 
 **Ninguna reemplaza a la pirámide: la usan.**
 
@@ -1251,7 +1249,7 @@ La pirámide es el piso, no el techo. Otras piezas que hoy no demostré:
 | Path | Qué es |
 |---|---|
 | `CLAUDE.md` | lo que se carga en **toda** sesión: convenciones + los `@` imports |
-| `.claude/rules/` · `.claude/skills/` | 3 rules siempre cargadas · 5 skills que cargan sólo cuando hacen falta |
+| `.claude/rules/` · `.claude/skills/` | 3 rules siempre cargadas · 6 skills que cargan cuando hacen falta — una es cómo se edita este deck |
 | `.claude/settings.json` | el hook de typecheck |
 | `memory/` | lo que sobrevive al `/clear` + el registry de known issues |
 | `skill-templates/` | plantillas vacías: tu primer skill, rule y hook |

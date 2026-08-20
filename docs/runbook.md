@@ -16,7 +16,7 @@ Inside the session, run `/context` once and confirm **only the repo's
 a mid-tier model; switch up with `/model` before Demo 4 if desired.
 
 **`/context` is also a demo asset, not just a pre-flight check.** It shows the
-3 rules and `memory/MEMORY.md` loaded, and the 5 skills *not* loaded — which is
+3 rules and `memory/MEMORY.md` loaded, and the 6 skills *not* loaded — which is
 exactly the pyramid's distinction, visible on screen. If you show `/context` at
 all on stage, say that out loud. (Until 2026-08-13 `CLAUDE.md` `@`-imported every
 `SKILL.md`, so `/context` would have shown all skills always loaded and
@@ -85,6 +85,13 @@ the rule catches *the agent*, not the human.
 **Expected:** invokes `multi-agent-pr-review` → dispatches the 5
 `pr-review-toolkit` subagents **in parallel in a single message** → aggregates
 into one comment (Blockers / Suggestions / Nitpicks + per-axis details).
+
+**Say the framing, it is on the slide:** the fan-out diagram earlier in the deck
+shows the presenter's *own* five reviewers (código, framework de tests, sync de
+casos, cobertura de AC, comentarios). What runs here is the **simplified
+version** — five generic reviewers from a public plugin, so the repo works in
+anyone's project. Do not let the room think the generic five are the ones you
+use at work; the slide says so, say it too.
 
 **Watch for:** the 5 seeded bugs, one per specialist: swallowed catch
 (`return []`), lying `as Channel` cast, comment claiming "sorted" over unsorted

@@ -74,6 +74,18 @@ The deck (see `slides/slides.md`) applies these deliberate storytelling devices:
    manual day, before any of what the talk goes on to show. "antes de todo esto"
    rather than "antes de IA" because the slide immediately before it already
    uses that phrase for the tooling — this one is what that pipeline *cost*.
+9. **The real thing in the diagram, the simplified thing in the demo**
+   (2026-08-20). The fan-out diagram on the delegation slide shows the
+   presenter's own five PR reviewers — código, framework de tests, sync de casos,
+   cobertura de AC, comentarios — because that is what the concept actually looks
+   like in their work. Demo 4 then runs the **generic** five from a public
+   plugin, framed on the slide as *"la versión simplificada del demo, para que
+   ande en cualquier repo"*. This resolves a contradiction the deck had carried:
+   claiming your own agents while the stage dispatches a plugin's. It also puts
+   the cultivation thesis on agents themselves — the plugin is the on-ramp, your
+   own reviewers are where you end up — and it costs no extra slide, because the
+   line it needed replaced one that was already there.
+
 5. **The agent loses on stage.** In Demo 3 Claude *tries* to trigger CI and the
    rule blocks it (build 43 is RUNNING on stage in the mock). Guardrails are
    shown catching the agent, not just the human — this inoculates against

@@ -134,6 +134,15 @@ with a ready-made kickoff prompt. Regenerate it whenever the state changes.
   **"Qué abrir cuando clones el repo"** as the last slide: a path→purpose table
   plus what `docs/showable-inventory.md` is and how to use it. Deck 46 → **48**,
   all four builds at **0/48 overflowing**.
+- **Own PR reviewers now in the deck (2026-08-20).** The deck used to claim its
+  own agents while the stage dispatches a plugin's five. Fixed by placing them
+  rather than choosing: the **fan-out diagram** (before the demos) shows the real
+  five — código, framework de tests, sync de casos, cobertura de AC,
+  comentarios — and **Demo 4 stays on the generic plugin five**, now labelled on
+  the slide as *"la versión simplificada del demo, para que ande en cualquier
+  repo"*. Zero new slides, zero added time: the linter slide was compressed to
+  pay for it, and the last backup slide gave up its now-redundant clause.
+  `slides/diagrams/subagentes.mmd` was relabelled and re-rendered.
 - **Showable inventory compiled (2026-08-20):**
   [`showable-inventory.md`](showable-inventory.md) catalogues what the author's
   private toolkit has that the deck could use — sanitized, with a substitution

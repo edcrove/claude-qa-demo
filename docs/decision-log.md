@@ -1181,3 +1181,112 @@ Lo que entró:
 
 Y quedó anotada una mejora de la Demo 4 que no cuesta una slide: mencionar en una
 frase que los reviewers propios llevan las convenciones de tu equipo.
+
+### El inventario completo, y los cinco reviewers propios entran al deck
+
+**El inventario ahora lista todo, incluido lo que ya está en el demo.** Venía
+funcionando como "el delta contra el deck", y eso escondía piezas que el autor
+usa todos los días: el planificador de una corrida no aparecía por ningún lado.
+Las skills quedaron agrupadas por lo que hacen —planificar, correr en local, CI,
+review, conocimiento, panel y deploy— con las que ya están en el demo marcadas.
+Dieciocho en total, contra siete de antes.
+
+Lo que apareció al listar en serio:
+
+- **`ticket-execution-plan`, el planificador.** Identifica clases y grupos de
+  test, arma el comando local por plataforma, escribe el plan en el scratchpad y
+  genera el script de trigger. El detalle que lo hace un plan y no una lista:
+  **resuelve el ambiente desde el estado del ticket de desarrollo.**
+- **`multi-ticket-work-plan`**, y su decisión de diseño: el template del doc
+  incluye a propósito un ticket cuyo dev **no** está Done, como segundo ejemplo.
+  Enseña la forma de la excepción, no sólo la del caso feliz.
+- **`local-functional-tests`**, que tiene los mejores títulos del inventario:
+  *"BUILD SUCCESS no significa nada"* (el pom trae `testFailureIgnore=true`, así
+  que Maven reporta éxito con fallas y con cero tests) y *"¿la falla es mía o del
+  ambiente?"* (un `5xx` upstream es el ambiente; compará contra un build reciente
+  del mismo env antes de debuggear).
+- **`test-case-manager-workflow`**, cuya primera línea es el hallazgo: **el MCP
+  conectado no expone ninguna tool**, así que todo va por la API REST. Un skill
+  que documenta que una integración conectada es inservible y cuál es el camino
+  que sí funciona.
+- **`preprod-deploy`**, el ejemplo más puro de "un skill es donde vive el
+  gotcha": los parámetros del job son dinámicos, y si el job no fue consultado
+  por API en esta sesión el trigger **descarta todos los parámetros en silencio**
+  y el build muere mucho después con un NullPointerException. Y el primado no es
+  un no-op: corre el pipeline completo con los defaults y *los deploya*.
+
+### Y el deck: lo real en el diagrama, lo simplificado en la demo
+
+El deck venía afirmando agentes propios mientras el escenario despacha los de un
+plugin. La solución no fue elegir uno de los dos, fue **ponerlos en su lugar**:
+
+- **El diagrama de fan-out** —el que aparece antes de las demos, cuando se
+  explica que un skill puede delegar— ahora muestra **los cinco reales**: código,
+  framework de tests, sync de casos, cobertura de AC, comentarios. Etiquetas más
+  cortas que los slugs del plugin que había antes, así que el diagrama quedó más
+  chico, no más grande.
+- **La Demo 4 sigue corriendo los genéricos**, y ahora la slide lo dice: *"acá
+  corren los genéricos de un plugin: la versión simplificada del demo, para que
+  ande en cualquier repo"*. El escenario y la slide dejan de contradecirse.
+- **El reporte agregado cambió las atribuciones** de slugs del plugin
+  (`silent-failure-hunter`) a roles legibles (`fallas silenciosas`). Un reporte lo
+  lee una persona: los nombres de máquina van en el dispatch, los humanos en el
+  reporte.
+- **La slide del linter se acortó.** Re-listaba los cinco hallazgos que la slide
+  anterior acababa de mostrar; ahora dice *"el comentario que miente, el cast que
+  miente, el test que no prueba nada"* y listo. Dos líneas menos, que pagan las
+  que se agregaron en el diagrama.
+- **Y la última slide de backup soltó su cláusula**, porque el mensaje se mudó al
+  flujo principal donde sí se ve.
+
+Neto: **cero slides nuevas, cero tiempo agregado**, y de paso la tesis de
+cultivar aplicada a los agentes mismos — el plugin es la rampa de entrada, los
+propios son donde terminás.
+
+**Nota de build:** regenerar los diagramas movió también
+`pipeline-antes.svg`/`-light.svg` sin que su `.mmd` cambiara — la versión de
+Mermaid instalada recalcula la geometría (anchos de nodo, coordenadas de los
+paths). Se commitean igual **a propósito**: si se revirtiera uno, el deck
+quedaría con dos diagramas renderizados por versiones distintas, y las
+diferencias de padding y métricas de fuente entre slides son exactamente lo que
+esta semana se estuvo corrigiendo a mano.
+
+### Una skill nueva: las reglas de cómo se edita este deck
+
+`.claude/skills/talk-deck-editing/SKILL.md`. Es el repo comiendo de su propia
+cocina: se cultivó exactamente como el deck dice que se cultiva cualquier cosa —
+las mismas correcciones, repetidas, hasta que valieron la pena escribirlas. Cada
+regla que tiene está porque ya salió mal una vez, y el decision-log tiene el
+incidente de cada una.
+
+Qué recoge, agrupado por cómo falla:
+
+- **El gate, que no es opcional.** Marp recorta en vez de quejarse. Y el checker
+  **falla a propósito ante una imagen que no cargó**, porque una imagen rota mide
+  0 px y eso se leería como "entra todo" en una slide que se desborda.
+- **Contar `<section>` del HTML, nunca los `---` del markdown.** Los
+  delimitadores del frontmatter y los separadores de slide son el mismo token: la
+  cuenta a mano da mal.
+- **Exportar dentro de `slides/`.** Los paths a `diagrams/` e `img/` son
+  relativos; un nivel más abajo dejan de resolver, los PDF sobreviven y el HTML
+  publica imágenes rotas sin decir nada.
+- **Las fallas silenciosas, por tipo**: línea en blanco adentro de un `<svg>`
+  inline (Marp cierra el tag ahí y el resto se renderiza como texto suelto), una
+  clase de CSS nueva sin su override en el tema claro, agrandar una clase
+  compartida entre dos slides, un `-light.svg` que falta, los emoji que Marp
+  reescribe a `<img>` de CDN, y la última fila de una tabla que no tiene borde.
+- **Los callbacks se editan de a pares**, con la tabla de qué línea cita a cuál.
+  Un cambio de un solo lado no rompe el render: rompe el sentido, en silencio.
+- **Las afirmaciones se verifican, no se recuerdan.** Sobre el repo → leé el
+  repo. Sobre una herramienta → leé la herramienta. Sobre lo que hace la demo en
+  vivo → la slide y el escenario tienen que coincidir.
+- **Agregar una slide al flujo principal cuesta tiempo**: decí cuántos segundos,
+  preferí reemplazar antes que agregar, y pagalo comprimiendo algo.
+- **Y tres "nunca"**: nunca `@`-importar las skills desde `CLAUDE.md`, nunca
+  agregarle una excepción a `check-leaks.sh` para que pase un texto, y nunca
+  declarar un build verificado sin la salida del gate a la vista.
+
+El repo pasa de 5 a **6 skills**. La sexta no es un workflow de QA y se dice así
+en `CLAUDE.md`, en `SOURCES.md` y en la slide del mapa del repo: *"una es cómo se
+edita este deck"*. Que es, probablemente, la mejor prueba de la tesis que el repo
+puede ofrecer sin decir una palabra más.

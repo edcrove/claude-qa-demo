@@ -35,7 +35,7 @@ automation setup is not designed up front — it is cultivated.** The mechanism
 is the promotion pyramid: `prompt suelto → memory → skill → rule → hook`; a
 correction repeated 3 times is a promotion waiting to happen. The companion
 repo (this one) is public-ready, fully offline, and contains everything shown
-on stage: a minimal TypeScript API, 5 skills, 3 rules, 1 hook, JSON mocks for
+on stage: a minimal TypeScript API, 6 skills, 3 rules, 1 hook, JSON mocks for
 Jira/Jenkins/GitHub, a known-issues registry, the Marp deck, and the scripts
 that reset and protect the live demo.
 
@@ -195,7 +195,7 @@ relevance" over code that does not sort, a `toBeDefined()`-only test, and a
 - `slides/slides.md` — the whole deck (Marp, Spanish); `slides/themes/`,
   `slides/diagrams/`, `slides/img/` are its inputs; the four
   `slides-{dark,light}-{16x9,16x10}.pdf` are its versioned outputs
-- `.claude/skills|rules/`, `.claude/settings.json` — the 5 skills, 3 rules,
+- `.claude/skills|rules/`, `.claude/settings.json` — the 6 skills, 3 rules,
   typecheck hook
 - `memory/` — `MEMORY.md` index + known-issues registry + seed feedback memory
 - `mocks/` — DEMO-100 ticket, builds 42/43/44, PR #7 diff

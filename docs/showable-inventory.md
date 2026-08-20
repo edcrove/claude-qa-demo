@@ -124,16 +124,56 @@ Es la versión mecánica del argumento de costo del deck. En el set real son
 
 ## Skills
 
+**El inventario es completo a propósito**, incluidas las que ya están en el repo
+del demo — van marcadas. Así se ve el conjunto, no sólo el delta.
+
+### Planificar
+
+| Skill | Qué hace | Por qué mostrarlo |
+|---|---|---|
+| `ticket-coverage-gap-analysis` | Trae los AC del ticket, greppea las clases y los métodos de test relacionados, **mapea cada test al AC que cubre** y reporta lo que falta. | **Ya en el demo** (es la Demo 1). La real tiene una sección extra que la del demo no: *patrones comunes de gap de cobertura* — el catálogo de lo que típicamente falta, para no redescubrirlo cada vez. |
+| `ticket-execution-plan` | El planificador de una corrida: identifica las clases y grupos de test que aplican, arma **el comando local por plataforma**, escribe el plan en el `scratchpad/` gitignoreado y genera el script de trigger de CI. | Y el detalle que lo hace un plan y no una lista: **resuelve el ambiente desde el estado del ticket de desarrollo.** Si el ticket dev está Done, la branch ya está mergeada y va contra stage; si no, contra el ambiente de la branch. Es una decisión derivada, no un parámetro que le pasás. |
+| `multi-ticket-work-plan` | Lo mismo para varios tickets a la vez: los trae uno por uno, inventaría los tests que ya existen, define la **matriz de dispositivos** y escribe un plan único con el orden. | El template del doc incluye a propósito **un ticket cuyo dev NO está Done**, como segundo ejemplo. Enseña la forma de la excepción, no sólo la del caso feliz — que es la diferencia entre un skill y un tutorial. |
+| `ticket-to-tests-workflow` | El compuesto: ticket → plan → matriz de coverage → implementar → crear los casos en el gestor → mapear ids → PR. | Una línea, como ejemplo de "los skills se componen en pipeline". Demasiado grande para demostrar. |
+
+### Correr y verificar en local
+
+| Skill | Qué hace | Por qué mostrarlo |
+|---|---|---|
+| `local-build-gate` | Typecheck + tests locales antes de disparar CI. | **Ya en el demo** (es la Demo 3, y el origen del hook de typecheck). |
+| `local-functional-tests` | Corre la suite funcional en local con la config equivalente a CI, sobre clases ya compiladas, para esquivar un cuelgue del compilador. | **El mejor conjunto de títulos del inventario, y los tres son craft de QA puro.** *"BUILD SUCCESS no significa nada"*: el pom trae `testFailureIgnore=true` y `failIfNoTests=false`, así que Maven reporta éxito con fallas **y con cero tests** — hay que leer la línea `Tests run: N` y confirmar que N es el esperado; el runner sale con código 2 en "no corrió ningún test" justamente para que no sea silencioso. *"¿La falla es mía o del ambiente?"*: greppeá el status upstream, un `5xx` es el ambiente; compará contra un build reciente del mismo env; re-corré el método a los minutos. Y *"cómo elegir un subconjunto que sabés verde"*. |
+| `local-ci-compile` | Replica el compile de CI local, offline, en un `git worktree` limpio para que los untracked no causen errores de clase duplicada. | Patrón genérico, y el detalle del worktree no es obvio. |
+
+### CI
+
+| Skill | Qué hace | Por qué mostrarlo |
+|---|---|---|
+| `ci-build-trigger` | Arma y corre el script de trigger: carga de credenciales, crumb de CSRF, POST a `buildWithParameters`, referencia completa de parámetros, y cómo leer el resultado. | Lo primero que hace es **llamar al guard de no-paralelo**. La rule le habla al agente; el script corre igual si el trigger lo dispara una persona. Las dos capas, visibles en el mismo skill. |
+| `ci-failure-triage` | Clasifica las fallas de un build en regresión real / flake conocido / infraestructura, contra el registry. | **Ya en el demo** (es la Demo 5). |
+| `known-issues-registry-update` | Agrega al registry un flake confirmado: nombre del test, firma de la falla, frecuencia, builds de primera y última aparición. | **Ya en el demo.** Y el detalle que sí conviene decir: pide **2+ apariciones** — una sola falla nunca es un flaky test. |
+| `ci-regression-review` | Produce un **veredicto, no una lista**: (1) totales reconciliados —cross-check de inconsistencias internas antes de citar un número, y decís el crudo y el corregido—, (2) clusters por causa raíz y no por clase de test, (3) split por equipo derivado del package, (4) clasificación de skips, (5) si el release es realmente culpable, reproducido contra prod. | El punto 1. Todo pipeline de reporting junta rarezas, y el número del dashboard es el que termina en un status update. *"Un skill también es donde guardás cómo se leen de verdad los números de tu propio reporte."* |
+
+### Review
+
+| Skill | Qué hace | Por qué mostrarlo |
+|---|---|---|
+| `pr-review-domain-agents` | Despacha **cinco reviewers propios en paralelo** (ver *Agentes*) y después aplica dos **gates bloqueantes calculados desde los paths tocados**: si algún archivo cae fuera del árbol de tu equipo, no es un merge solo tuyo — pide review del equipo dueño, aviso en el canal compartido y un chequeo de si el fix podía portarse a tu propio árbol; y si toca código común, exige la evidencia de regresión completa. Cierra con reporte unificado y **pregunta qué aplicar**. | **Ya en el demo** (es la Demo 4) — pero el demo despacha los reviewers **genéricos de un plugin**. Lo que agrega el real son los gates: no son opiniones, son decisiones mecánicas sacadas de la lista de archivos. Y el orquestador tiene instrucción de **liderar con el gate cross-team** — *un cambio en código compartido es un bloqueante de merge, no un nit*. |
+| `board-pr-triage` | El dashboard de **las PRs del equipo que no son tuyas**: arranca de la JQL del board, filtra por keyword, busca las PRs abiertas linkeadas a esos tickets, **excluye las tuyas**, y por cada una reporta estado en Jira, aprobaciones contra el mínimo de merge, estado de checks y **si tiene evidencia de CI**. Termina en una decisión por PR: pedir reviewers con `gh`, o correrle la review con agentes. | El complemento de la Demo 4: esa revisa *una* PR que le señalás, esta gobierna **la cola del equipo**. Tres beats, elegí uno: (1) **contar aprobaciones bien** — la API te da *eventos* de review, no estado, así que hay que quedarse con el más reciente por reviewer y tratar un `CHANGES_REQUESTED` abierto como no-mergeable; el skill es donde vive esa reducción. (2) **"No inventes la JQL"** — el skill le dice al agente que la copie de Board settings → Filter, porque un agente arma una JQL plausible y equivocada sin dudar. (3) **el dashboard termina en una acción**, y una de las dos opciones es invocar otro skill: composición visible. |
+
+### Conocimiento y referencia
+
 | Skill | Qué hace | Por qué mostrarlo |
 |---|---|---|
 | `feature-knowledge-base` | **RECALL** al empezar un ticket: greppea la base por endpoint/dominio/región, lee los matches, sigue los `[[cross-links]]` y te dice qué se sabe *antes* de proponer trabajo. **CAPTURE** después de analizar: copia el template, llena el frontmatter, escribe Summary / Qué aprendimos / Evidencia / Cómo aplicarlo. | El más fuerte de los nuevos, y el único que cambia qué cree la audiencia que *es* un skill: memoria durable que **no** es la feature de memory del harness. Archivos planos, greppeables, compartidos entre dos herramientas distintas. Su barra de calidad tiene la frase: *"una entrada que sólo registra qué pasó es un changelog, no conocimiento."* |
-| `ci-regression-review` | Produce un **veredicto, no una lista**: (1) totales reconciliados —cross-check de inconsistencias internas antes de citar un número, y decís el crudo y el corregido—, (2) clusters por causa raíz y no por clase de test, (3) split por equipo derivado del package, (4) clasificación de skips, (5) si el release es realmente culpable, reproducido contra prod. | El punto 1. Todo pipeline de reporting junta rarezas, y el número del dashboard es el que termina en un status update. *"Un skill también es donde guardás cómo se leen de verdad los números de tu propio reporte."* |
-| `session-status-panel` | Con la palabra **"status"** sola, responde tres cosas a la vez: qué está haciendo cada sesión de agente abierta del proyecto (branch, último turno, cuál te dejó una pregunta sin responder), qué hace CI (builds en vuelo y recién terminados), y qué llegó a **Slack** en los canales configurados — sólo lo que te necesita: menciones, pedidos de release, preguntas sobre tus PRs, incidentes. Cierra con **una** acción recomendada, no una lista. | Va con la slide de background agents: cuando corrés más de una sesión necesitás **una vista sobre tus agentes**, y esa vista es un skill. Dos detalles de craft para señalar: el skill **define su formato de salida** (tres bloques, el más accionable primero, sin preámbulo) porque lo vas a leer veinte veces al día; y `"check again"` significa *diffear contra lo último que reportaste y liderar con lo que cambió* — si no cambió nada, decir exactamente eso en una línea. |
-| `board-pr-triage` | El dashboard de **las PRs del equipo que no son tuyas**: arranca de la JQL del board, filtra por keyword, busca las PRs abiertas linkeadas a esos tickets, **excluye las tuyas**, y por cada una reporta estado en Jira, aprobaciones contra el mínimo de merge, estado de checks y **si tiene evidencia de CI**. Termina en una decisión por PR: pedir reviewers con `gh`, o correrle la review con agentes. | El complemento de la Demo 4: esa revisa *una* PR que le señalás, esta gobierna **la cola del equipo**. Tres beats, elegí uno: (1) **contar aprobaciones bien** — la API te da *eventos* de review, no estado, así que hay que quedarse con el más reciente por reviewer y tratar un `CHANGES_REQUESTED` abierto como no-mergeable; el skill es donde vive esa reducción. (2) **"No inventes la JQL"** — el skill le dice al agente que la copie de Board settings → Filter, porque un agente arma una JQL plausible y equivocada sin dudar. (3) **el dashboard termina en una acción**, y una de las dos opciones es invocar otro skill: composición visible. |
-| `pr-review-domain-agents` | Despacha **cinco reviewers propios en paralelo** (ver *Agentes*) y después aplica dos **gates bloqueantes calculados desde los paths tocados**: si algún archivo cae fuera del árbol de tu equipo, no es un merge solo tuyo — pide review del equipo dueño, aviso en el canal compartido y un chequeo de si el fix podía portarse a tu propio árbol; y si toca código común, exige la evidencia de regresión completa. Cierra con reporte unificado y **pregunta qué aplicar**. | Ya está en el demo, pero el demo despacha los reviewers **genéricos de un plugin**. Lo que agrega el real son los gates: no son opiniones, son decisiones mecánicas sacadas de la lista de archivos. Y el orquestador tiene instrucción de **liderar con el gate cross-team** — *un cambio en código compartido es un bloqueante de merge, no un nit*. |
 | `release-ticket-structure` | Lee tickets de release management, donde la evidencia de validación vive en **custom fields**, no en comments ni attachments. | **No tiene checklist ni procedimiento**: es una *referencia*. Le dice al agente dónde está la data en un sistema cuya UI la esconde. Cerca de la mitad de los skills son referencias. *"Un skill no es sólo un procedimiento; a veces es sólo saber dónde está la data."* |
-| `local-ci-compile` | Replica el compile de CI local, offline, en un `git worktree` limpio para que los untracked no causen errores de clase duplicada. | Patrón genérico, y el detalle del worktree no es obvio. |
-| `ticket-to-tests-workflow` | El compuesto: ticket → plan → matriz de coverage → implementar → crear los casos en el gestor → mapear ids → PR. | Una línea, como ejemplo de "los skills se componen en pipeline". Demasiado grande para demostrar. |
+| `test-case-manager-workflow` | Crea y mantiene secciones y casos en el gestor de test cases: inspeccionar la estructura, crear bajo el padre correcto, cargar los campos, traer los ids para mapearlos al nombre del método. Con un paso de **verificación pre-PR marcado obligatorio** y otro para retirar casos. | Su primera línea es el hallazgo: **el MCP conectado no expone ninguna tool**, así que todo va por la API REST. Un skill que documenta que una integración conectada es inservible, y cuál es el camino que sí funciona. Nadie lo descubre dos veces si está escrito. |
+
+### Panel y despliegue
+
+| Skill | Qué hace | Por qué mostrarlo |
+|---|---|---|
+| `session-status-panel` | Con la palabra **"status"** sola, responde tres cosas a la vez: qué está haciendo cada sesión de agente abierta del proyecto (branch, último turno, cuál te dejó una pregunta sin responder), qué hace CI (builds en vuelo y recién terminados), y qué llegó a **Slack** en los canales configurados — sólo lo que te necesita: menciones, pedidos de release, preguntas sobre tus PRs, incidentes. Cierra con **una** acción recomendada, no una lista. | Va con la slide de background agents: cuando corrés más de una sesión necesitás **una vista sobre tus agentes**, y esa vista es un skill. Dos detalles de craft para señalar: el skill **define su formato de salida** (tres bloques, el más accionable primero, sin preámbulo) porque lo vas a leer veinte veces al día; y `"check again"` significa *diffear contra lo último que reportaste y liderar con lo que cambió* — si no cambió nada, decir exactamente eso en una línea. |
+| `preprod-deploy` | Dispara el deploy de una branch a preproducción. | **El ejemplo más puro de "un skill es donde vive el gotcha".** Los parámetros del job son dinámicos: si el job no fue consultado por API en esta sesión, el trigger **descarta silenciosamente todos los parámetros** y el build muere mucho más adelante con un NullPointerException que no dice nada. Y el "primado" **no es un no-op**: corre el pipeline completo con los defaults y *los deploya*, quince minutos. Así que por API cuesta **dos builds**. El skill trae el one-liner que responde PRIMED / NEEDS_PRIME antes de tocar nada. Eso es un día de alguien, escrito una vez. |
 
 ---
 
@@ -410,6 +450,19 @@ Quedó como **taxonomía**: cuatro formas de fallar —inventa, toma un atajo, s
 de límite, se olvida— cada una en una fila, y al lado qué la agarra: hook, rule +
 skill, permisos, memory. Las cuatro piezas de la pirámide apareciendo como
 respuesta a una forma concreta de fallar.
+
+**Y los cinco reviewers propios entraron al deck.** El diagrama de fan-out —el
+que aparece *antes* de las demos, cuando se explica que un skill puede delegar—
+ahora muestra los reales: código, framework de tests, sync de casos, cobertura de
+AC, comentarios. La Demo 4 sigue corriendo los cinco genéricos del plugin, pero
+ahora la slide lo dice: *"la versión simplificada del demo, para que ande en
+cualquier repo"*.
+
+Esto arregla una contradicción que el deck venía cargando —afirmar agentes
+propios mientras el escenario despacha los de un plugin— y de paso pone la tesis
+de cultivar sobre los agentes mismos: el plugin es la rampa de entrada, los
+propios son donde terminás. No costó ninguna slide: la línea que hacía falta
+reemplazó una que ya estaba.
 
 ## Deliberadamente no mostrable
 
