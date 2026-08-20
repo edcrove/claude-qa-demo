@@ -1143,3 +1143,41 @@ Lo que el merge destrabó, que es más que cosmética:
 Y en el deck, la última slide ahora nombra las cinco categorías —rules, skills,
 **agentes**, hooks, permisos— en vez de "skills, rules, hooks y otras piezas".
 "Agentes" es a propósito: cierra el loop que abre la slide anterior.
+
+### Faltaba el skill de PR review, y el motivo por el que faltaba era el error
+
+Lo descarté en la primera pasada con "ya está en el demo". Falso: el demo
+despacha los cinco reviewers **genéricos del plugin** (código, fallas
+silenciosas, tipos, comentarios, tests), y el real tiene cinco escritos para el
+dominio del equipo. Es justo la mitad que el deck afirma y no muestra —la última
+slide dice *"los tuyos los escribís vos"* sin mostrar ninguno.
+
+Lo que entró:
+
+- **Los cinco reviewers propios**, en `## Agentes`, que ahora tiene dos
+  subsecciones: los reviewers de PR y el pipeline. El dev-code reviewer es la
+  rule `test-antipatterns` convertida en prompt, lo cual cierra un loop que el
+  deck no cierra: **la rule le dice al agente cómo escribir, el reviewer chequea
+  que lo hizo.** El mismo conocimiento en los dos extremos del ciclo, salido del
+  mismo review repetido.
+- **La respuesta a "¿y para qué escribo un agente si el plugin ya trae cinco?"**
+  Ninguno de los genéricos puede saber que el id de tu caso de test es un prefijo
+  del nombre del método, ni qué anotación aplica en un repo del monorepo y no en
+  el otro, ni qué AC tenía el ticket. Eso no es code smell: es tu convención.
+- **Los dos gates bloqueantes del orquestador**, que son lo mejor del skill y no
+  son opiniones: se calculan desde la lista de archivos tocados. Si algo cae
+  fuera del árbol de tu equipo, no es un merge solo tuyo. Y el orquestador tiene
+  instrucción de **liderar con ese gate** — un cambio en código compartido es un
+  bloqueante de merge, no un nit.
+- **La política de auto-fix partida en dos:** un solo reviewer arregla solo
+  metadata que no cambia el comportamiento de ningún test; todo lo demás se
+  reporta y espera aprobación. Es una línea defendible de qué toca un agente sin
+  que lo miren.
+- **El analista de comentarios tiene prohibido postear.** Analiza y devuelve; el
+  orquestador postea después de que el humano elige.
+- **El chequeo de salud de datos del SME**, que separa *"falta cobertura"* de
+  *"los datos del ambiente no soportan ese escenario"*. Un reviewer que exige un
+  test imposible quema su credibilidad.
+
+Y quedó anotada una mejora de la Demo 4 que no cuesta una slide: mencionar en una
+frase que los reviewers propios llevan las convenciones de tu equipo.

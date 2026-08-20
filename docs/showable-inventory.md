@@ -130,6 +130,7 @@ Es la versión mecánica del argumento de costo del deck. En el set real son
 | `ci-regression-review` | Produce un **veredicto, no una lista**: (1) totales reconciliados —cross-check de inconsistencias internas antes de citar un número, y decís el crudo y el corregido—, (2) clusters por causa raíz y no por clase de test, (3) split por equipo derivado del package, (4) clasificación de skips, (5) si el release es realmente culpable, reproducido contra prod. | El punto 1. Todo pipeline de reporting junta rarezas, y el número del dashboard es el que termina en un status update. *"Un skill también es donde guardás cómo se leen de verdad los números de tu propio reporte."* |
 | `session-status-panel` | Con la palabra **"status"** sola, responde tres cosas a la vez: qué está haciendo cada sesión de agente abierta del proyecto (branch, último turno, cuál te dejó una pregunta sin responder), qué hace CI (builds en vuelo y recién terminados), y qué llegó a **Slack** en los canales configurados — sólo lo que te necesita: menciones, pedidos de release, preguntas sobre tus PRs, incidentes. Cierra con **una** acción recomendada, no una lista. | Va con la slide de background agents: cuando corrés más de una sesión necesitás **una vista sobre tus agentes**, y esa vista es un skill. Dos detalles de craft para señalar: el skill **define su formato de salida** (tres bloques, el más accionable primero, sin preámbulo) porque lo vas a leer veinte veces al día; y `"check again"` significa *diffear contra lo último que reportaste y liderar con lo que cambió* — si no cambió nada, decir exactamente eso en una línea. |
 | `board-pr-triage` | El dashboard de **las PRs del equipo que no son tuyas**: arranca de la JQL del board, filtra por keyword, busca las PRs abiertas linkeadas a esos tickets, **excluye las tuyas**, y por cada una reporta estado en Jira, aprobaciones contra el mínimo de merge, estado de checks y **si tiene evidencia de CI**. Termina en una decisión por PR: pedir reviewers con `gh`, o correrle la review con agentes. | El complemento de la Demo 4: esa revisa *una* PR que le señalás, esta gobierna **la cola del equipo**. Tres beats, elegí uno: (1) **contar aprobaciones bien** — la API te da *eventos* de review, no estado, así que hay que quedarse con el más reciente por reviewer y tratar un `CHANGES_REQUESTED` abierto como no-mergeable; el skill es donde vive esa reducción. (2) **"No inventes la JQL"** — el skill le dice al agente que la copie de Board settings → Filter, porque un agente arma una JQL plausible y equivocada sin dudar. (3) **el dashboard termina en una acción**, y una de las dos opciones es invocar otro skill: composición visible. |
+| `pr-review-domain-agents` | Despacha **cinco reviewers propios en paralelo** (ver *Agentes*) y después aplica dos **gates bloqueantes calculados desde los paths tocados**: si algún archivo cae fuera del árbol de tu equipo, no es un merge solo tuyo — pide review del equipo dueño, aviso en el canal compartido y un chequeo de si el fix podía portarse a tu propio árbol; y si toca código común, exige la evidencia de regresión completa. Cierra con reporte unificado y **pregunta qué aplicar**. | Ya está en el demo, pero el demo despacha los reviewers **genéricos de un plugin**. Lo que agrega el real son los gates: no son opiniones, son decisiones mecánicas sacadas de la lista de archivos. Y el orquestador tiene instrucción de **liderar con el gate cross-team** — *un cambio en código compartido es un bloqueante de merge, no un nit*. |
 | `release-ticket-structure` | Lee tickets de release management, donde la evidencia de validación vive en **custom fields**, no en comments ni attachments. | **No tiene checklist ni procedimiento**: es una *referencia*. Le dice al agente dónde está la data en un sistema cuya UI la esconde. Cerca de la mitad de los skills son referencias. *"Un skill no es sólo un procedimiento; a veces es sólo saber dónde está la data."* |
 | `local-ci-compile` | Replica el compile de CI local, offline, en un `git worktree` limpio para que los untracked no causen errores de clase duplicada. | Patrón genérico, y el detalle del worktree no es obvio. |
 | `ticket-to-tests-workflow` | El compuesto: ticket → plan → matriz de coverage → implementar → crear los casos en el gestor → mapear ids → PR. | Una línea, como ejemplo de "los skills se componen en pipeline". Demasiado grande para demostrar. |
@@ -140,7 +141,48 @@ Es la versión mecánica del argumento de costo del deck. En el set real son
 
 La categoría que el inventario más necesitaba, y la que el deck sólo roza: los 5
 subagentes de la Demo 4 vienen de un plugin, y la última slide dice *"los tuyos
-los escribís vos"* sin mostrar uno. Estos son propios.
+los escribís vos"* sin mostrar uno. Acá hay dos grupos, y los dos son propios.
+
+### Los cinco reviewers de PR — "los tuyos los escribís vos"
+
+El demo despacha los cinco reviewers **genéricos** del plugin: código, fallas
+silenciosas, tipos, comentarios, tests. Sirven, y el deck ya defiende usarlos. Lo
+que el deck afirma y no muestra es la otra mitad: **reviewers escritos para tu
+dominio.**
+
+| Reviewer | Qué chequea |
+|---|---|
+| **Dev code** | Estructura, redundancia, constantes en vez de strings mágicos, imports, checkstyle. Y seis ítems que son la rule `test-antipatterns` convertida en prompt: setup que falla rápido, smoke que assertea el valor que consume producción, sin headers duplicados en el cable, sin re-hardcodear un chequeo que ya tiene helper, sin fallback silencioso a un host equivocado, comportamiento cross-cutting en el chokepoint |
+| **Experto del framework** | Diseño del test, patrones de login, flakiness, y **las convenciones de nombres de tu repo** — incluido qué anotación **no** se usa acá aunque sí en el repo de al lado |
+| **Sync con el gestor de test cases** | Que la cantidad de tests matchee la de casos, la etiqueta de creado-por-IA, la referencia al ticket, que no queden casos huérfanos, que ningún título tenga un ticket id |
+| **Subject matter expert** | **Mapea cada AC a un test** y marca el AC sin cobertura. Tipos de usuario, regiones, plataformas, casos de error, y si las assertions dicen lo que el AC pide |
+| **Analista de comentarios** | Clasifica los comentarios que ya dejaron los reviewers —fix de código / explicación / aclaración / ya resuelto—, redacta las respuestas… y **no postea nada** |
+
+**Por qué esto no lo puede hacer un reviewer genérico.** Ninguno de los cinco del
+plugin puede saber que el id de tu caso de test es un prefijo del nombre del
+método, ni que tal anotación aplica en un repo del monorepo y no en el otro, ni
+qué AC tenía el ticket. Eso no es "code smell": es tu convención. *"El plugin
+sabe de código. Estos saben de tu equipo."*
+
+Y cierra un loop con la pirámide: **la rule le dice al agente cómo escribir, el
+reviewer chequea que lo hizo.** El mismo conocimiento, en los dos extremos del
+ciclo, salido del mismo review repetido.
+
+Tres detalles de craft que se dicen en una línea cada uno:
+
+- **La política de auto-fix está partida en dos.** Un solo reviewer arregla solo:
+  metadata del gestor de casos (etiqueta, referencia, limpieza de título), que no
+  cambia el comportamiento de ningún test. Todo lo demás se reporta y espera
+  aprobación. Es una línea defendible de qué puede tocar un agente sin que lo
+  miren.
+- **El analista de comentarios tiene prohibido postear.** Analiza y devuelve;
+  postea el orquestador después de que vos elegís. El hilo de accountability,
+  mecanizado adentro de un skill.
+- **El SME corre un chequeo de salud de datos** contra el ambiente, para separar
+  *"falta cobertura"* de *"los datos del ambiente no soportan ese escenario"*. Un
+  reviewer que exige un test imposible quema tu credibilidad; este distingue.
+
+### El pipeline: planificar → escribir → verificar
 
 Forman un **pipeline con orquestación determinística**: dado un ticket, planifica
 la cobertura desde los AC, escribe los tests en el framework real del equipo, los
@@ -337,6 +379,12 @@ inventario, ~45 s como nota al pasar después de la Demo 3.
 Suplentes de una línea: las fechas `Last verified:`, el aviso de que los
 transcripts son superficie de leak, y la proporción 4 rules globales / 8 por repo
 como versión concreta del argumento de costo de contexto.
+
+**Y hay una mejora de la Demo 4 que no cuesta una slide nueva:** hoy despacha los
+cinco reviewers genéricos del plugin. Mencionar en una frase que los tuyos los
+escribís con las convenciones de tu equipo —y que ahí es donde la rule vuelve
+como reviewer— responde la pregunta obvia *"¿y para qué escribo un agente si el
+plugin ya trae cinco?"* sin sumar tiempo.
 
 Y si en algún momento se abre espacio para un segundo skill en vivo,
 **`board-pr-triage`** es el candidato: la Demo 4 revisa una PR que le señalás,
