@@ -335,7 +335,7 @@ Plataforma de streaming · servicio backend REST
 
 ---
 
-# Mi día como QA, hoy
+# Mi día como QA, antes de todo esto
 
 - **Análisis del ticket** — Jira + repo + Confluence (AC) + TestRail · nada de eso queda escrito en un solo lugar
 - **Mapeo AC ↔ cambio** — comparo docs vs branch a ojo, página por página
@@ -844,23 +844,25 @@ aplicado a un linter o a un quality gate, la conversación es la misma.
 
 ---
 
+<!-- _class: dense -->
+
 # El modelo se equivoca
 
-Un LLM es probabilístico: alucina un comando, afirma una API que no existe, se
-va por la rama — y **suena igual de convincente cuando acierta que cuando no.**
+No es determinístico, y no avisa: **suena igual de convincente cuando acierta que
+cuando no.** Cuatro formas de fallar, las cuatro vistas en mi propio setup:
 
-- **Demo 3:** el agente iba a triggear un build que no debía. No lo frenó el
-  modelo — lo frenó una rule
-- **Este deck afirmaba tres cosas que su propio repo desmentía.** Las encontró
-  una revisión que fue a leer el repo, no que volvió a preguntarle al modelo
-- **Y dije que SonarQube no ve el `// TODO`.** Lo ve (`S1135`) — se arregló
-  leyendo la regla, no mi memoria
+| Se equivoca así | Qué lo agarra |
+|---|---|
+| **Inventa** — un flag, un endpoint, un método que no existe | Que el resultado sea **verificable**: el hook corre typecheck, el test pasa o no pasa |
+| **Toma un atajo razonable** — le pedís tests y los escribe mirando el código del dev: pasan por construcción, con el bug adentro | Una **rule** que lo prohíbe y un **skill** que fija el orden: primero el AC, el código después |
+| **Se pasa de límite** — triggea el build que ya estaba corriendo, intenta leer credenciales del keychain | La **rule** lo frenó en la Demo 3. Y lo que no se negocia no se le pide: se bloquea en los permisos |
+| **Se olvida** — sesión nueva, cero contexto, todo de nuevo | **Memory** — lo que sobrevive al `/clear` |
 
-**Mi trabajo no es que el agente no se equivoque: es que se equivoque donde se
-nota, y que el error no vuelva.**
+**Mi trabajo no es que no se equivoque. Es que cuando pase, se vea — y que el
+mismo error no vuelva dos veces.**
 
-> Cada pieza de la pirámide nació de un error concreto.
-> **El error es la materia prima del setup.**
+> Cuando aparece uno nuevo no lo corrijo en el chat y sigo de largo: **lo
+> escribo.** Así nació cada pieza que vieron hoy.
 
 ---
 

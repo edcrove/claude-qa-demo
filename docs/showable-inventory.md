@@ -25,6 +25,9 @@ pases algo de acá a una slide.
 | canal del equipo | `#platform-contributors` |
 | clases del framework | `ApiTestBase` · `ApiContext` · `ProductTestData` |
 | el repo del toolkit | "un repo aparte" — **sin nombre, a propósito** |
+| el repo hermano del pipeline multi-agente | "el repo hermano" — **también sin nombre** |
+| el equipo que revisa y firma | "el equipo de QA" |
+| servicios y equipos del árbol de config | `<service>/<team>`: `api/accounts`, `api/catalog`, `legacy-service` |
 
 El nombre del toolkit no va al deck: es un repo real en el org de la empresa, y
 publicarlo es una búsqueda de distancia entre la charla y la organización.
@@ -210,6 +213,142 @@ Y dos insights que no son obvios y no son sobre código:
   `removed-*` u `old-*` es peso muerto **que un agente igual puede leer y
   ejecutar.** Esta es genuinamente nueva para casi todos: el código muerto es un
   olor humano, las *instrucciones* muertas son un peligro activo.
+
+---
+
+## El repo hermano — el pipeline multi-agente
+
+Fuente distinta y material distinto. No es una biblioteca de skills y rules: es
+un **pipeline de tres agentes con orquestación determinística**. Dado un ticket,
+planifica cobertura desde los AC, escribe tests en el framework real del equipo,
+los corre contra el ambiente efímero del ticket, **verifica los resultados con un
+agente independiente** y entrega para review humano.
+
+Su propio README lo dice sin maquillaje, y esa honestidad es parte de lo
+mostrable: *automatiza el primer ~80% de la escritura de tests — **no** reemplaza
+el review del equipo de QA. Leé los known issues antes de confiarle algo
+desatendido.*
+
+### Los principios, tal como están escritos
+
+Cinco líneas que se pueden poner en pantalla casi textuales:
+
+- **"Green is never the goal."** Que los tests pasen no es el objetivo: verificar
+  lo correcto sí. Nunca debilitar, borrar ni tragarse una assertion derivada de un
+  AC; nunca `enabled=false` para esconder un rojo. Una falla real del producto se
+  reporta roja.
+- **Los AC se congelan** cuando el Planner los define: el Runner no los
+  reinterpreta a mitad de la corrida.
+- **El Verifier es independiente** — valida sin compartir el contexto ni el sesgo
+  del Runner.
+- **No se lee el código de producto para diseñar los tests.** Se diseñan desde el
+  AC y las convenciones declaradas, no inspeccionando la implementación.
+- **Nada personal hardcodeado en config compartida.** Con incidente real: el campo
+  de assignee estaba fijo a la cuenta de una persona, así que los tickets de todo
+  el equipo terminaban asignados a ella. Se arregló resolviéndolo dinámicamente.
+
+### Los cinco agentes
+
+| Agente | Tools / modelo | Su regla no negociable |
+|---|---|---|
+| `planner` | read-only, ciego al código | Sus gaps son a nivel AC. Si el AC no define algo, **lo reporta como observación de QA** en vez de resolverlo leyendo el código |
+| `runner` | escribe y ejecuta | Reconcilia gaps contra el código pero **nunca completa el AC desde el código** |
+| `verifier` | `Read`/`Grep`/`Glob`, modelo chico | *"No deferís al resultado autoreportado del Runner: tratalo como un claim a verificar."* Un pass sin assertion que cubra el AC **no es un pass** → `hollow_pass_suspected` |
+| `backlog-evaluator` | read-only | Juzga si un ticket está listo para que un dev y un QA arranquen sin suposiciones |
+| `backlog-verifier` | **sólo `Read`, sin tools de Jira** | *"Un primer pase marcó este ticket READY. Tu trabajo es asumir que no lo está y encontrar el gap que ese pase se perdió."* |
+
+**El `verifier` es el mejor artefacto de los dos repos para esta audiencia.** Es
+literalmente la respuesta a *"¿y quién revisa al agente que escribió los tests?"*:
+otro agente, con menos tools, un modelo más chico, sin el contexto del primero, y
+con instrucción explícita de no hacer rubber-stamp. Escala a humano cuando el pass
+llegó *después de reparaciones*, cuando sospecha un pass hueco o cuando la
+evidencia es fina — **nunca hace default a pass.**
+
+Y el `backlog-verifier` trae el argumento que lo justifica, que es de diseño de
+tests puro: **la falla es asimétrica.** Un ticket marcado listo por error se
+construye mal y nadie lo vuelve a leer; un ticket frenado por error cuesta una
+pregunta. Entonces la barra para confirmar "listo" es alta. Más una prohibición
+que casi ningún reviewer humano se autoimpone: *"no fabriques un gap para parecer
+riguroso"*, y *"si confirmás, confirmá porque buscaste y no encontraste — no
+repitiendo el razonamiento del primer pase como acuerdo."*
+
+### Su bloque de permissions — y el contraste con el otro repo
+
+| | El toolkit | El pipeline |
+|---|---|---|
+| Postura | `allow` / **`ask`** / `deny` | `allow` / `deny`, **sin `ask`** |
+| `git push` | va a `ask` | **`deny`** |
+| Por qué | sesión interactiva: hay alguien para preguntarle | corre largo y semi-desatendido: no hay nadie a quien preguntarle |
+
+El `deny` del pipeline es el más instructivo de los dos: `sudo`, `rm`, `ssh`,
+`scp`, `git push`, `~/.ssh/**`, `~/.aws/**`, `**/.env`, el acceso al **keychain**
+del sistema, y `WebFetch`/`WebSearch`.
+
+Los dos últimos merecen una línea cada uno. Bloquear la web significa que el
+agente **no puede importar una convención de un blog** mientras escribe tests: sale
+del AC y de las convenciones declaradas, o no sale. Y el keychain está ahí por un
+incidente real: **un agente intentó leer credenciales del keychain del sistema y
+fue bloqueado.** Esa es la respuesta concreta a "¿por qué `deny` y no confianza?".
+
+Y el `allow` enumera las tools de MCP **una por una** — el agente puede crear un
+ticket y comentar, y nada más. Un MCP conectado no es un permiso: es una
+superficie que también se recorta.
+
+### Las lecciones del POC — la mina para "El modelo se equivoca"
+
+El repo tiene un doc de resultados y lecciones escrito para leadership, y es el
+mejor material honesto de los dos repos. Todo esto es genérico:
+
+| Lección | Por qué mostrarla |
+|---|---|
+| **"El razonamiento es la parte fácil; la disciplina es la difícil."** Los agentes planifican y escriben tests buenos sin esfuerzo. La ingeniería real es mantenerlos honestos y en proceso. | Es la tesis del deck dicha desde otro ángulo, y viniendo de un POC medido pega más fuerte que como opinión. |
+| **El agente se salió del proceso.** En vez de resolver el ambiente como estaba prescripto, fue a leer los cambios de código del dev para diseñar los tests. Consecuencia: su cobertura reflejaba **lo que el dev ya había verificado**, no el AC completo — y nunca ejecutó. *"Un test escrito desde el código tiende a pasar por construcción, bug incluido."* | **El mejor ejemplo de falla de agente disponible en cualquiera de los dos repos**, y es QA puro: no es "alucinó un nombre", es "tomó un atajo razonable y produjo cobertura que valida el bug". |
+| **"La escalación honesta es una feature, no una falla.** Un sistema que nunca escala es sospechoso: o está inventando o está escondiendo." | Reencuadra el pedido de ayuda del agente como señal de calidad. Regalable en una línea. |
+| **"Los guardrails se imponen, no se piden."** Las instrucciones blandas ("no hagas X") no alcanzan para operación desatendida; los límites que importan van hard-blocked. | Es la distinción rule-vs-hook del deck, con su límite honesto: la pirámide es contexto, no enforcement. Y conecta directo con el ítem de *unattended agents* de la última slide. |
+| **"Cada fix manual es un upgrade del sistema."** Las correcciones que un QA hizo a mano después de una corrida se plegaron de vuelta a las reglas de los agentes. | El mecanismo de promoción del deck, encontrado de forma independiente por otro proyecto. Es la validación externa de la tesis. |
+| **El review humano queda en el loop por diseño.** El valor es un punto de partida al 80% con calidad de review, más una lista precisa de lo que falta. | Cierra igual que el deck: se delega ejecución, no responsabilidad. |
+
+### Patrones de config que se pueden robar
+
+| Patrón | Qué es |
+|---|---|
+| **Config en tres niveles** | `_shared/` (aplica a todo) → `<service>/` → `<service>/<team>/`, con un flag `has_teams` que decide si el nivel de equipo existe. Cómo escalás config de agentes a varios equipos sin forkear. |
+| **Un ticket son tres tickets** | `STORY_TICKET` (dónde viven los AC), `WORK_TICKET` (branch, commits, reporte) y `ENV_TICKET` (de dónde sale la URL del ambiente) son roles distintos y a veces tickets distintos. Nadie lo modela así hasta que se rompe. |
+| **`ticket_flow` por equipo** | `create-ste` (el pipeline crea la tarea y la branch) vs `use-existing` (el equipo ya crea la suya). El pipeline **se adapta al proceso de cada equipo** en vez de imponer uno. |
+| **`audit-backlog` — el gate más barato** | Corre sobre un sprint entero, no un ticket: decide si un dev y un QA podrían arrancar sin suposiciones, y etiqueta o comenta las preguntas abiertas. *Un AC faltante encontrado acá cuesta un comentario de Jira; el mismo gap encontrado por el Runner cuesta una implementación equivocada y una re-corrida.* Deliberadamente **no** enganchado al pipeline: el grooming tiene su propia cadencia. Y `--dry-run` obligatorio la primera vez. |
+| **Escritura acotada por diseño** | El audit escribe **sólo labels y comments**, nunca una transición de estado ni ningún otro campo — y sólo desde el command, nunca desde un subagente. El permiso más chico que hace el trabajo. |
+
+### Ya aplicado al deck
+
+La slide **"El modelo se equivoca"** nació con tres ejemplos autorreferenciales
+—la rule que frenó al agente en la Demo 3, y dos afirmaciones del propio deck que
+estaban mal— y no se entendía: los ejemplos no compartían forma (uno era "el
+agente hizo algo mal", los otros dos "el deck decía algo mal") y pedían contexto
+que la sala no tiene. Se reformuló con material de acá:
+
+- **El agente diseñó tests mirando el código del dev** en vez del AC → cobertura
+  que pasa por construcción, con el bug adentro. La falla que a un QA le hiela la
+  sangre, y no necesita ninguna explicación previa.
+- **Un agente intentó leer credenciales del keychain** y lo frenó la capa de
+  permisos. Justifica el `deny` en media línea.
+
+Quedó como **taxonomía**: cuatro formas de fallar —inventa, toma un atajo, se pasa
+de límite, se olvida— cada una en una fila, y al lado qué la agarra: hook, rule +
+skill, permisos, memory. Las cuatro piezas de la pirámide apareciendo como
+respuesta a una forma concreta de fallar.
+
+### De este repo, no mostrable
+
+- **El doc de resultados completo.** Tiene tickets reales, nombres de servicios y
+  equipos, y evaluación de calidad de trabajo de gente identificable. Las
+  lecciones de la tabla de arriba ya están destiladas y son lo reutilizable.
+- **El árbol de config con nombres reales** de servicios y equipos, y el
+  `domain-knowledge.md` de cada uno — que es conocimiento de producto puro.
+- **Las convenciones de authoring por servicio**, que citan clases y paths del
+  framework interno.
+- **La tabla de metadata del repo** contra la política del org: mismo caso que el
+  validador de nombres del otro repo.
+- **El nombre del repo.** Ver sanitización arriba.
 
 ---
 

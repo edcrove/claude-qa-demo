@@ -1027,3 +1027,85 @@ re-renderizados.
 script ya honra `CHROME_PATH` y lo pasa como `executablePath`. Con el Chrome del
 sistema, más `PATH`/`NODE_PATH` apuntando a donde quedaron instalados `marp` y
 `playwright`, buildea y verifica sin instalar nada nuevo.
+
+
+## 2026-08-20 (más tarde) — El repo hermano entra al inventario, y la slide se reescribe
+
+### Lo mostrable del pipeline multi-agente
+
+El inventario cubría un solo repo privado. Falta el hermano, que es material de
+otra naturaleza: no es una biblioteca de skills y rules, es un **pipeline de tres
+agentes con orquestación determinística** — planifica cobertura desde los AC,
+escribe los tests, los corre contra el ambiente efímero del ticket, y los
+**verifica con un agente independiente**.
+
+Lo que se llevó al inventario, sanitizado:
+
+- **El `verifier` es el mejor artefacto de los dos repos para esta audiencia.**
+  Es literalmente la respuesta a *"¿y quién revisa al agente que escribió los
+  tests?"*: otro agente, con menos tools, modelo más chico, sin el contexto del
+  primero, y con instrucción explícita de tratar el resultado del Runner como un
+  claim a verificar. Un pass sin assertion que cubra el AC no es un pass —
+  `hollow_pass_suspected`. Nunca hace default a pass.
+- **El `backlog-verifier` trae el argumento asimétrico**, que es diseño de tests
+  puro: un ticket marcado listo por error se construye mal y nadie lo vuelve a
+  leer; uno frenado por error cuesta una pregunta. Entonces la barra para
+  confirmar "listo" es alta. Y una prohibición que casi ningún reviewer humano se
+  autoimpone: *"no fabriques un gap para parecer riguroso."*
+- **El contraste entre los dos bloques de permissions.** El toolkit usa
+  `allow`/`ask`/`deny` y manda `git push` a `ask`; el pipeline no tiene `ask` y
+  **deniega** `git push`. La diferencia es la presencia de un humano: sesión
+  interactiva hay a quién preguntarle, corrida larga semi-desatendida no.
+- **`WebFetch`/`WebSearch` denegados** — el agente no puede importar una
+  convención de un blog mientras escribe tests. Sale del AC y de las convenciones
+  declaradas, o no sale.
+- **Las lecciones del POC**, que son el mejor material honesto de los dos repos:
+  *"el razonamiento es la parte fácil; la disciplina es la difícil"*, *"la
+  escalación honesta es una feature, no una falla — un sistema que nunca escala o
+  está inventando o está escondiendo"*, *"los guardrails se imponen, no se
+  piden"*, y *"cada fix manual es un upgrade del sistema"* — que es el mecanismo
+  de promoción del deck, encontrado de forma independiente por otro proyecto.
+
+### Y la slide se reescribió entera
+
+**"El modelo se equivoca" no se entendía.** El diagnóstico, que vale más que el
+arreglo: sus tres ejemplos no compartían forma. Uno era *el agente hizo algo mal*
+(la Demo 3) y los otros dos eran *el deck decía algo mal* (tres afirmaciones que
+el repo desmentía, y la slide del linter). Mezclar "falla el agente" con "fallé
+yo" difumina el punto, y los dos últimos pedían contexto que la sala no tiene:
+nadie estuvo en el desarrollo del deck. Encima la conclusión —*"que se equivoque
+donde se nota"*— no decía **dónde** se nota ni **qué** lo nota.
+
+Ahora es una **taxonomía de cuatro filas: forma de fallar → qué la agarra.**
+
+| Se equivoca así | Qué lo agarra |
+|---|---|
+| Inventa un flag, un endpoint, un método | que el resultado sea verificable: hook + test |
+| Toma un atajo razonable: escribe los tests mirando el código del dev | rule que lo prohíbe + skill que fija el orden |
+| Se pasa de límite: triggea el build corriendo, va al keychain | la rule (Demo 3) y los permisos |
+| Se olvida: sesión nueva, cero contexto | memory |
+
+Las cuatro piezas de la pirámide aparecen **como respuesta a una forma concreta
+de fallar**, así que la pirámide se gana su existencia en vez de afirmarla. Y los
+dos ejemplos nuevos salen de las lecciones del repo hermano: son reales, son de
+QA, y ninguno necesita explicación previa. El del código del dev es el que hiela
+la sangre — cobertura que pasa por construcción, con el bug adentro.
+
+Cierra en las dos mitades que faltaban: *"que cuando pase, se vea — y que el
+mismo error no vuelva dos veces"*, y después *"cuando aparece uno nuevo no lo
+corrijo en el chat y sigo de largo: lo escribo."*
+
+### Y el título de la slide del dolor decía lo contrario de lo que mostraba
+
+*"Mi día como QA, **hoy**"* se leía como el día actual —con IA— cuando el
+contenido es el día enteramente manual: copiar los AC a mano, comparar docs
+contra branch a ojo, pingear peers y volver a pingear. La slide contradecía su
+propio encabezado.
+
+Queda **"Mi día como QA, antes de todo esto"**. No *"antes de IA"*, porque la
+slide inmediatamente anterior ya se llama así y habla del stack: ésta es lo que
+ese pipeline **costaba**. La marca temporal es relativa a la charla, no al
+calendario, así que no vuelve a envejecer.
+
+El callback de la Demo 6 no se toca: cita el último *bullet* (*"Mañana — sesión
+nueva. Re-explico el ticket, el plan, las convenciones."*), no el título.

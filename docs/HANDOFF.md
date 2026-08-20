@@ -63,8 +63,10 @@ which is what a critical review flagged as the deck's main structural weakness.
   imageless on purpose — that is where the terminal is shown.
 - **Presentation-feedback pass done (2026-08-19).** Eleven items from the
   author's read-through. The two that change the text a chat might edit:
-  the pain slide is now **first person** ("Mi día como QA", and its bullets
-  with it), and Demo 4's report slide now names **what each specialist found**
+  the pain slide is now **first person** (its title is
+  "Mi día como QA, antes de todo esto" since 2026-08-20, and its bullets moved
+  to first person with it), and Demo 4's report slide now names
+  **what each specialist found**
   instead of showing a per-axis tally — which let the following
   linter/SonarQube slide anchor its argument in something visible on screen
   (honest split: **2 of 5** findings are pattern-matchable, 3 have to be read).

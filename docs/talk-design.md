@@ -66,9 +66,14 @@ The deck (see `slides/slides.md`) applies these deliberate storytelling devices:
    Re-explico el ticket, el plan, las convenciones."* Demo 6 closes by quoting
    that line and negating it word for word. That is the emotional arc of the
    talk in two sentences. The whole pain slide is **first person** since
-   2026-08-19 ("Mi día como QA"), so the two lines must be edited together —
-   Demo 6 quotes this one verbatim and a one-sided edit breaks the quote
-   silently.
+   2026-08-19, so the two lines must be edited together — Demo 6 quotes this one
+   verbatim and a one-sided edit breaks the quote silently.
+
+   Its title is **"Mi día como QA, antes de todo esto"** (2026-08-20). It used
+   to end in "hoy", which contradicted the slide: the content is the fully
+   manual day, before any of what the talk goes on to show. "antes de todo esto"
+   rather than "antes de IA" because the slide immediately before it already
+   uses that phrase for the tooling — this one is what that pipeline *cost*.
 5. **The agent loses on stage.** In Demo 3 Claude *tries* to trigger CI and the
    rule blocks it (build 43 is RUNNING on stage in the mock). Guardrails are
    shown catching the agent, not just the human — this inoculates against
@@ -123,11 +128,26 @@ section count, not eyeballed):
   an LLM is probabilistic and fails. It sits immediately before "qué le toca a
   la persona" on purpose: it converts that table from a moral claim into an
   engineering one. The criterion stays human *because the model is
-  probabilistic*, not because of policy. Its three examples are deliberately
-  self-referential — the rule that stopped the agent in Demo 3 (which the room
-  just watched), three claims this deck made that its own repo refuted, and a
-  linter claim on a slide that was itself wrong. Showing your own errors in the
-  artifact on screen is what makes it land instead of reading as a disclaimer.
+  probabilistic*, not because of policy.
+
+  **Shape: a four-row taxonomy, failure mode → what catches it.** *Inventa* (a
+  flag/endpoint/method that does not exist) → the hook runs typecheck and the
+  test passes or does not. *Toma un atajo razonable* (asked for tests, writes
+  them from the developer's code, so they pass by construction with the bug
+  inside) → a rule forbidding it plus a skill fixing the order, AC first. *Se
+  pasa de límite* (triggers the running build, tries to read credentials from
+  the keychain) → the rule stopped it in Demo 3, and what is not negotiable gets
+  blocked in permissions rather than requested. *Se olvida* (new session, no
+  context) → memory. The four pyramid pieces each show up as the answer to a
+  concrete way of failing, which is what makes the pyramid earn its own
+  existence rather than being asserted.
+
+  Its first version used three self-referential examples (the Demo 3 rule plus
+  two wrong claims the deck itself had made) and did not read: the examples did
+  not share a shape and needed context the room does not have. The replacements
+  come from the sibling multi-agent repo's POC lessons — both are real, both are
+  QA-native, neither needs a setup. See `showable-inventory.md`.
+
   Costs ~40 s of a path already ~18 min over; see STATUS.
 
   Two merges in the 2026-08-13 timing pass: **the pyramid absorbed "Las 4
