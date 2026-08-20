@@ -209,9 +209,11 @@ feature: plain files, grep-addressable, shared across two different agent tools.
 **`ci-regression-review`** — reviews a whole CI regression run and produces a
 **verdict, not a list**:
 
-1. **Real counts, not the dashboard's** — the report double-publishes every
-   suite, so raw numbers are ~2×. State both, and flag partial coverage when a
-   device fork is missing.
+1. **Reconciled counts, not the dashboard's.** Cross-check the totals for
+   internal inconsistency before quoting them — totals against the sum of the
+   suites, the suite list against the matrix that was supposed to run — and
+   adjust, stating both the raw and the reconciled number. Flag partial
+   coverage when part of the matrix is missing from the report.
 2. Clusters by **root cause**, not by test class.
 3. A **per-team split** derived from the test package, flagging failures one
    team's tests surfaced in another team's code.
@@ -219,10 +221,13 @@ feature: plain files, grep-addressable, shared across two different agent tools.
 5. Whether the release under test is **actually at fault** — reproduced against
    production.
 
-Best beat available anywhere in the toolkit: point 1. The skill exists partly
-because **the reporting tool lies**, and the correction lives in the skill so
-nobody re-derives it at 9am on a Monday. Beat: *"un skill también es donde
-guardás que tu propia herramienta miente."*
+Best beat available anywhere in the toolkit: point 1. Every reporting pipeline
+grows quirks — a run counted twice somewhere, a fork missing from the summary,
+a retry inflating a total — and the number on the dashboard is the one that ends
+up in a status update. The skill is where that reconciliation lives, so nobody
+re-derives it at 9am on a Monday, and nobody quotes the raw number by accident.
+Beat: *"un skill también es donde guardás cómo se leen de verdad los números de
+tu propio reporte."*
 
 **`session-status-panel`** — one panel: what every other open agent session in
 this project is doing (branch, last turn, what it is blocked on), what CI is
@@ -514,5 +519,11 @@ transcripts-are-a-leak-surface warning, and the `rules/user/` vs
   (test-management conventions with real project and suite ids, the shared-code
   ownership map, the CI parameter reference). Their *shape* is the reusable part
   and it is already covered above.
+- **The specific reporting defect behind the reconciled-counts step.** The
+  toolkit names the exact mechanism and the exact multiplier, because the skill
+  needs it to do arithmetic. That is a live bug in a team's own tooling and it
+  is not the author's to put on a projector. Keep the step generic — *check the
+  totals for internal inconsistency and adjust* — and do not lift the mechanism
+  back out of the toolkit on a future pass.
 - **The toolkit's name and the sibling repo's name.** See the sanitization
   contract at the top.
